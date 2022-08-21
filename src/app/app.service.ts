@@ -6,7 +6,9 @@ import { Subject, BehaviorSubject } from 'rxjs';
 })
 export class AppService {
 
+  orderID   = ''
   roomEdit = false;
+  userMode : boolean;
 
   states = [];
   redoStates = [];
@@ -20,10 +22,12 @@ export class AppService {
 
   ungroupable = false;
 
+  setSelectedObjectColor: Subject<any> = new Subject<any>();
+  performOperation: Subject<any> = new Subject<any>();
   insertObject: Subject<any> = new Subject<any>();
   defaultChair: Subject<any> = new Subject<any>();
-  performOperation: Subject<any> = new Subject<any>();
-  roomEdition: Subject<boolean> = new Subject<boolean>();
+  jsonValue: Subject<any>        = new Subject<any>();
+  roomEdition: Subject<boolean>  = new Subject<boolean>();
   saveState = new Subject<any>();
   zoom = 100;
 
@@ -74,15 +78,37 @@ export class AppService {
     }
   }
 
+  //setFillColor
+  setObjectFillColor(color: string) {
+    this.setSelectedObjectColor.next(color);
+  }
+
   paste() {
     this.performOperation.next('PASTE');
   }
 
+  setOrder(orderID) {
+    if (!this.selections.length) { return; }
+    this.orderID = orderID;
+    this.performOperation.next('setOrderID');
+  }
+
   delete() {
-    if (!this.selections.length) {
-      return;
-    }
+    if (!this.selections.length) { return; }
     this.performOperation.next('DELETE');
+  }
+
+  disableSeletion() {
+    this.performOperation.next('disableSeletion');
+  }
+
+  loadJson(value: string) {
+    this.jsonValue.next(value);
+  }
+
+  clearLayout() {
+    this.jsonValue.next(null);
+    this.performOperation.next('clearLayout')
   }
 
   rotateAntiClockWise() {
@@ -124,4 +150,109 @@ export class AppService {
     this.zoom -= 10;
     this.performOperation.next('ZOOM');
   }
+
+  alterObjectColor(name: string, color: string, obj: any, view: any) {
+    let json
+    if (view) {
+      json = view.toJSON(['name']);
+      if (json.objects) {
+        if (json.objects.length > 0) {
+          json.objects.forEach(data => {
+            console.log('alterObjectColor data?.backgroundColor', data?.backgroundColor)
+            if (data?.name === name) {
+              if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
+                data.backgroundColor = color;
+                data.borderColor =  color
+                data.stroke = color
+                data.strokeWidth = 10
+                // console.log('item color changed 1', data?.backgroundColor)
+              }
+              if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
+                data.backgroundColor = color;
+                data.borderColor =  color
+                data.stroke = color
+                data.strokeWidth = 10
+                // console.log('item color changed 1', data?.backgroundColor)
+              }
+
+              this.alterColor('red', data)
+            }
+          })
+        }
+      }
+
+    }
+
+    if (view && json) {
+      console.log('loading json')
+    }
+
+    return json ;
+  }
+
+
+  // borderColor: 'purple',
+  // backgroundColor: 'purple',
+  // stroke: 'purple',
+  // strokeWidth: 10,
+  // fill: 'purple'
+  setObjectColor(name: string, color: string, obj: any, view: any) {
+    let json
+    if (view) {
+      // json = view.toJSON(['name']);
+      this.alterColor(color, obj);
+
+      if (obj.objects) {
+        if (obj.objects.length > 0) {
+            obj.objects.forEach(data => {
+            console.log('alterObjectColor data?.backgroundColor', data?.backgroundColor)
+            if (data?.name === name) {
+              if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
+                data.backgroundColor = color;
+                data.borderColor =  color
+                data.stroke = color
+                data.strokeWidth = 10
+                // console.log('item color changed 1', data?.backgroundColor)
+              }
+              if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
+                data.backgroundColor = color;
+                data.borderColor =  color
+                data.stroke = color
+                data.strokeWidth = 10
+                // console.log('item color changed 1', data?.backgroundColor)
+              }
+              this.alterColor('red', data)
+            }
+          })
+        }
+      }
+
+    }
+
+    if (view && obj) {
+      console.log('loading json')
+    }
+
+    return obj ;
+  }
+
+  alterColor(color, obj) {
+
+    // console.log('obj', obj, obj.length)
+    // if (obj?.backgroundColor === 'purple' || obj?.backgroundColor === 'rgba(255,100,171,0.25)') {
+      // obj.backgroundColor = color;
+      obj.borderColor =  color
+      obj.stroke = color
+      obj.strokeWidth = 3
+      // console.log('item color changed 2', obj.backgroundColor)
+    // }
+
+    if (obj.objects && obj.objects.length > 0 ) {
+      obj.objects.forEach(item => {
+        this.alterColor(color, item)
+      })
+    }
+    return obj
+  }
+
 }

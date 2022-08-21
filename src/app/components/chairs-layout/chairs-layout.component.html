@@ -1,8 +1,10 @@
 <div class="layout-chairs">
   <div>
     <div class="layout-type" fxLayout fxLayoutAlign="space-between center">
-      <mat-radio-group aria-label="Select an layout" [ngModel]="layoutOption"
-        (ngModelChange)="layoutOptionChanged($event)">
+      <mat-radio-group
+            aria-label="Select an layout"
+            [ngModel]="layoutOption"
+            (ngModelChange)="layoutOptionChanged($event)">
         <mat-radio-button value="NORMAL">Normal</mat-radio-button>
         <mat-radio-button value="CURVED">Curved</mat-radio-button>
       </mat-radio-group>
@@ -109,11 +111,20 @@
       </div>
     </form>
   </div>
+
   <div>
     <canvas id="layout_chairs"></canvas>
   </div>
+
   <div style="margin-top: 1rem">
     <button mat-raised-button color="primary" (click)="create()">Create</button>
     <button style="margin-left: 1rem" mat-button color="primary" (click)="cancel()">Cancel</button>
+  </div>
+
+  <div *ngIf="curvedBlock">
+    {{curvedBlock.value}}
+  </div>
+  <div *ngIf="rectBlock">
+    {{rectBlock.value}}
   </div>
 </div>

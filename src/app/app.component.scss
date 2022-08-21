@@ -59,17 +59,22 @@ mat-drawer-container {
   }
 }
 
-.export-btns {
-  padding: 24px;
-
-  button {
-    width: 100%;
-    &:first-of-type {
-      margin-bottom: 24px;
-    }
-  }
+.layout-options-grid {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
 }
 
 mat-toolbar-row{
   justify-content: space-between
+}
+
+button {
+  margin:10px;
+}
+
+.example-full-width {
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

@@ -1,5 +1,9 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "5d42dc27-5788-49d1-a937-0be78f27e4a4"
+  },
+
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -147,4 +151,5 @@
     }
   },
   "defaultProject": "room-layout"
+
 }

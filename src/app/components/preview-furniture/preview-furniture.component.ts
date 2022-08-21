@@ -8,7 +8,7 @@ import { AppService } from '../../app.service';
 let RL_DEFAULT_CHAIR = null;
 
 @Component({
-  selector: 'app-preview-furniture',
+  selector: 'pointless-preview-furniture',
   templateUrl: './preview-furniture.component.html',
   styleUrls: ['./preview-furniture.component.scss']
 })
@@ -45,12 +45,11 @@ export class PreviewFurnitureComponent implements OnInit, AfterViewInit {
 
   handleObjectInsertion({ type, object }) {
     const group = createFurniture(type, object, RL_DEFAULT_CHAIR);
-
     group.left = RL_PREVIEW_WIDTH / 2;
     group.top = RL_PREVIEW_HEIGHT / 2;
     group.selectable = false;
     group.hoverCursor = 'pointer';
-
+    console.log('group add', group)
     this.canvas.add(group);
   }
 }

@@ -1,0 +1,34 @@
+{
+  "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+  "lib": {
+    "entryFile": "public_api.ts"
+  },
+  "allowedNonPeerDependencies": [
+    "@angular/animations",
+    "@angular/cdk",
+    "@angular/common",
+    "@angular/compiler",
+    "@angular/compiler",
+    "@angular/core",
+    "@angular/flex-layout",
+    "@angular/forms",
+    "@angular/localize",
+    "@angular/material",
+    "@angular/platform-browser",
+    "@angular/platform-browser-dynamic",
+    "@angular/router",
+    "@fortawesome/angular-fontawesome",
+    "@fortawesome/fontawesome-svg-core",
+    "@fortawesome/free-brands-svg-icons",
+    "@fortawesome/free-regular-svg-icons",
+    "@fortawesome/free-solid-svg-icons",
+    "canvas",
+    "core-js",
+    "fabric",
+    "file-saver",
+    "rxjs",
+    "tslib",
+    "uuid",
+    "zone.js"
+  ]
+}

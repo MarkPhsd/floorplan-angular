@@ -46,12 +46,24 @@ const FURNISHINGS = {
   ],
   'tables': [
     {
+      'title': '44" Round Folding',
+      'width': 44,
+      'height': 44,
+      'lrSpacing': 44,
+      'tbSpacing': 44,
+      'shape': 'circle',
+      'fill': "skyBlue",
+      'selectionBackgroundColor': "skyBlue",
+      'chairs': 4
+    },
+    {
       'title': '54" Round Folding',
       'width': 54,
       'height': 54,
       'lrSpacing': 54,
       'tbSpacing': 54,
       'shape': 'circle',
+      'fill': "skyBlue",
       'chairs': 6
     },
     {
@@ -61,6 +73,7 @@ const FURNISHINGS = {
       'lrSpacing': 60,
       'tbSpacing': 60,
       'shape': 'circle',
+      'fill': "skyBlue",
       'chairs': 8
     },
     {
@@ -70,6 +83,7 @@ const FURNISHINGS = {
       'lrSpacing': 72,
       'tbSpacing': 72,
       'shape': 'circle',
+      'fill': "skyBlue",
       'chairs': 8
     },
     {
@@ -79,6 +93,7 @@ const FURNISHINGS = {
       'lrSpacing': 24,
       'tbSpacing': 60,
       'shape': 'rect',
+      'fill': "skyBlue",
       'topChairs': 3,
       'bottomChairs': 3,
       'leftChairs': 0,
@@ -90,6 +105,7 @@ const FURNISHINGS = {
       'height': 30,
       'lrSpacing': 24,
       'tbSpacing': 60,
+      'fill': "skyBlue",
       'shape': 'rect',
       'topChairs': 4,
       'bottomChairs': 4,
@@ -102,6 +118,7 @@ const FURNISHINGS = {
       'height': 40,
       'lrSpacing': 60,
       'tbSpacing': 60,
+      'fill': "skyBlue",
       'shape': 'rect',
       'topChairs': 4,
       'bottomChairs': 3,
@@ -114,6 +131,7 @@ const FURNISHINGS = {
       'height': 18,
       'lrSpacing': 24,
       'tbSpacing': 36,
+      'fill': "skyBlue",
       'shape': 'rect',
       'topChairs': 0,
       'bottomChairs': 4,
@@ -126,6 +144,7 @@ const FURNISHINGS = {
       'height': 18,
       'lrSpacing': 24,
       'tbSpacing': 36,
+      'fill': "skyBlue",
       'shape': 'rect',
       'topChairs': 0,
       'bottomChairs': 3,
@@ -140,9 +159,13 @@ const FURNISHINGS = {
       'height': 20,
       'lrSpacing': 2,
       'tbSpacing': 12,
+      'borderColor': 'purple',
+      'strokeWidth' : '4',
+      'fill' : 'purple',
+      'stroke': 'purple',
       'parts': [
-        { 'type': 'rect', 'definition': { left: 0, top: 0, width: 18, height: 20 } },
-        { 'type': 'rect', 'definition': { left: 0, top: 18, width: 18, height: 2 } }
+        { 'stroke': 'purple','borderColor': 'purple', 'strokeWidth' : '4', 'fill' : 'purple', 'type':'rect',  'definition': { left: 0, top: 0, width: 18, height: 20 } },
+        { 'stroke': 'purple', 'borderColor': 'purple', 'strokeWidth' : '4', 'fill' : 'purple', 'type': 'rect', 'definition': { left: 0, top: 18, width: 18, height: 2 } }
       ]
     },
     {

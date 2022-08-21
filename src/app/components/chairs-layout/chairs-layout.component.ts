@@ -9,11 +9,11 @@ import { createShape, RL_FILL, RL_STROKE } from '../../helpers';
 const WIDTH = 1100, HEIGHT = 400;
 
 @Component({
-  selector: 'app-chairs-layout',
+  selector: 'pointless-chairs-layout',
   templateUrl: './chairs-layout.component.html',
   styleUrls: ['./chairs-layout.component.scss']
 })
-export class ChairsLayoutComponent implements OnInit {
+export  class  ChairsLayoutComponent implements OnInit {
 
   layout: fabric.Group;
   layoutOption = 'NORMAL';
@@ -66,7 +66,6 @@ export class ChairsLayoutComponent implements OnInit {
     this.layoutOption = value;
     this.changeLayout();
   }
-
 
   changeLayout() {
     const chrs = [];

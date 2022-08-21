@@ -46,6 +46,15 @@ const FURNISHINGS = {
   ],
   'tables': [
     {
+      'title': '48" Round Folding',
+      'width': 48,
+      'height': 8,
+      'lrSpacing': 8,
+      'tbSpacing': 8,
+      'shape': 'circle',
+      'chairs': 4
+    },
+    {
       'title': '54" Round Folding',
       'width': 54,
       'height': 54,
@@ -284,20 +293,24 @@ const FURNISHINGS = {
 
         // blue
         { 'type': 'path', 'path': 'M329.8,82.32L340.41,71.71', 'definition': { strokeWidth: 2, stroke: '#aaaaaa' } },  // circle starting line
-        { 'type': 'path', 'path': 'M480,0L480,480M480,0L240,240M299.4,180.6L299.4,299.4M278.19,193.33L286.67,201.81M273.94,138.18L341.82,206.06M312.13,159.39L320.61,167.87M320.61,150.91L329.09,159.39M329.1,142.42L337.58,150.9M337.58,133.94L346.06,142.42M346.07,125.45L354.55,133.93', 'definition': { stroke: 'blue', strokeWidth: 2 } },
+        { 'type': 'path', 'path': 'M480,0L480,480M480,0L240,240M299.4,180.6L299.4,299.4M278.19,193.33L286.67,201.81M273.94,138.18L341.82,206.06M312.13,159.39L320.61,167.87M320.61,150.91L329.09,159.39M329.1,142.42L337.58,150.9M337.58,133.94L346.06,142.42M346.07,125.45L354.55,133.93',
+        'definition': { stroke: 'blue', strokeWidth: 2 } },
 
         // green
         { 'type': 'path', 'path': 'M408.29,340.41L397.68,329.8', 'definition': { strokeWidth: 2, stroke: '#aaaaaa' } },  // circle starting line
-        { 'type': 'path', 'path': 'M0,480L480,480M240,240L480,480M180.6,299.4L299.4,299.4M278.19,286.67L286.67,278.19M273.94,341.82L341.82,273.94M312.13,320.61L320.61,312.13M320.61,329.09L329.09,320.61M329.1,337.58L337.58,329.1M337.58,346.06L346.06,337.58M346.07,354.55L354.55,346.07', 'definition': { stroke: 'green', strokeWidth: 2 } },
+        { 'type': 'path', 'path': 'M0,480L480,480M240,240L480,480M180.6,299.4L299.4,299.4M278.19,286.67L286.67,278.19M273.94,341.82L341.82,273.94M312.13,320.61L320.61,312.13M320.61,329.09L329.09,320.61M329.1,337.58L337.58,329.1M337.58,346.06L346.06,337.58M346.07,354.55L354.55,346.07',
+          'definition': { stroke: 'green', strokeWidth: 2 } },
 
         // yellow
         { 'type': 'path', 'path': 'M150.2,397.68L139.59,408.29', 'definition': { strokeWidth: 2, stroke: '#aaaaaa' } },  // circle starting line
-        { 'type': 'path', 'path': 'M0,480L0,0M0,480L240,240M180.6,299.4L180.6,180.6M201.81,286.67L193.33,278.19M206.06,341.82L138.18,273.94M167.87,320.61L159.39,312.13M159.39,329.09L150.91,320.61M150.9,337.58L142.42,329.1M142.42,346.06L133.94,337.58M133.93,354.55L125.45,346.07', 'definition': { stroke: 'yellow', strokeWidth: 2 } },
+        { 'type': 'path', 'path': 'M0,480L0,0M0,480L240,240M180.6,299.4L180.6,180.6M201.81,286.67L193.33,278.19M206.06,341.82L138.18,273.94M167.87,320.61L159.39,312.13M159.39,329.09L150.91,320.61M150.9,337.58L142.42,329.1M142.42,346.06L133.94,337.58M133.93,354.55L125.45,346.07',
+          'definition': { stroke: 'yellow', strokeWidth: 2 } },
 
         // draw red last because it's stronger and on top, and it'll capture corners this way
         // red
         { 'type': 'path', 'path': 'M82.32,150.2L71.71,139.59', 'definition': { strokeWidth: 2, stroke: '#aaaaaa' } },  // circle starting line
-        { 'type': 'path', 'path': 'M0,0L480,0M0,0L240,240M180.6,180.6L299.4,180.6M193.33,201.81L201.81,193.33M138.18,206.06L206.06,138.18M159.39,167.87L167.87,159.39M150.91,159.39L159.39,150.91M142.42,150.9L150.9,142.42M133.94,142.42L142.42,133.94M125.45,133.93L133.93,125.45', 'definition': { stroke: 'red', strokeWidth: 2 } }
+        { 'type': 'path', 'path': 'M0,0L480,0M0,0L240,240M180.6,180.6L299.4,180.6M193.33,201.81L201.81,193.33M138.18,206.06L206.06,138.18M159.39,167.87L167.87,159.39M150.91,159.39L159.39,150.91M142.42,150.9L150.9,142.42M133.94,142.42L142.42,133.94M125.45,133.93L133.93,125.45',
+          'definition': { stroke: 'red', strokeWidth: 2 } }
 
         // { "type": "line", "line": [ 0,0,100,0 ], "definition": { stroke: "#ffff00", strokeWidth: "2" } },
         // { "type": "line", "line": [ 0,0,100,100 ], "definition": { stroke: "#00ffff", strokeWidth: "2" } }

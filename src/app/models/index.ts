@@ -19,6 +19,7 @@ export interface Part {
     strokeWidth?: number;
     stroke?: string;
     fill?: string;
+    borderColor: string;
   };
   path?: string;
   line?: number[];

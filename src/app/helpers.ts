@@ -2,23 +2,30 @@ import { fabric } from 'fabric';
 const { Group, Rect, Line, Circle, Ellipse, Path, Polygon, Polyline, Triangle } = fabric;
 
 const
-  RL_FILL = '#FFF',
-  RL_STROKE = '#000',
+  RL_FILL = 'white',
+
+  RL_STROKE = 'green',
+  RL_STROKE_InUse = 'yello',
+  RL_STROKE_NoReady = 'red',
+
   RL_PREVIEW_WIDTH = 140,
   RL_PREVIEW_HEIGHT = 120,
-  RL_CHAIR_STROKE = '#999',
-  RL_CHAIR_FILL = '#FFF',
+
+  RL_CHAIR_STROKE = 'white',
+  RL_CHAIR_FILL = 'purple',
+
   RL_CHAIR_TUCK = 6,
   RL_VIEW_WIDTH = 120,
   RL_VIEW_HEIGHT = 56,
   RL_FOOT = 12,
   RL_AISLEGAP = 12 * 3,
+
   RL_ROOM_OUTER_SPACING = 48,
   RL_ROOM_INNER_SPACING = 4,
   RL_ROOM_STROKE = '#000',
   RL_CORNER_FILL = '#88f',
   RL_UNGROUPABLES = ['CHAIR', 'MISCELLANEOUS', 'DOOR'],
-  RL_CREDIT_TEXT = 'Created By https://github.com/ilhccc',
+  RL_CREDIT_TEXT = '',
   RL_CREDIT_TEXT_PARAMS = { fontSize: 12, fontFamily: 'Arial', fill: '#999', left: 12 };
 
 
@@ -83,9 +90,10 @@ const createBasicShape = (part: any, stroke: string = '#aaaaaa', fill: string = 
   return (fObj);
 };
 
-
 const createFurniture = (type: string, object, chair = {}) => {
   if (type === 'TABLE') {
+    console.log('chair', chair)
+    console.log('object', object)
     return createTable(object, chair);
   } else if (type === 'TEXT') {
     return createText(object);
@@ -114,6 +122,9 @@ const createShape = (object: any, stroke = RL_CHAIR_STROKE, fill = RL_CHAIR_FILL
 
 const createTable = (def: any, RL_DEFAULT_CHAIR: any, type: string = 'TABLE') => {
   // tables with chairs have the chairs full-height around the table
+  // create table name passing from def
+  // console.log('createTable def', def?.name)
+  // console.log('createTable def RL_DEFAULT_CHAIR', def?.name)
 
   const components = [];
   let index = 0;
@@ -155,15 +166,20 @@ const createTable = (def: any, RL_DEFAULT_CHAIR: any, type: string = 'TABLE') =>
       angle += angleIncrement;
     }
 
+    if (def.fill  === '') {
+      def.fill = RL_FILL
+      def.stroke = RL_STROKE
+    }
+
     const tableCircle = {
       left: origin_x,
       top: origin_y,
       radius: tableRadius,
-      fill: RL_FILL,
-      stroke: RL_STROKE,
+      fill: def.fill,
+      stroke: def.stroke,
       originX: 'center',
       originY: 'center',
-      name: 'DESK'
+      name: def?.name + ';orderid;itemName;'
     };
     components[index] = new fabric.Circle(tableCircle);
 
@@ -173,7 +189,7 @@ const createTable = (def: any, RL_DEFAULT_CHAIR: any, type: string = 'TABLE') =>
       height: def.height,
       fill: RL_FILL,
       stroke: RL_STROKE,
-      name: 'DESK'
+      name: def?.name + ';orderid;itemName;'
     };
 
     // calculate gap between chairs, with extra for gap to end of table
@@ -255,7 +271,12 @@ const createTable = (def: any, RL_DEFAULT_CHAIR: any, type: string = 'TABLE') =>
     // set origin for all groups to center
     originX: 'center',
     originY: 'center',
-    name: `${type}:${def.title}`
+    name: def?.name + ';orderid;itemName;',
+    borderColor: 'purple',
+    backgroundColor: 'purple',
+    stroke: 'purple',
+    strokeWidth: 10,
+    fill: 'purple'
   });
 
   return tableGroup;

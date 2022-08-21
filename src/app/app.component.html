@@ -1,12 +1,20 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <!-- <button mat-icon-button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button> -->
-    <h1>Room Layout</h1>
+    <h1>Layout</h1>
+    <button mat-raised-button (click)="toggleMode()">Toggle Mode</button>
+    <button mat-raised-button (click)="disableLayout()">Disable Edit</button>
+    <div class="layout-options-grid" *ngIf="layoutList">
+      <div *ngFor="let item of layoutList" >
+        <button mat-raised-button (click)="displayLayout(item)">{{item.name}}</button>
+      </div>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-drawer-container hasBackdrop="false">
-  <mat-drawer #drawer mode="side" opened>
+
+  <mat-drawer *ngIf="!userMode" #drawer mode="side" opened>
     <mat-accordion class="rl-object-options">
       <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -35,7 +43,7 @@
         <div class="preview-layout">
           <div class="preview-item" *ngFor="let door of furnishings.doors">
             <div (click)="insert(door, 'DOOR')">
-              <app-preview-furniture [type]="'DOOR'" [furniture]="door"></app-preview-furniture>
+              <pointless-preview-furniture [type]="'DOOR'" [furniture]="door"></pointless-preview-furniture>
               <div class="preview-title">{{door.title}}</div>
             </div>
           </div>
@@ -52,7 +60,10 @@
         <div class="preview-layout">
           <div class="preview-item" *ngFor="let window of furnishings.windows">
             <div (click)="insert(window, 'WINDOW')">
-              <app-preview-furniture [type]="'WINDOW'" [furniture]="window"></app-preview-furniture>
+                <pointless-preview-furniture
+                    [type]="'WINDOW'"
+                    [furniture]="window">
+                </pointless-preview-furniture>
               <div class="preview-title">{{window.title}}</div>
             </div>
           </div>
@@ -68,14 +79,21 @@
         <mat-divider></mat-divider>
         <mat-form-field>
           <mat-label>Default Chair</mat-label>
-          <mat-select [value]="defaultChairIndex" (valueChange)="defaultChairChanged($event)">
-            <mat-option *ngFor="let chair of furnishings.chairs; let i=index;" [value]="i">{{chair.title}}</mat-option>
+          <mat-select [value]="defaultChairIndex"
+                      (valueChange)="defaultChairChanged($event)">
+            <mat-option *ngFor="let chair of furnishings.chairs; let i=index;"
+                        [value]="i">
+                {{chair.title}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
         <div class="preview-layout">
           <div class="preview-item" *ngFor="let table of furnishings.tables">
             <div (click)="insert(table, 'TABLE')">
-              <app-preview-furniture [type]="'TABLE'" [furniture]="table"></app-preview-furniture>
+              <pointless-preview-furniture
+                  [type]="'TABLE'"
+                  [furniture]="table">
+              </pointless-preview-furniture>
               <div class="preview-title">{{table.title}}</div>
             </div>
           </div>
@@ -92,7 +110,10 @@
         <div class="preview-layout">
           <div class="preview-item" *ngFor="let chair of furnishings.chairs">
             <div (click)="insert(chair, 'CHAIR')">
-              <app-preview-furniture [type]="'CHAIR'" [furniture]="chair"></app-preview-furniture>
+              <pointless-preview-furniture
+                  [type]="'CHAIR'"
+                  [furniture]="chair">
+              </pointless-preview-furniture>
               <div class="preview-title">{{chair.title}}</div>
             </div>
           </div>
@@ -109,7 +130,10 @@
         <div class="preview-layout">
           <div class="preview-item" *ngFor="let m of furnishings.miscellaneous">
             <div (click)="insert(m, 'MISCELLANEOUS')">
-              <app-preview-furniture [type]="'MISCELLANEOUS'" [furniture]="m"></app-preview-furniture>
+              <pointless-preview-furniture
+                  [type]="'MISCELLANEOUS'"
+                  [furniture]="m">
+              </pointless-preview-furniture>
               <div class="preview-title">{{m.title}}</div>
             </div>
           </div>
@@ -123,12 +147,18 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-divider></mat-divider>
-        <form [formGroup]="textForm" class="new-text" (ngSubmit)="insertNewText()">
+        <form [formGroup]="textForm"
+              class="new-text"
+              (ngSubmit)="insertNewText()">
           <mat-form-field>
             <input matInput placeholder="Input text" formControlName="text">
           </mat-form-field>
           <mat-form-field>
-            <input matInput type="number" placeholder="Font Size" min="1" max="200" formControlName="font_size">
+            <input matInput type="number"
+                   placeholder="Font Size"
+                   min="1"
+                   max="200"
+                   formControlName="font_size">
           </mat-form-field>
           <div style="margin: 1rem 0">
             <mat-radio-group formControlName="direction">
@@ -150,19 +180,55 @@
         </mat-expansion-panel-header>
         <mat-divider></mat-divider>
         <div style="padding: 2rem">
-          <button mat-raised-button color="primary" style="width: 100%" (click)="layoutChairs()">Layout chairs</button>
+          <button mat-raised-button
+                  color="primary"
+                  style="width: 100%"
+                  (click)="layoutChairs()">
+            Layout chairs
+          </button>
         </div>
       </mat-expansion-panel>
 
-      <div class="export-btns">
-        <button mat-raised-button color="primary" (click)="download('PNG')">Download as Image</button>
-        <button mat-raised-button color="primary" (click)="download('SVG')">Download as SVG</button>
+      <div >
+        <button mat-raised-button color="primary" (click)="getCurrentFabricLayout()">Save Layout</button>
+        <button mat-raised-button color="primary" (click)="loadJSON()">Load Layout</button>
+        <button mat-raised-button color="primary" (click)="clearLayout()">Clear Layout</button>
+      </div>
+
+      <div class="example-full-width">
+        <mat-form-field  appearance="fill">
+          <mat-label>JSON Result</mat-label>
+          <textarea  cdkTextareaAutosize
+                     matInput
+                     [(ngModel)]="jsonValue"
+                     placeholder="JSON Result"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="outline">
+        <mat-label >OrderID</mat-label>
+        <input matInput
+              type="text"
+              [(ngModel)]="app.orderID"
+              class="form-control" >
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-raised-button color="primary" (click)="app.setOrder('131390')">Set Order #</button>
+      </div>
+      <div>
+        <button mat-raised-button color="primary" (click)="app.setObjectFillColor('red')">Set Red</button>
+      </div>
+      <div>
+        <button mat-raised-button color="primary" (click)="app.setObjectFillColor('green')">Set  Green</button>
       </div>
     </mat-accordion>
   </mat-drawer>
 
   <mat-drawer-content>
-    <mat-toolbar>
+
+    <mat-toolbar  *ngIf="!userMode" >
       <mat-toolbar-row>
         <div *ngIf="init">
           <ng-container *ngIf="!app.roomEdit">
@@ -178,6 +244,7 @@
               (click)="app.clone()">
               <fa-icon [icon]="faClone"></fa-icon>
             </button>
+            <!--  -->
             <button mat-icon-button matTooltip="Delete (Delete)" [disabled]="app.selections.length === 0"
               (click)="app.delete()">
               <fa-icon [icon]="faTrash"></fa-icon>
@@ -199,8 +266,15 @@
               <fa-icon [icon]="faObjectUngroup"></fa-icon>
             </button>
             <button mat-button matTooltip="Arrange" [matMenuTriggerFor]="arrange">Arrange</button>
-            <button mat-raised-button matTooltip="Switch Edition Mode" color="primary" (click)="app.editRoom()">Edit
+            <button mat-raised-button matTooltip="Switch Edition Mode" color="primary"
+                    (click)="app.editRoom()">Edit
               Room</button>
+
+            <button mat-raised-button matTooltip="Switch Edition Mode" color="primary"
+                   (click)="app.setObjectFillColor('red')">
+              Set Red
+            </button>
+
           </ng-container>
           <ng-container *ngIf="app.roomEdit">
             <button mat-icon-button matTooltip="Undo (Ctrl + Z)" (click)="app.undo()"
@@ -215,6 +289,7 @@
               (click)="app.endEditRoom()">End Room Edition</button>
           </ng-container>
         </div>
+
         <mat-menu #arrange="matMenu">
           <ng-template matMenuContent>
             <button mat-menu-item (click)="app.arrange('LEFT')" [disabled]="app.selections.length < 2">Arrange Left</button>
@@ -230,11 +305,16 @@
         <app-zoom (zoomChange)="onZoom($event)" [zoom]="app.zoom"></app-zoom>
       </mat-toolbar-row>
     </mat-toolbar>
-    <app-view></app-view>
-    <table class="status-bar">
+
+    <pointless-room-layout-view
+        [userMode]="userMode">
+    </pointless-room-layout-view>
+
+    <table  *ngIf="!userMode" class="status-bar">
       <tbody>
         <tr class="status-bar-item">
           <td>Type</td>
+          <td>ID</td>
           <td>Name</td>
           <td>Left</td>
           <td>Top</td>
@@ -244,8 +324,9 @@
           <td></td>
         </tr>
         <tr class="status-bar-item" *ngFor="let selected of app.selections">
-          <td><strong *ngIf="selected.name">{{selected.name.split(':')[0] | titlecase}}</strong></td>
-          <td><strong *ngIf="selected.name">{{selected.name.split(':')[1]}}</strong></td>
+          <td><strong *ngIf="selected.name">{{selected.name.split(';')[0] | titlecase}}</strong></td>
+          <td><strong *ngIf="selected.name">{{selected.name.split(';')[1]}}</strong></td>
+          <td><strong *ngIf="selected.name">{{selected.name.split(';')[2]}}</strong></td>
           <td><strong>{{selected.left}}</strong></td>
           <td><strong>{{selected.top}}</strong></td>
           <td><strong>{{selected.angle}}'</strong></td>
@@ -259,5 +340,6 @@
         </tr>
       </tbody>
     </table>
+
   </mat-drawer-content>
 </mat-drawer-container>
