@@ -1,14 +1,15 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <!-- <button mat-icon-button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button> -->
-    <h1>Layout</h1>
-    <button mat-raised-button (click)="toggleMode()">Toggle Mode</button>
-    <button mat-raised-button (click)="disableLayout()">Disable Edit</button>
-    <div class="layout-options-grid" *ngIf="layoutList">
-      <div *ngFor="let item of layoutList" >
+    <!-- <h1>Layout</h1> -->
+    <div class="layout-options-grid" *ngIf="jsonTemplateLists; else jsonTemplates">
+      Templates
+      <div *ngFor="let item of jsonTemplateLists" >
         <button mat-raised-button (click)="displayLayout(item)">{{item.name}}</button>
       </div>
     </div>
+    <button mat-raised-button (click)="toggleMode()">Toggle Mode</button>
+    <button mat-raised-button (click)="disableLayout()">Disable Edit</button>
+    <ng-template #jsonTemplates>...loading</ng-template>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -307,6 +308,7 @@
     </mat-toolbar>
 
     <pointless-room-layout-view
+        (outPutSelectedItem)="selectItem($event)"
         [userMode]="userMode">
     </pointless-room-layout-view>
 

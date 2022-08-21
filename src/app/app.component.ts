@@ -18,12 +18,13 @@ import {
 import { FURNISHINGS } from './models/furnishings';
 import { AppService } from './app.service';
 import { ChairsLayoutComponent } from './components/chairs-layout/chairs-layout.component';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { delay, repeatWhen  } from 'rxjs/operators';
 import * as uuid from 'uuid';
 
 library.add(faReply, faShare, faClone, faTrash, faUndo, faRedo, faObjectGroup, faObjectUngroup, faMinus, faPlus);
 
+// https://stackoverflow.com/questions/38974896/call-child-component-method-from-parent-class-angular
 @Component({
   selector: 'pointless-room-layout-designer',
   templateUrl: './app.component.html',
@@ -31,12 +32,21 @@ library.add(faReply, faShare, faClone, faTrash, faUndo, faRedo, faObjectGroup, f
 })
 export class RoomLayoutDesignerComponent implements OnInit {
 
-  //table list
-  @Input() userMode: boolean = false;
-  @Input() layoutList: any[];
+  //table list //  _userMode: Subscription;
+  @Input() _userMode: Subject<boolean>;
+  // @Input() _userMode: Subject<boolean>;
 
-  currentLayout : any;
+  @Input() userMode: boolean = false;
+  @Input() _jsonTemplateLists: Subject<string[]>;
+  jsonTemplateLists: any;
+  @Input() jsonTemplate: string;
+  @Input() orderID: string;
+
+  @Output() outPutOrderSelected = new EventEmitter(); // {uuid: string, orderID: string, name: string}
+  @Output() outPutTemplate = new EventEmitter();// {id: number, name: string, jsonTEmplate}
   @Output() outPutLayoutTable = new EventEmitter();
+
+  // currentLayout : any;
 
   title = 'room-layout';
   _jsonValue : Subscription;
@@ -71,8 +81,48 @@ export class RoomLayoutDesignerComponent implements OnInit {
       this.app.defaultChair.next(defaultChair);
       this.init = true;
     }, 100);
+
     this.initTextForm();
-    this.load();
+    this.intJSONTemplateSubscriber();
+    this.initJSONTemplateList();
+  }
+
+  initJSONTemplateList() {
+    this._jsonTemplateLists.subscribe(data => {
+      this.jsonTemplateLists = data;
+    })
+  }
+
+
+  intJSONTemplateSubscriber() {
+    this._jsonValue = this.app.jsonValue.subscribe(data => {
+      if (this.isJsonStructure(data)) {
+        this.jsonValue = data;
+        return;
+      }
+      this.jsonValue = JSON.stringify(data);
+      return;
+    })
+  }
+
+  initUserModeSubscriber() {
+    this._userMode.subscribe(v => {
+      this.toggleMode();
+    });
+  }
+
+  initTaleLayoutList() {
+
+  }
+
+  selectItem(item) {
+    this.outPutLayoutTable.emit(item)
+  }
+  selectOrder(item) {
+    this.outPutOrderSelected.emit(item)
+  }
+  selectTableLayout(item) {
+    this.outPutLayoutTable.emit(item)
   }
 
   insert(object: any, type: string) {
@@ -118,17 +168,7 @@ export class RoomLayoutDesignerComponent implements OnInit {
     this.app.setOrder('131390')
   }
 
-  load() {
-    this._jsonValue = this.app.jsonValue.subscribe(data => {
-      // console.log(data)
-      if (this.isJsonStructure(data)) {
-        this.jsonValue = data;
-        return;
-      }
-      this.jsonValue = JSON.stringify(data);
-      return;
-    })
-  }
+
 
  loadJSON() {
     try {
@@ -175,18 +215,18 @@ export class RoomLayoutDesignerComponent implements OnInit {
     if (item) {
       if (item.id) {
         this.app.disableSeletion();
-        this.currentLayout = item;
+        // this.currentLayout = item;
       }
     }
   }
 
-  refreshCurrentList() {
-    //use the same feature as the current order refresh.
-    if (!this.userMode) { return }
-    if (this.currentLayout) {
+  // refreshCurrentList() {
+  //   //use the same feature as the current order refresh.
+  //   if (!this.userMode) { return }
+  //   if (this.currentLayout) {
 
-    }
-  }
+  //   }
+  // }
 
   refreshObservable(item$: Observable<any>) {
     if (!this.userMode) { return }

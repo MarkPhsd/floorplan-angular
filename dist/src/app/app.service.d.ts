@@ -42,6 +42,9 @@ export declare class AppService {
     arrange(side: any): void;
     zoomIn(): void;
     zoomOut(): void;
+    alterObjectColor(name: string, color: string, obj: any, view: any): any;
+    setObjectColor(name: string, color: string, obj: any, view: any): any;
+    alterColor(color: any, obj: any): any;
     static ɵfac: i0.ɵɵFactoryDeclaration<AppService, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<AppService>;
 }

@@ -9,7 +9,6 @@ import { PreviewFurnitureComponent } from './components/preview-furniture/previe
 import { ChairsLayoutComponent } from './components/chairs-layout/chairs-layout.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 // import { ViewJSONServiceService } from './view-jsonservice.service';
-
 @NgModule({
   declarations: [
     RoomLayoutDesignerComponent,
@@ -32,7 +31,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ChairsLayoutComponent
   ],
   // providers: [],
-  // bootstrap: [RoomLayoutDesignerComponent],
-  // entryComponents: [RoomLayoutDesignerComponent,ChairsLayoutComponent]
+  bootstrap: [RoomLayoutDesignerComponent],
+  entryComponents: [RoomLayoutDesignerComponent,ChairsLayoutComponent]
 })
-export class AppModule { }
+export class PointlessRoomLayoutModule { }

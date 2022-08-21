@@ -2,15 +2,20 @@ import { EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AppService } from './app.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import * as i0 from "@angular/core";
 export declare class RoomLayoutDesignerComponent implements OnInit {
     app: AppService;
     private fb;
     private dialog;
+    _userMode: Subject<boolean>;
     userMode: boolean;
-    layoutList: any[];
-    currentLayout: any;
+    _jsonTemplateLists: Subject<string[]>;
+    jsonTemplateLists: any;
+    jsonTemplate: string;
+    orderID: string;
+    outPutOrderSelected: EventEmitter<any>;
+    outPutTemplate: EventEmitter<any>;
     outPutLayoutTable: EventEmitter<any>;
     title: string;
     _jsonValue: Subscription;
@@ -345,6 +350,13 @@ export declare class RoomLayoutDesignerComponent implements OnInit {
     faMinus: import("@fortawesome/fontawesome-common-types").IconDefinition;
     constructor(app: AppService, fb: FormBuilder, dialog: MatDialog);
     ngOnInit(): void;
+    initJSONTemplateList(): void;
+    intJSONTemplateSubscriber(): void;
+    initUserModeSubscriber(): void;
+    initTaleLayoutList(): void;
+    selectItem(item: any): void;
+    selectOrder(item: any): void;
+    selectTableLayout(item: any): void;
     insert(object: any, type: string): void;
     defaultChairChanged(index: number): void;
     initTextForm(): void;
@@ -352,7 +364,6 @@ export declare class RoomLayoutDesignerComponent implements OnInit {
     layoutChairs(): void;
     getCurrentFabricLayout(): void;
     setOrderID(): void;
-    load(): void;
     loadJSON(): void;
     clearLayout(): void;
     isJsonStructure(str: any): boolean;
@@ -360,8 +371,7 @@ export declare class RoomLayoutDesignerComponent implements OnInit {
     toggleMode(): void;
     disableLayout(): void;
     displayLayout(item: any): void;
-    refreshCurrentList(): void;
     refreshObservable(item$: Observable<any>): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<RoomLayoutDesignerComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<RoomLayoutDesignerComponent, "pointless-room-layout-designer", never, { "userMode": "userMode"; "layoutList": "layoutList"; }, { "outPutLayoutTable": "outPutLayoutTable"; }, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<RoomLayoutDesignerComponent, "pointless-room-layout-designer", never, { "_userMode": "_userMode"; "userMode": "userMode"; "_jsonTemplateLists": "_jsonTemplateLists"; "jsonTemplate": "jsonTemplate"; "orderID": "orderID"; }, { "outPutOrderSelected": "outPutOrderSelected"; "outPutTemplate": "outPutTemplate"; "outPutLayoutTable": "outPutLayoutTable"; }, never, never>;
 }

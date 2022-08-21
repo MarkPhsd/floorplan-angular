@@ -6,7 +6,7 @@ export declare class ViewComponent implements OnInit, AfterViewInit {
     app: AppService;
     selectedObject: any;
     userMode: boolean;
-    outPutTable: EventEmitter<any>;
+    outPutSelectedItem: EventEmitter<any>;
     view: fabric.Canvas;
     room: fabric.Group;
     roomLayer: fabric.Group | fabric.Rect;
@@ -112,8 +112,6 @@ export declare class ViewComponent implements OnInit, AfterViewInit {
     loadJSON(): void;
     isJsonStructure(str: any): boolean;
     alterObjectColor(name: string, color: string, obj: any, view: any): any;
-    setObjectColor(name: string, color: string, obj: any, view: any): any;
-    alterColor(color: any, obj: any): any;
     static ɵfac: i0.ɵɵFactoryDeclaration<ViewComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ViewComponent, "pointless-room-layout-view", never, { "userMode": "userMode"; }, { "outPutTable": "outPutTable"; }, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ViewComponent, "pointless-room-layout-view", never, { "userMode": "userMode"; }, { "outPutSelectedItem": "outPutSelectedItem"; }, never, never>;
 }

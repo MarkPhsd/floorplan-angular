@@ -45,8 +45,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
   selectedObject: any;
 
-  @Input() userMode: boolean;
-  @Output() outPutTable = new EventEmitter();
+  @Input()  userMode: boolean;
+  @Output() outPutSelectedItem = new EventEmitter();
 
   view: fabric.Canvas;
   room: fabric.Group;
@@ -385,7 +385,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
     this.view.on('mouse:down:before', (e: fabric.IEvent) => {
       const obj = e.target;
       this.selectedObject = obj;
-      // console.log(obj)
+      this.outPutSelectedItem.emit(obj)
+
       if (this.app.roomEdit && obj && obj?.name.indexOf('WALL') > -1 && obj instanceof Line) {
         let { v1, v2, v1Id, v2Id } = cornersOfWall(obj);
         const v0Id = (v1Id === 0) ? this.corners.length - 1 : v1Id - 1;
