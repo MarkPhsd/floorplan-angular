@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, UntypedFormArray } from '@angular/forms';
 import { fabric } from 'fabric';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -17,11 +17,11 @@ export  class  ChairsLayoutComponent implements OnInit {
 
   layout: fabric.Group;
   layoutOption = 'NORMAL';
-  rectBlock: FormGroup;
-  curvedBlock: FormGroup;
+  rectBlock: UntypedFormGroup;
+  curvedBlock: UntypedFormGroup;
   view: fabric.Canvas;
   chairs = [];
-  sps: FormArray; // Spacing between sections
+  sps: UntypedFormArray; // Spacing between sections
   zoom = 100;
 
   constructor(private dialogRef: MatDialogRef<ChairsLayoutComponent>) { }
@@ -29,14 +29,14 @@ export  class  ChairsLayoutComponent implements OnInit {
   ngOnInit() {
     this.chairs = FURNISHINGS.chairs;
 
-    this.rectBlock = new FormGroup({
-      chair: new FormControl(0),
-      rows: new FormControl(1),
-      sections: new FormControl(1),
-      chairs: new FormControl(12),
-      spacing_chair: new FormControl(0),
-      spacing_row: new FormControl(22),
-      spacing_sections: new FormArray([1, 2, 3, 4].map(() => new FormControl(5)))
+    this.rectBlock = new UntypedFormGroup({
+      chair: new UntypedFormControl(0),
+      rows: new UntypedFormControl(1),
+      sections: new UntypedFormControl(1),
+      chairs: new UntypedFormControl(12),
+      spacing_chair: new UntypedFormControl(0),
+      spacing_row: new UntypedFormControl(22),
+      spacing_sections: new UntypedFormArray([1, 2, 3, 4].map(() => new UntypedFormControl(5)))
     });
 
     const array = [];
@@ -44,13 +44,13 @@ export  class  ChairsLayoutComponent implements OnInit {
       array.push(i);
     }
 
-    this.curvedBlock = new FormGroup({
-      chair: new FormControl(0),
-      radius: new FormControl(200),
-      angle: new FormControl(180),
-      rows: new FormControl(1),
-      spacing_row: new FormControl(40),
-      chairs: new FormArray(new Array(10).fill(new FormControl(10))),
+    this.curvedBlock = new UntypedFormGroup({
+      chair: new UntypedFormControl(0),
+      radius: new UntypedFormControl(200),
+      angle: new UntypedFormControl(180),
+      rows: new UntypedFormControl(1),
+      spacing_row: new UntypedFormControl(40),
+      chairs: new UntypedFormArray(new Array(10).fill(new UntypedFormControl(10))),
     });
 
     console.log(this.curvedBlock);
@@ -135,7 +135,7 @@ export  class  ChairsLayoutComponent implements OnInit {
   }
 
   get spacing_sections() {
-    const c = this.rectBlock.get('spacing_sections') as FormArray;
+    const c = this.rectBlock.get('spacing_sections') as UntypedFormArray;
     return c.controls;
   }
 
@@ -144,7 +144,7 @@ export  class  ChairsLayoutComponent implements OnInit {
   }
 
   get curved_chairs() {
-    const c = this.curvedBlock.get('chairs') as FormArray;
+    const c = this.curvedBlock.get('chairs') as UntypedFormArray;
     return c.controls;
   }
 

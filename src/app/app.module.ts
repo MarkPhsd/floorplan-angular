@@ -10,28 +10,27 @@ import { ChairsLayoutComponent } from './components/chairs-layout/chairs-layout.
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 // import { ViewJSONServiceService } from './view-jsonservice.service';
 @NgModule({
-  declarations: [
-    RoomLayoutDesignerComponent,
-    ViewComponent,
-    PreviewFurnitureComponent,
-    ChairsLayoutComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    FontAwesomeModule
-  ],
-  exports: [
-    RoomLayoutDesignerComponent,
-    ViewComponent,
-    PreviewFurnitureComponent,
-    ChairsLayoutComponent
-  ],
-  // providers: [],
-  bootstrap: [RoomLayoutDesignerComponent],
-  entryComponents: [RoomLayoutDesignerComponent,ChairsLayoutComponent]
+    declarations: [
+        RoomLayoutDesignerComponent,
+        ViewComponent,
+        PreviewFurnitureComponent,
+        ChairsLayoutComponent
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule,
+        FontAwesomeModule
+    ],
+    exports: [
+        RoomLayoutDesignerComponent,
+        ViewComponent,
+        PreviewFurnitureComponent,
+        ChairsLayoutComponent
+    ],
+    // providers: [],
+    bootstrap: [RoomLayoutDesignerComponent]
 })
 export class PointlessRoomLayoutModule { }

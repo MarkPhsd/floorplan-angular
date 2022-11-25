@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup,  FormBuilder } from '@angular/forms';
+import { UntypedFormGroup,  UntypedFormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -78,7 +78,7 @@ export class RoomLayoutDesignerComponent implements OnInit, OnDestroy {
   init = false;
   furnishings = FURNISHINGS;
   defaultChairIndex = 0;
-  textForm: FormGroup;
+  textForm: UntypedFormGroup;
   previewItem = null;
   previewType = null;
 
@@ -95,7 +95,7 @@ export class RoomLayoutDesignerComponent implements OnInit, OnDestroy {
   faMinus = faMinus;
 
   constructor(public app: AppService,
-              private fb: FormBuilder,
+              private fb: UntypedFormBuilder,
               private dialog: MatDialog) { }
 
   ngOnInit() {
