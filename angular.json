@@ -1,17 +1,13 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "cli": {
-    "analytics": "5d42dc27-5788-49d1-a937-0be78f27e4a4"
-  },
-
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "room-layout": {
+      "projectType": "application",
       "root": "",
       "sourceRoot": "src",
-      "projectType": "application",
-      "prefix": "app",
+      "prefix": "pointless",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
@@ -36,9 +32,9 @@
             "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
+            "buildOptimizer": true,
             "sourceMap": true,
-            "optimization": false,
+            "optimization": true,
             "namedChunks": true
           },
           "configurations": {
@@ -49,14 +45,6 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -150,6 +138,8 @@
       }
     }
   },
-  "defaultProject": "room-layout"
-
+  "defaultProject": "room-layout",
+  "cli": {
+    "analytics": false
+  }
 }

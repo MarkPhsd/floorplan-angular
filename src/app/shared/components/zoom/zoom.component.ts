@@ -27,7 +27,7 @@ export class ZoomComponent implements OnInit {
     if (this.zoom >= 150) {
       return;
     }
-    this.zoom += 10;
+    this.zoom += 5;
     this.zoomChange.emit(this.zoom);
   }
 
@@ -35,7 +35,7 @@ export class ZoomComponent implements OnInit {
     if (this.zoom <= 20) {
       return;
     }
-    this.zoom -= 10;
+    this.zoom -= 5;
     this.zoomChange.emit(this.zoom);
   }
 

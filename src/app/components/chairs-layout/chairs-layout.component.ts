@@ -53,6 +53,8 @@ export  class  ChairsLayoutComponent implements OnInit {
       chairs: new FormArray(new Array(10).fill(new FormControl(10))),
     });
 
+    console.log(this.curvedBlock);
+
     this.view = new fabric.Canvas('layout_chairs');
     this.view.setWidth(WIDTH);
     this.view.setHeight(HEIGHT);

@@ -1,7 +1,14 @@
 import { Subject } from 'rxjs';
 import * as i0 from "@angular/core";
+export interface uuidList {
+    uuID: string;
+    color: string;
+}
 export declare class AppService {
+    clearNextSelectedTable: boolean;
     orderID: string;
+    tableName: string;
+    tableStatus: string;
     roomEdit: boolean;
     userMode: boolean;
     states: any[];
@@ -12,7 +19,10 @@ export declare class AppService {
     selections: any[];
     copied: any;
     ungroupable: boolean;
+    currenObject: any;
+    selectededObject: Subject<any>;
     setSelectedObjectColor: Subject<any>;
+    selectedBackGroundImage: Subject<any>;
     performOperation: Subject<any>;
     insertObject: Subject<any>;
     defaultChair: Subject<any>;
@@ -23,15 +33,17 @@ export declare class AppService {
     constructor();
     editRoom(): void;
     endEditRoom(): void;
+    updateCurrentObjet(): void;
     undo(): void;
     redo(): void;
     clone(): void;
     copy(doClone?: boolean): void;
     setObjectFillColor(color: string): void;
     paste(): void;
-    setOrder(orderID: any): void;
+    setOrder(item: any): void;
+    setTable(tableName: any): void;
     delete(): void;
-    disableSeletion(): void;
+    disableSelection(): void;
     loadJson(value: string): void;
     clearLayout(): void;
     rotateAntiClockWise(): void;
@@ -42,9 +54,6 @@ export declare class AppService {
     arrange(side: any): void;
     zoomIn(): void;
     zoomOut(): void;
-    alterObjectColor(name: string, color: string, obj: any, view: any): any;
-    setObjectColor(name: string, color: string, obj: any, view: any): any;
-    alterColor(color: any, obj: any): any;
     static ɵfac: i0.ɵɵFactoryDeclaration<AppService, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<AppService>;
 }

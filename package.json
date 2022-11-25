@@ -1,6 +1,6 @@
 {
   "name": "pointless-room-layout",
-  "version": "0.1.7",
+  "version": "0.12.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4500",

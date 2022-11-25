@@ -4,6 +4,7 @@ import { fabric } from 'fabric';
 import { saveAs } from 'file-saver';
 import { AppService } from '../../app.service';
 import * as _ from '../../helpers';
+import { faListSquares } from '@fortawesome/free-solid-svg-icons';
 // import { json } from 'stream/consumers';
 // import { ViewJSONServiceService } from 'src/app/view-jsonservice.service';
 
@@ -62,9 +63,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
   DEFAULT_CHAIR = null;
   REMOVE_DW = false;
 
-  constructor(
-    // public viewJSONServiceService: ViewJSONServiceService,
-    public app: AppService) { }
+  constructor( public app: AppService ) { }
 
   maincontainerClass = 'main-container'
 
@@ -72,30 +71,45 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
     this.loadJSON();
 
-    this.app.setSelectedObjectColor.subscribe(data => {
-      if (data) {
-        this.setSelectedObjectColor(data)
-      }
-    })
+    try {
+      this.app.setSelectedObjectColor.subscribe(data => {
+         this.alterObjectColor(data.uuid, data.color);
+         console.log('alter object color')
+      })
+      this.view.renderAll();
+    } catch (error) {
+    }
 
-    this.app.roomEdition.subscribe(doEdit => {
-      this.corners.forEach(c => this.setCornerStyle(c));
-      this.drawRoom();
-      if (doEdit) { this.editRoom(); } else { this.cancelRoomEdition(); }
-    });
+    try {
+      this.app.roomEdition.subscribe(doEdit => {
+        this.corners.forEach(c => this.setCornerStyle(c));
+        this.drawRoom();
+        if (doEdit) {
+          this.editRoom();
+        } else {
+          this.cancelRoomEdition();
+        }
+      });
+    } catch (error) {
+    }
 
-    this.app.insertObject.subscribe(res => {
-      this.handleObjectInsertion(res);
-      this.saveState();
-    });
+    try {
+        this.app.insertObject.subscribe(res => {
+          this.handleObjectInsertion(res);
+          this.saveState();
+        });
+    } catch (error) {
+    }
 
     this.app.defaultChair.subscribe(res => this.DEFAULT_CHAIR = res);
 
-    this.app.setSelectedObjectColor.subscribe(data => {
-      if (data) {
-        this.setSelectedObjectColor(data)
-      }
-    })
+    try {
+      this.app.selectedBackGroundImage.subscribe(data => {
+        this.setBackgroundImage(data)
+      })
+    } catch (error) {
+    }
+
 
     this.app.performOperation.subscribe(operation => {
       switch (operation) {
@@ -127,8 +141,15 @@ export class ViewComponent implements OnInit, AfterViewInit {
         case 'ROTATE_ANTI':
           this.rotate(false);
           break;
-
+        case 'setTableName':
+          this.setTableName(this.app.tableName);
+          break
         case 'setOrderID':
+          if (this.app.clearNextSelectedTable) {
+            this.setObjectOrderID('');
+            this.app.clearNextSelectedTable = false;
+            return
+          }
           this.setObjectOrderID(this.app.orderID);
           break
         case 'clearLayout':
@@ -146,28 +167,35 @@ export class ViewComponent implements OnInit, AfterViewInit {
         case 'VERTICAL':
           this.placeInCenter(operation);
           break;
-
         case 'ROOM_OPERATION':
-          this.drawRoom();
+          // this.drawRoom();
           break;
-
         case 'PNG':
-        case 'SVG':
-          this.saveAs(operation);
           break;
         case 'loadjson':
           this.loadJSON();
           break;
+        case 'save':
+          this.saveState();
+          break;
         case 'json':
-          this.saveAs(operation);
+          this.saveState();
+          break;
+        case 'saveFullJson':
+          this.app.jsonValue.next( JSON.stringify(this.view.toJSON(['name'])) )
           break;
         case 'ZOOM':
           this.setZoom();
           break;
-
-        case 'disableSeletion':
-          this.disableSeletion();
+        case 'InitLayout':
+          this.initLayout();
           break;
+        case 'disableSelection':
+          this.toggleSelection(false);
+          break;
+        case 'disableSelection':
+            this.toggleSelection(true);
+            break;
         case 'LEFT':
         case 'CENTER':
         case 'RIGHT':
@@ -178,6 +206,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
           break;
       }
     });
+
   }
 
   ngAfterViewInit() {
@@ -186,6 +215,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
   }
 
   initLayout() {
+    this.app.saveState.next(JSON.stringify(null));
     this.setCanvasView();
     /** Add room */
     this.setRoom(this.ROOM_SIZE);
@@ -244,85 +274,153 @@ export class ViewComponent implements OnInit, AfterViewInit {
     }
 
     const obj = this.view.getActiveObject();
-    const type = obj.name ? obj.name.split(':')[0] : '';
 
-    if (RL_UNGROUPABLES.indexOf(type) > -1) {
-      this.app.ungroupable = false;
-    } else {
-      this.app.ungroupable = true;
+    try {
+      const type = obj.name ? obj.name.split(':')[0] : '';
+      if (RL_UNGROUPABLES.indexOf(type) > -1) {
+        this.app.ungroupable = false;
+      } else {
+        this.app.ungroupable = true;
+      }
+    } catch (error) {
+
     }
   }
 
   setObjectSettings(object , key,  color) {
     fabric.Group.prototype.selectionBackgroundColor = 'rgba(255,100,171,0.25)';
-    fabric.Group.prototype.backgroundColor = 'rgba(255,100,171,0.25)'
+    fabric.Group.prototype.backgroundColor = 'rgba(255,100,171,0.25)';
     fabric.Group.prototype.fill = 'rgba(255,100,171,0.25)';
-    fabric.Group.prototype.strokeWidth = 3
+    fabric.Group.prototype.strokeWidth = 3;
   }
 
   onSelected() {
+    if (!this.view) {
+      console.log('view is undefined')
+      return
+    }
+
     const active = this.view.getActiveObject();
+
+    if (!this.view || !active) {
+      console.log('active is undefined');
+      return
+    }
     // this.setObjectSettings(active, 'fill', 'red')
     // // active._renderFill('purple', () => { });
     // return;
 
-    active.lockScalingX = true, active.lockScalingY = true;
-    if (!active.name) {
-      active.name = 'GROUP';
+    try {
+      active.lockScalingX = true, active.lockScalingY = true;
+      if (!active.name) {
+        active.name = 'GROUP';
+      }
+    } catch (error) {
+
     }
 
     this.app.selections = this.view.getActiveObjects();
     this.setGroupableState();
   }
 
-
-  setSelectedObjectColor(color: string) {
-    // console.log('item.', color)
-    const item = this.view.getActiveObject();
+  setSelectedObjectColor(item, color: string, saveState: boolean) {
+    // const item = this.view.getActiveObject();
     if (!item) { return }
-
-    // console.log('item.', item.name)
     if (item.name) {
-      // const json =  this.viewJSONServiceService.alterObjectColor(item.name, color, item, this.view)
-      // const newItem = `${uid};${orderID};${name}`;
-      // console.log('New Item', newItem)
-      // this.selectedObject.name = newItem;
-
-      const json = this.alterObjectColor(item.name, color, item, this.view);
-
+      const uid  = item.name.split(';')[0];
+      // const json = this.alterObjectColor(item.name, color);
       this.drawRoom();
       this.saveState();
-
-      // console.log(json)
-      // let object
-      // if (this.isJsonStructure(json)) {
-      //   object = json
-      // } else {
-      //   object = JSON.parse(json)
-      // }
-
-      this.view.loadFromJSON(json, function() {
-        // this.view.renderAll();
-      });
-
+      // this.view.loadFromJSON(json, function() { });
     }
     return;
   }
 
-  setObjectOrderID(orderID: string) {
+  setBackgroundImage(image: string) {
+    if (!image || image === '') {
+      return
+    }
+    this.view.setBackgroundImage(image, this.view.renderAll.bind(this.view), {
+    });
+  }
+
+  setObjectOrderID(orderID) {
+    if (this.selectedObject) {
+    const item = this.selectedObject?.name
+    if (item) {
+        const uid = item.split(';')[0];
+        const name = item.split(';')[2];
+        let status = item.split(';')[3];
+        status = this.getStatusDescription(orderID);
+        const newItem = `${uid};${orderID};${name};${status}`;
+
+        // if (!orderID) {
+        //   this.alterObjectColor(uid, 'red')
+        // }
+        // if (!orderID)  {
+        //   this.alterObjectColor(uid, 'green')
+        // }
+
+        this.selectedObject.name = newItem;
+        // this.saveState();
+      }
+    }
+  }
+
+  getStatusDescription(orderID) {
+    let status
+    if (orderID) {
+      if (status) {
+        status = 'active'
+      }
+    }
+    if (!orderID) {
+      if (!status) {
+        status = 'inactive'
+      }
+    }
+    return status
+  }
+
+  setTableName(name: string) {
+    if (this.selectedObject) {
+
+      let order;
+      let status;
+      let uuid;
+      const item  = this.selectedObject?.name;
+      if (item && (item.split(';').length>0 || item.split(';').length == 0) ){
+        uuid   = item.split(';')[0];
+      }
+      // if (item && (item.split(';').length>1 || item.split(';').length == 1) ){
+      //    uid   = item.split(';')[1];
+      // }
+      // if (item && (item.split(';').length>2 || item.split(';').length == 2) ){
+      //    name   = item.split(';')[2];
+      // }
+      // if (item && (item.split(';').length>3 || item.split(';').length == 3) ){
+      //    status   = item.split(';')[3];
+      // }
+
+      status = 'inactive'
+      const newItem = `${uuid};${order};${name};${status}`;
+      console.log('newItem', newItem)
+      this.selectedObject.name = newItem;
+      this.saveState();
+      this.app.tableName = ''
+    }
+  }
+
+  setTableStatus(status: string) {
     if (this.selectedObject) {
       const item = this.selectedObject?.name;
       const uid = item.split(';')[0];
       const order = item.split(';')[1];
       const name = item.split(';')[2];
-
-      // console.log('setObjectOrderID', order)
-
-      const newItem = `${uid};${orderID};${name}`;
-      // console.log('New Item', newItem)
+      const newItem = `${uid};${order};${name};${status}`;
       this.selectedObject.name = newItem;
-      this.drawRoom();
       this.saveState();
+      this.app.tableStatus = ''
     }
   }
 
@@ -350,7 +448,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
         return;
       }
       this.onSelected();
-      console.log('selection:created', this.app.roomEdit)
+      // console.log('selection:created', this.app.roomEdit)
     });
 
     this.view.on('selection:updated', (e: fabric.IEvent) => {
@@ -366,8 +464,6 @@ export class ViewComponent implements OnInit, AfterViewInit {
       if (this.app.roomEdit) {
         return;
       }
-      console.log('selection:cleared', this.app.roomEdit)
-
       this.app.selections = [];
       this.app.ungroupable = false;
     });
@@ -383,9 +479,11 @@ export class ViewComponent implements OnInit, AfterViewInit {
     this.view.on('object:rotated', () => this.saveState());
 
     this.view.on('mouse:down:before', (e: fabric.IEvent) => {
+      this.app.selections = [];
       const obj = e.target;
       this.selectedObject = obj;
-      this.outPutSelectedItem.emit(obj)
+      this.app.selections.push(obj);
+      this.app.selectededObject.next(obj);
 
       if (this.app.roomEdit && obj && obj?.name.indexOf('WALL') > -1 && obj instanceof Line) {
         let { v1, v2, v1Id, v2Id } = cornersOfWall(obj);
@@ -408,7 +506,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
         this.drawRoom();
         this.saveState();
-      }
+      };
+
     });
 
     this.view.on('object:moving', (e: fabric.IEvent) => {
@@ -479,12 +578,10 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
     this.view.on('mouse:up', (e: fabric.IEvent) => {
       const obj = e.target;
-
       if (this.REMOVE_DW) {
         this.view.remove(obj);
         this.REMOVE_DW = false;
       }
-
     });
 
     this.view.on('mouse:dblclick', (e: fabric.IEvent) => {
@@ -552,6 +649,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
    * -------------------------------------------------------------------------------------------------------
    */
   drawCorner(p: fabric.Point) {
+
     const c = new fabric.Rect({
       left: p.x,
       top: p.y,
@@ -570,47 +668,57 @@ export class ViewComponent implements OnInit, AfterViewInit {
    * -------------------------------------------------------------------------------------------------------
    */
   drawRoom() {
+    let exists : any;
 
-    const exists = this.view.getObjects().filter(obj => obj.name.indexOf('WALL') > -1 || obj.name === 'CORNER');
-    this.view.remove(...exists);
+    try {
+       exists = this.view.getObjects().filter(obj => obj.name.indexOf('WALL') > -1 || obj.name === 'CORNER');
+    } catch (error) {
 
-    this.view.add(...this.corners);
+    }
 
-    const wall = (coords: number[], index: number) => new Line(coords, {
-      stroke: RL_ROOM_STROKE,
-      strokeWidth: RL_ROOM_INNER_SPACING,
-      name: `WALL:${index}`,
-      originX: 'center',
-      originY: 'center',
-      hoverCursor: this.app.roomEdit ? this.view.moveCursor : this.view.defaultCursor,
-      hasControls: false,
-      hasBorders: false,
-      selectable: this.app.roomEdit,
-      evented: this.app.roomEdit,
-      cornerStyle: 'rect'
-    });
+    try {
+      this.view.remove(...exists);
 
-    let LT = new Point(9999, 9999), RB = new Point(0, 0);
+      this.view.add(...this.corners);
 
-    this.walls = this.corners.map((corner, i) => {
-      const start = corner;
-      const end = (i === this.corners.length - 1) ? this.corners[0] : this.corners[i + 1];
+      const wall = (coords: number[], index: number) => new Line(coords, {
+        stroke: RL_ROOM_STROKE,
+        strokeWidth: RL_ROOM_INNER_SPACING,
+        name: `WALL:${index}`,
+        originX: 'center',
+        originY: 'center',
+        hoverCursor: this.app.roomEdit ? this.view.moveCursor : this.view.defaultCursor,
+        hasControls: false,
+        hasBorders: false,
+        selectable: this.app.roomEdit,
+        evented: this.app.roomEdit,
+        cornerStyle: 'rect'
+      });
 
-      if (corner.top < LT.x && corner.left < LT.y)
-        LT = new Point(corner.left, corner.top);
+      let LT = new Point(9999, 9999), RB = new Point(0, 0);
 
-      if (corner.top > RB.y && corner.left > RB.y)
-        RB = new Point(corner.left, corner.top);
+      this.walls = this.corners.map((corner, i) => {
+        const start = corner;
+        const end = (i === this.corners.length - 1) ? this.corners[0] : this.corners[i + 1];
 
-      const w = wall([start.left, start.top, end.left, end.top], i);
-      return w;
-    });
+        if (corner.top < LT.x && corner.left < LT.y)
+          LT = new Point(corner.left, corner.top);
 
-    this.view.add(...this.walls);
-    this.walls.forEach(w => w.sendToBack());
-    this.ROOM_SIZE = { width: RB.x - LT.x, height: RB.y - LT.y };
+        if (corner.top > RB.y && corner.left > RB.y)
+          RB = new Point(corner.left, corner.top);
+
+        const w = wall([start.left, start.top, end.left, end.top], i);
+        return w;
+      });
+
+      this.view.add(...this.walls);
+      this.walls.forEach(w => w.sendToBack());
+      this.ROOM_SIZE = { width: RB.x - LT.x, height: RB.y - LT.y };
+
+    } catch (error) {
+
+    }
   }
-
 
   locateDW(dw: fabric.Group, wall: fabric.Line, x: number, y: number) {
     const dWall = this.directionOfWall(wall);
@@ -644,47 +752,52 @@ export class ViewComponent implements OnInit, AfterViewInit {
   }
 
   /**********************************************************************************************************/
-
   editRoom() {
-
-    if ( this.userMode) {
-      return;
-    }
-
-    this.view.getObjects().forEach(r => {
-      if (r.name.indexOf('WALL') !== -1) {
-        r.selectable = true;
-        r.evented = true;
-      } else {
-        r.selectable = false;
-        r.evented = false;
-      }
-    });
-
+    if (this.view.getObjects()) {
+        let items = this.view.getObjects()
+        items.forEach(r => {
+            if ((r === null || r === void 0 ? void 0 : r?.name?.indexOf('WALL')) !== -1) {
+                r.selectable = false;
+                r.evented = false;
+            }
+            else {
+                if (this.app.userMode) {
+                    r.selectable = false;
+                    r.evented = true;
+                }
+                if (!this.app.userMode) {
+                    r.selectable = true;
+                    r.evented = true;
+                }
+            }
+        });
+     }
     if (this.app.roomEditStates.length === 0)
-      this.saveState();
+    this.saveState();
   }
 
   cancelRoomEdition() {
+
     this.view.getObjects().forEach(r => {
-      if (r.name.indexOf('WALL') !== -1 || r.name.indexOf('CORNER') !== -1) {
-        r.selectable = false;
-        r.evented = false;
-      } else {
-        r.selectable = true;
-        r.evented = true;
+      try {
+        if (r.name.indexOf('WALL') !== -1 || r.name.indexOf('CORNER') !== -1) {
+          r.selectable = false;
+          r.evented = false;
+        } else {
+          r.selectable = true;
+          r.evented = true;
+        }
+      } catch (error) {
+
       }
     });
   }
 
   setItemStatus(type: string, object: any) {
-    // console.log('type', type)
-    // console.log('object', object)
 
     if (object && type)  {
       if (type === 'table') {
         if (object.name != '') {
-          const fullName = object.name;
           const items = object.split(';')
 
           //type
@@ -751,6 +864,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
     if (type != 'table') {
       group = _.createFurniture(type, object, this.DEFAULT_CHAIR);
     }
+
+    // console.log(group);
 
     if (type === 'DOOR' || type === 'WINDOW') {
       group.originX = 'center';
@@ -843,7 +958,6 @@ export class ViewComponent implements OnInit, AfterViewInit {
     }
 
     group.fill = 'blue'
-    // console.log('group', group);
 
     this.view.add(group);
     this.view.setActiveObject(group);
@@ -854,7 +968,14 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
   /** Save current state */
   saveState() {
-    const state = this.view.toDatalessJSON(['name', 'hasControls', 'selectable', 'hasBorders', 'evented', 'hoverCursor', 'moveCursor']);
+    if (this.app.userMode) {
+      const state = this.view.toDatalessJSON(['name', 'hasControls', 'selectable',
+      'hasBorders', 'evented', 'hoverCursor']);
+      this.app.saveState.next(JSON.stringify(state));
+      return
+    }
+    const state = this.view.toDatalessJSON(['name', 'hasControls', 'selectable',
+                                            'hasBorders', 'evented', 'hoverCursor', 'moveCursor']);
     this.app.saveState.next(JSON.stringify(state));
   }
 
@@ -915,7 +1036,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     if (!active) {
       return;
     }
-    active.clone(cloned => this.app.copied = cloned, ['name', 'hasControls']);
+    active.clone(cloned => this.app.copied = cloned, ['pointname','name', 'hasControls']);
   }
 
   /** Paste operation */
@@ -928,6 +1049,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     if (!this.app.copied || this.app.roomEdit) {
       return;
     }
+
     this.app.copied.clone((cloned) => {
       this.view.discardActiveObject();
       cloned.set({
@@ -945,19 +1067,19 @@ export class ViewComponent implements OnInit, AfterViewInit {
       this.app.copied.left += RL_AISLEGAP;
       this.view.setActiveObject(cloned);
       this.view.requestRenderAll();
-      this.saveState();
-    }, ['name', 'hasControls']);
+      this.saveState();  }, ['name', 'hasControls']);
+
   }
 
   clearLayout() {
     this.app.loadJson('');
-    // this.view.clear();
     this.initLayout();
   }
 
   /** Delete operation */
   delete() {
 
+    // console.log(this.app.selections)
     if ( this.userMode) {
       return;
     }
@@ -970,6 +1092,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     if (this.app.selections) {
       this.app.selections.forEach(selection => this.view.remove(selection));
     }
+
     try {
       this.view.discardActiveObject();
       this.view.requestRenderAll();
@@ -1096,6 +1219,11 @@ export class ViewComponent implements OnInit, AfterViewInit {
     this.view.renderAll();
   }
 
+  setScalingZoom() {
+    // this.view.setDimensions({ width: this.view.getWidth() * this.app.scaleRatio,
+    //                        height: this.view.getHeight() * this.app.scaleRatio });
+  }
+
   placeInCenter(direction) {
     if ( this.userMode) {
       return;
@@ -1180,80 +1308,6 @@ export class ViewComponent implements OnInit, AfterViewInit {
     return { left, top, right, bottom, center, middle };
   }
 
-  saveAs(format: string) {
-
-    const { right, bottom } = this.getBoundingRect(this.corners);
-    const width  = this.view.getWidth();
-    const height = this.view.getHeight();
-
-    this.view.setWidth(right + RL_ROOM_OUTER_SPACING);
-    this.view.setHeight(bottom + RL_ROOM_OUTER_SPACING + 12);
-
-    // this.view.setBackgroundColor('purple', () => { });
-
-    const credit = new fabric.Text(RL_CREDIT_TEXT,
-      {
-        ...RL_CREDIT_TEXT_PARAMS,
-        left: RL_ROOM_OUTER_SPACING,
-        top: bottom + RL_ROOM_OUTER_SPACING - RL_CREDIT_TEXT_PARAMS.fontSize
-      }
-    );
-
-    this.view.add(credit);
-    this.view.discardActiveObject();
-    this.view.renderAll();
-
-    const restore = () => {
-      this.view.remove(credit);
-      this.view.setBackgroundColor('transparent', () => { });
-      this.view.setWidth(width);
-      this.view.setHeight(height);
-      this.view.renderAll();
-    };
-
-    if (format === 'PNG') {
-      const canvas: any = document.getElementById('main');
-      canvas.toBlob((blob: Blob) => {
-        saveAs(blob, `room_layout_${formatDate(new Date(), 'yyyy-MM-dd-hh-mm-ss', 'en')}.png`);
-        restore();
-      });
-    } else if (format === 'SVG') {
-      const svg = this.view.toSVG();
-      const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
-      saveAs(blob, `room_layout_${formatDate(new Date(), 'yyyy-MM-dd-hh-mm-ss', 'en')}.svg`);
-      restore();
-    } else if (format === 'json') {
-      const json  = this.view.toJSON(['name']);
-      this.app.jsonValue.next(json)
-    }
-  }
-
-
-  disableSeletion(){
-    // if (this.userMode) {
-      // this.view.forEachObject(function(o) {
-      //   o.selectable = false;
-      // });
-    // }
-
-    this.view.getObjects().forEach((obj, index) => {
-        obj.selectable = false;
-    });
-
-    // this.view = new fabric.StaticCanvas(this.view);
-
-    // if (this.userMode) {
-    //   this.maincontainerClass = 'main-container-usermode'
-    //   this.userMode = true;
-    // }
-
-    // if (!this.userMode) {
-    //   this.maincontainerClass = 'main-container'
-    //   this.userMode = false;
-    // }
-
-  }
-
   loadJSON() {
     this.app.jsonValue.subscribe(data => {
         if (this.userMode) {
@@ -1262,35 +1316,28 @@ export class ViewComponent implements OnInit, AfterViewInit {
         if (!this.userMode) {
           this.maincontainerClass = 'main-container'
         }
-
-        if (!data || data == null) {
-          this.view.loadFromJSON(null, function() {
-            this.view.renderAll();
-          });
-          return
+        try {
+          if (!data || data == null  && this.view) {
+            console.log('clear')
+            this.view.loadFromJSON(null, function() {
+              this.view.renderAll();
+            });
+            this.view.loadFromJSON( data, this.view.renderAll.bind(this.view) )
+            return
+          }
+        } catch (error) {
+          console.log('error', error)
         }
-
-        let object
-
-        if (this.isJsonStructure(data)) {
-          object = data
-          const string = JSON.stringify(data)
-        } else {
-          object = JSON.parse(data)
-        }
-
-        if (this.userMode) {
-          this.view.loadFromJSON(object, function() {
-            this.view.renderAll();
-          });
-        }
-        if (!this.userMode) {
-          this.view.loadFromJSON(object, function() {
-            this.view.renderAll();
-          });
-        }
+        this.view.loadFromJSON( data, this.view.renderAll.bind(this.view) )
       }
     )
+  }
+
+  toggleSelection(selectable: boolean){
+    this.view.getObjects().forEach((obj, index) => {
+      obj.selectable = selectable;
+      obj.evented = true
+    });
   }
 
   isJsonStructure(str) {
@@ -1305,51 +1352,81 @@ export class ViewComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // saveToJSON() {
-  //   const canvas: any = document.getElementById('main');
-  //   const json = canvas.toJSON(['name'])
-  //   return json
-  // }
-
-  alterObjectColor(name: string, color: string, obj: any, view: any) {
-    let json
+  alterObjectColor(uuID: string, color: string) {
+    const view = this.view;
     if (view) {
-      json = view.toJSON(['name']);
-      if (json.objects) {
-        if (json.objects.length > 0) {
-          json.objects.forEach(data => {
-            console.log('alterObjectColor data?.backgroundColor', data?.backgroundColor)
-            if (data?.name === name) {
-              if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
-                data.backgroundColor = color;
-                data.borderColor =  color
-                data.stroke = color
-                data.strokeWidth = 10
-                // console.log('item color changed 1', data?.backgroundColor)
-              }
-              if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
-                data.backgroundColor = color;
-                data.borderColor =  color
-                data.stroke = color
-                data.strokeWidth = 10
-                // console.log('item color changed 1', data?.backgroundColor)
-              }
+      console.log('uuid', uuID);
+      console.log(view._objects)
+      if (view._objects) {
+          view._objects.forEach(data => {
+            if (data && data?.type  && (data?.type === 'group' ) ) {
+              const itemValue = data?.name.split(";")
+              console.log(data?.name, uuID);
+              console.log('itemValue', itemValue)
+              if (itemValue.length>0){
+                const itemUUID = itemValue[0];
+                if (uuID === itemUUID ) {
+                      console.log('itemValue update ', itemValue)
+                      let stroke = 5
+                      if (color === 'red' || color ===  'rgb(200,10,10)') {
+                        data.backgroundColor = color;
+                        data.borderColor =  color
+                        let stroke = 8
+                      }
 
-              this.app.alterColor('red', data)
+                      if (color === 'green' || color ===  'rgb(10,10,200)') {
+                        data.backgroundColor = color;
+                        data.borderColor =  color
+                        let stroke = 5
+                      }
+
+                      if (color === 'yellow' || color ===  'rgb(10,10,200)') {
+                        data.backgroundColor = color;
+                        data.borderColor =  color
+                        let stroke = 5
+                      }
+
+                      if (data?.backgroundColor === 'purple' ||
+                          data?.backgroundColor === 'rgba(255,100,171,0.25)') {
+                        // console.log('name successful setting color', name, data?.backgroundColor, color);
+                        data.backgroundColor = color;
+                        data.borderColor =  color
+                        data.stroke = color
+                        data.strokeWidth = stroke
+                      }
+
+                      if (data?.backgroundColor === 'purple' ||
+                          data?.backgroundColor === 'rgba(255,100,171,0.25)') {
+                        // console.log('name successful setting color 2', name, data?.backgroundColor, color);
+                        data.backgroundColor = color;
+                        data.borderColor =  color
+                        data.stroke = color
+                        data.strokeWidth = stroke
+                      }
+
+                      this.alterColor(color, data, stroke -3 )
+                  //   }
+                  // }
+                };
+              }
             }
           })
         }
       }
-
-    }
-
-    if (view && json) {
-      console.log('loading json')
-    }
-
-    return json ;
+      return view;
   }
 
+  alterColor(color, obj, stroke) {
+    obj.borderColor =  color
+    obj.stroke = color
+    obj.strokeWidth = stroke
+    if (obj.objects && obj.objects.length > 0 ) {
+        obj.objects.forEach(item => {
+          this.alterColor(color, item, stroke)
+      })
+    }
+    return obj
+  }
 
 
 }

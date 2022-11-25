@@ -49,7 +49,7 @@ export class PreviewFurnitureComponent implements OnInit, AfterViewInit {
     group.top = RL_PREVIEW_HEIGHT / 2;
     group.selectable = false;
     group.hoverCursor = 'pointer';
-    console.log('group add', group)
+    // console.log('group add', group)
     this.canvas.add(group);
   }
 }

@@ -1,12 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
+export interface uuidList {
+  uuID: string;
+  color: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
 
+  //if true when table is selected, it's cleared', and submitted back to
+  //the appcomponent to be saved.
+  clearNextSelectedTable: boolean;
+
   orderID   = ''
+  tableName: string;
+
+  tableStatus: string;
   roomEdit = false;
   userMode : boolean;
 
@@ -21,8 +32,10 @@ export class AppService {
   copied: any;
 
   ungroupable = false;
-
+  currenObject : any;
+  selectededObject: Subject<any> = new Subject<any>();
   setSelectedObjectColor: Subject<any> = new Subject<any>();
+  selectedBackGroundImage: Subject<any> = new Subject<any>();
   performOperation: Subject<any> = new Subject<any>();
   insertObject: Subject<any> = new Subject<any>();
   defaultChair: Subject<any> = new Subject<any>();
@@ -46,11 +59,19 @@ export class AppService {
   editRoom() {
     this.roomEdit = true;
     this.roomEdition.next(true);
+    this.performOperation.next('enableSelection');
   }
 
   endEditRoom() {
     this.roomEdit = false;
     this.roomEdition.next(false);
+    this.performOperation.next('disableSelection');
+  }
+
+  updateCurrentObjet() {
+    this.selectededObject.subscribe(data => {
+      this.currenObject = data;
+    })
   }
 
   undo() {
@@ -87,10 +108,16 @@ export class AppService {
     this.performOperation.next('PASTE');
   }
 
-  setOrder(orderID) {
+  setOrder(item) {
     if (!this.selections.length) { return; }
-    this.orderID = orderID;
+    this.orderID = item ;
     this.performOperation.next('setOrderID');
+  }
+
+  setTable(tableName) {
+    console.log(tableName, this.selections.length)
+    if (!this.selections.length) { return; }
+    this.performOperation.next('setTableName');
   }
 
   delete() {
@@ -98,8 +125,8 @@ export class AppService {
     this.performOperation.next('DELETE');
   }
 
-  disableSeletion() {
-    this.performOperation.next('disableSeletion');
+  disableSelection() {
+    this.performOperation.next('disableSelection');
   }
 
   loadJson(value: string) {
@@ -151,108 +178,6 @@ export class AppService {
     this.performOperation.next('ZOOM');
   }
 
-  alterObjectColor(name: string, color: string, obj: any, view: any) {
-    let json
-    if (view) {
-      json = view.toJSON(['name']);
-      if (json.objects) {
-        if (json.objects.length > 0) {
-          json.objects.forEach(data => {
-            console.log('alterObjectColor data?.backgroundColor', data?.backgroundColor)
-            if (data?.name === name) {
-              if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
-                data.backgroundColor = color;
-                data.borderColor =  color
-                data.stroke = color
-                data.strokeWidth = 10
-                // console.log('item color changed 1', data?.backgroundColor)
-              }
-              if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
-                data.backgroundColor = color;
-                data.borderColor =  color
-                data.stroke = color
-                data.strokeWidth = 10
-                // console.log('item color changed 1', data?.backgroundColor)
-              }
 
-              this.alterColor('red', data)
-            }
-          })
-        }
-      }
-
-    }
-
-    if (view && json) {
-      console.log('loading json')
-    }
-
-    return json ;
-  }
-
-
-  // borderColor: 'purple',
-  // backgroundColor: 'purple',
-  // stroke: 'purple',
-  // strokeWidth: 10,
-  // fill: 'purple'
-  setObjectColor(name: string, color: string, obj: any, view: any) {
-    let json
-    if (view) {
-      // json = view.toJSON(['name']);
-      this.alterColor(color, obj);
-
-      if (obj.objects) {
-        if (obj.objects.length > 0) {
-            obj.objects.forEach(data => {
-            console.log('alterObjectColor data?.backgroundColor', data?.backgroundColor)
-            if (data?.name === name) {
-              if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
-                data.backgroundColor = color;
-                data.borderColor =  color
-                data.stroke = color
-                data.strokeWidth = 10
-                // console.log('item color changed 1', data?.backgroundColor)
-              }
-              if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
-                data.backgroundColor = color;
-                data.borderColor =  color
-                data.stroke = color
-                data.strokeWidth = 10
-                // console.log('item color changed 1', data?.backgroundColor)
-              }
-              this.alterColor('red', data)
-            }
-          })
-        }
-      }
-
-    }
-
-    if (view && obj) {
-      console.log('loading json')
-    }
-
-    return obj ;
-  }
-
-  alterColor(color, obj) {
-
-    // console.log('obj', obj, obj.length)
-    // if (obj?.backgroundColor === 'purple' || obj?.backgroundColor === 'rgba(255,100,171,0.25)') {
-      // obj.backgroundColor = color;
-      obj.borderColor =  color
-      obj.stroke = color
-      obj.strokeWidth = 3
-      // console.log('item color changed 2', obj.backgroundColor)
-    // }
-
-    if (obj.objects && obj.objects.length > 0 ) {
-      obj.objects.forEach(item => {
-        this.alterColor(color, item)
-      })
-    }
-    return obj
-  }
 
 }

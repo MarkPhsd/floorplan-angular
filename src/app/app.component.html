@@ -1,259 +1,321 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <!-- <h1>Layout</h1> -->
-    <div class="layout-options-grid" *ngIf="jsonTemplateLists; else jsonTemplates">
-      Templates
-      <div *ngFor="let item of jsonTemplateLists" >
-        <button mat-raised-button (click)="displayLayout(item)">{{item.name}}</button>
-      </div>
-    </div>
-    <button mat-raised-button (click)="toggleMode()">Toggle Mode</button>
-    <button mat-raised-button (click)="disableLayout()">Disable Edit</button>
-    <ng-template #jsonTemplates>...loading</ng-template>
-  </mat-toolbar-row>
-</mat-toolbar>
+<button *ngIf="!toggleButtonHidden" mat-raised-button (click)="toggleUserMode()">toggle</button>
 
 <mat-drawer-container hasBackdrop="false">
 
   <mat-drawer *ngIf="!userMode" #drawer mode="side" opened>
     <mat-accordion class="rl-object-options">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Rooms
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-list>
-          <mat-divider></mat-divider>
-          <ng-container *ngFor="let room of furnishings.rooms">
-            <mat-list-item (click)="insert(room, 'ROOM')">
-              {{room.title}}
-            </mat-list-item>
+      <span [hidden]="!floorPlan">
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Rooms
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
             <mat-divider></mat-divider>
-          </ng-container>
-        </mat-list>
-      </mat-expansion-panel>
+            <ng-container *ngFor="let room of furnishings.rooms">
+              <mat-list-item (click)="insert(room, 'ROOM')">
+                {{room.title}}
+              </mat-list-item>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </mat-list>
+        </mat-expansion-panel>
 
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Doors
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-divider></mat-divider>
-        <div class="preview-layout">
-          <div class="preview-item" *ngFor="let door of furnishings.doors">
-            <div (click)="insert(door, 'DOOR')">
-              <pointless-preview-furniture [type]="'DOOR'" [furniture]="door"></pointless-preview-furniture>
-              <div class="preview-title">{{door.title}}</div>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Doors
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-divider></mat-divider>
+          <div class="preview-layout">
+            <div class="preview-item" *ngFor="let door of furnishings.doors">
+              <div (click)="insert(door, 'DOOR')">
+                <pointless-preview-furniture [type]="'DOOR'" [furniture]="door"></pointless-preview-furniture>
+                <div class="preview-title">{{door.title}}</div>
+              </div>
             </div>
           </div>
-        </div>
-      </mat-expansion-panel>
+        </mat-expansion-panel>
 
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Windows
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-divider></mat-divider>
-        <div class="preview-layout">
-          <div class="preview-item" *ngFor="let window of furnishings.windows">
-            <div (click)="insert(window, 'WINDOW')">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Windows
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-divider></mat-divider>
+          <div class="preview-layout">
+            <div class="preview-item" *ngFor="let window of furnishings.windows">
+              <div (click)="insert(window, 'WINDOW')">
+                  <pointless-preview-furniture
+                      [type]="'WINDOW'"
+                      [furniture]="window">
+                  </pointless-preview-furniture>
+                <div class="preview-title">{{window.title}}</div>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Tables
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-divider></mat-divider>
+          <mat-form-field>
+            <mat-label>Default Chair</mat-label>
+            <mat-select [value]="defaultChairIndex"
+                        (valueChange)="defaultChairChanged($event)">
+              <mat-option *ngFor="let chair of furnishings.chairs; let i=index;"
+                          [value]="i">
+                  {{chair.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="preview-layout">
+            <div class="preview-item" *ngFor="let table of furnishings.tables">
+              <div (click)="insert(table, 'TABLE')">
                 <pointless-preview-furniture
-                    [type]="'WINDOW'"
-                    [furniture]="window">
+                    [type]="'TABLE'"
+                    [furniture]="table">
                 </pointless-preview-furniture>
-              <div class="preview-title">{{window.title}}</div>
+                <div class="preview-title">{{table.title}}</div>
+              </div>
             </div>
           </div>
-        </div>
-      </mat-expansion-panel>
+        </mat-expansion-panel>
 
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Tables
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-divider></mat-divider>
-        <mat-form-field>
-          <mat-label>Default Chair</mat-label>
-          <mat-select [value]="defaultChairIndex"
-                      (valueChange)="defaultChairChanged($event)">
-            <mat-option *ngFor="let chair of furnishings.chairs; let i=index;"
-                        [value]="i">
-                {{chair.title}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <div class="preview-layout">
-          <div class="preview-item" *ngFor="let table of furnishings.tables">
-            <div (click)="insert(table, 'TABLE')">
-              <pointless-preview-furniture
-                  [type]="'TABLE'"
-                  [furniture]="table">
-              </pointless-preview-furniture>
-              <div class="preview-title">{{table.title}}</div>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Chairs
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-divider></mat-divider>
+          <div class="preview-layout">
+            <div class="preview-item" *ngFor="let chair of furnishings.chairs">
+              <div (click)="insert(chair, 'CHAIR')">
+                <pointless-preview-furniture
+                    [type]="'CHAIR'"
+                    [furniture]="chair">
+                </pointless-preview-furniture>
+                <div class="preview-title">{{chair.title}}</div>
+              </div>
             </div>
           </div>
-        </div>
-      </mat-expansion-panel>
+        </mat-expansion-panel>
 
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Chairs
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-divider></mat-divider>
-        <div class="preview-layout">
-          <div class="preview-item" *ngFor="let chair of furnishings.chairs">
-            <div (click)="insert(chair, 'CHAIR')">
-              <pointless-preview-furniture
-                  [type]="'CHAIR'"
-                  [furniture]="chair">
-              </pointless-preview-furniture>
-              <div class="preview-title">{{chair.title}}</div>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Miscellaneous
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-divider></mat-divider>
+          <div class="preview-layout">
+            <div class="preview-item" *ngFor="let m of furnishings.miscellaneous">
+              <div (click)="insert(m, 'MISCELLANEOUS')">
+                <pointless-preview-furniture
+                    [type]="'MISCELLANEOUS'"
+                    [furniture]="m">
+                </pointless-preview-furniture>
+                <div class="preview-title">{{m.title}}</div>
+              </div>
             </div>
           </div>
-        </div>
-      </mat-expansion-panel>
+        </mat-expansion-panel>
 
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Miscellaneous
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-divider></mat-divider>
-        <div class="preview-layout">
-          <div class="preview-item" *ngFor="let m of furnishings.miscellaneous">
-            <div (click)="insert(m, 'MISCELLANEOUS')">
-              <pointless-preview-furniture
-                  [type]="'MISCELLANEOUS'"
-                  [furniture]="m">
-              </pointless-preview-furniture>
-              <div class="preview-title">{{m.title}}</div>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Text
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-divider></mat-divider>
+          <form [formGroup]="textForm"
+                class="new-text"
+                (ngSubmit)="insertNewText()">
+            <mat-form-field>
+              <input matInput placeholder="Input text" formControlName="text">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="number"
+                    placeholder="Font Size"
+                    min="1"
+                    max="200"
+                    formControlName="font_size">
+            </mat-form-field>
+            <div style="margin: 1rem 0">
+              <mat-radio-group formControlName="direction">
+                <mat-radio-button value="HORIZONTAL">Horizontal</mat-radio-button>
+                <mat-radio-button value="VERTICAL">Vertical</mat-radio-button>
+              </mat-radio-group>
             </div>
-          </div>
-        </div>
-      </mat-expansion-panel>
+            <div style="margin: 2rem 12px">
+              <button mat-raised-button color="primary" type="submit">Add text</button>
+            </div>
+          </form>
+        </mat-expansion-panel>
 
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Text
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-divider></mat-divider>
-        <form [formGroup]="textForm"
-              class="new-text"
-              (ngSubmit)="insertNewText()">
-          <mat-form-field>
-            <input matInput placeholder="Input text" formControlName="text">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Advanced
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-divider></mat-divider>
+          <div style="padding: 2rem">
+            <button mat-raised-button
+                    color="primary"
+                    style="width: 100%"
+                    (click)="layoutChairs()">
+              Layout chairs
+            </button>
+          </div>
+        </mat-expansion-panel>
+
+      </span>
+
+      <h3>Layout</h3>
+      <div class="grid-buttons">
+        <div>
+          <button class="buttons" mat-raised-button color="primary"
+                  (click)="_saveFloorPlan()">
+            <mat-icon>save</mat-icon>Save </button>
+        </div>
+
+        <div>
+          <button class="buttons"  mat-raised-button color="primary"
+                 (click)="loadTemplate()">
+            <mat-icon>refresh</mat-icon>Refresh </button>
+        </div>
+
+        <div>
+          <button class="buttons"  mat-raised-button color="primary"
+                  (click)="app.setOrder('131390')">
+            Set Order #</button>
+        </div>
+
+        <div>
+          <button class="buttons"  mat-raised-button color="primary"
+                 (click)="clearTable()">
+           Clear Table</button>
+        </div>
+
+        <div>
+          <button class="buttons"  mat-raised-button color="primary"
+                  (click)="app.setObjectFillColor('red')">
+            Set Red</button>
+        </div>
+
+        <div>
+          <button class="buttons"  mat-raised-button color="primary"
+                 (click)="app.setObjectFillColor('green')">
+            Set  Green</button>
+        </div>
+      </div>
+
+      <div *ngIf="floorPlan">
+        <div>
+            <mat-form-field appearance="outline">
+            <mat-label >Name</mat-label>
+            <input matInput
+                  type="text"
+                  [(ngModel)]="floorPlan.name"
+                  class="form-control" >
+            </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field appearance="outline">
+          <mat-label >Height</mat-label>
+          <input matInput
+                type="text"
+                [(ngModel)]="floorPlan.height"
+                class="form-control" >
           </mat-form-field>
-          <mat-form-field>
-            <input matInput type="number"
-                   placeholder="Font Size"
-                   min="1"
-                   max="200"
-                   formControlName="font_size">
-          </mat-form-field>
-          <div style="margin: 1rem 0">
-            <mat-radio-group formControlName="direction">
-              <mat-radio-button value="HORIZONTAL">Horizontal</mat-radio-button>
-              <mat-radio-button value="VERTICAL">Vertical</mat-radio-button>
-            </mat-radio-group>
-          </div>
-          <div style="margin: 2rem 12px">
-            <button mat-raised-button color="primary" type="submit">Add text</button>
-          </div>
-        </form>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Advanced
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-divider></mat-divider>
-        <div style="padding: 2rem">
-          <button mat-raised-button
-                  color="primary"
-                  style="width: 100%"
-                  (click)="layoutChairs()">
-            Layout chairs
-          </button>
         </div>
-      </mat-expansion-panel>
+        <div>
+            <mat-form-field appearance="outline">
+            <mat-label >Width</mat-label>
+            <input matInput
+                  type="text"
+                  [(ngModel)]="floorPlan.width"
+                  class="form-control" >
+            </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="outline">
+          <mat-label >OrderID</mat-label>
+          <input matInput
+                type="text"
+                [(ngModel)]="app.orderID"
+                class="form-control" >
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="outline">
+          <mat-label >Image</mat-label>
+          <input matInput
+                type="text"
+                (change)="changeBackGroundImage()"
+                [(ngModel)]="floorPlan.image"
+                class="form-control" >
+          </mat-form-field>
+        </div>
 
-      <div >
-        <button mat-raised-button color="primary" (click)="getCurrentFabricLayout()">Save Layout</button>
-        <button mat-raised-button color="primary" (click)="loadJSON()">Load Layout</button>
-        <button mat-raised-button color="primary" (click)="clearLayout()">Clear Layout</button>
+        <div class="example-full-width">
+          <mat-form-field  appearance="fill" >
+            <mat-label>Floor Plan Result</mat-label>
+            <textarea  cdkTextareaAutosize
+                      matInput
+                      rows = 5
+                      class="floor-plan-json"
+                      [(ngModel)]="floorPlan.template"
+                      placeholder="Floor plan Result"></textarea>
+          </mat-form-field>
+        </div>
+
       </div>
 
-      <div class="example-full-width">
-        <mat-form-field  appearance="fill">
-          <mat-label>JSON Result</mat-label>
-          <textarea  cdkTextareaAutosize
-                     matInput
-                     [(ngModel)]="jsonValue"
-                     placeholder="JSON Result"></textarea>
-        </mat-form-field>
-      </div>
-
-      <div>
-        <mat-form-field appearance="outline">
-        <mat-label >OrderID</mat-label>
-        <input matInput
-              type="text"
-              [(ngModel)]="app.orderID"
-              class="form-control" >
-        </mat-form-field>
-      </div>
-      <div>
-        <button mat-raised-button color="primary" (click)="app.setOrder('131390')">Set Order #</button>
-      </div>
-      <div>
-        <button mat-raised-button color="primary" (click)="app.setObjectFillColor('red')">Set Red</button>
-      </div>
-      <div>
-        <button mat-raised-button color="primary" (click)="app.setObjectFillColor('green')">Set  Green</button>
-      </div>
     </mat-accordion>
   </mat-drawer>
 
   <mat-drawer-content>
-
-    <mat-toolbar  *ngIf="!userMode" >
+    <mat-toolbar  *ngIf="!userMode && floorPlan" >
       <mat-toolbar-row>
+
         <div *ngIf="init">
+
           <ng-container *ngIf="!app.roomEdit">
             <button mat-icon-button matTooltip="Undo (Ctrl + Z)" (click)="app.undo()"
               [disabled]="app.states.length === 1">
               <fa-icon [icon]="faReply"></fa-icon>
             </button>
-            <button mat-icon-button matTooltip="Redo (Ctrl + Shift + Z)" (click)="app.redo()"
-              [disabled]="app.redoStates.length === 0">
+            <button mat-icon-button matTooltip="Redo (Ctrl + Shift + Z)"
+                    (click)="app.redo()"
+                    [disabled]="app.redoStates.length === 0">
               <fa-icon [icon]="faShare"></fa-icon>
             </button>
-            <button mat-icon-button matTooltip="Clone (Ctrl + D)" [disabled]="app.selections.length === 0"
-              (click)="app.clone()">
-              <fa-icon [icon]="faClone"></fa-icon>
-            </button>
-            <!--  -->
-            <button mat-icon-button matTooltip="Delete (Delete)" [disabled]="app.selections.length === 0"
+
+            <button mat-icon-button
+              [disabled]="app.selections.length === 0"
+              matTooltip="Delete (Delete)"
               (click)="app.delete()">
               <fa-icon [icon]="faTrash"></fa-icon>
             </button>
+
             <button mat-icon-button matTooltip="Rotate Anti-Clockwise (Ctrl + Left Arrow)"
               [disabled]="app.selections.length === 0" (click)="app.rotateAntiClockWise()">
               <fa-icon [icon]="faUndo"></fa-icon>
             </button>
+
             <button mat-icon-button matTooltip="Rotate Clockwise (Ctrl + Right Arrow)"
               [disabled]="app.selections.length === 0" (click)="app.rotateClockWise()">
               <fa-icon [icon]="faRedo"></fa-icon>
@@ -267,17 +329,8 @@
               <fa-icon [icon]="faObjectUngroup"></fa-icon>
             </button>
             <button mat-button matTooltip="Arrange" [matMenuTriggerFor]="arrange">Arrange</button>
-            <button mat-raised-button matTooltip="Switch Edition Mode" color="primary"
-                    (click)="app.editRoom()">Edit
-              Room</button>
-
-            <button mat-raised-button matTooltip="Switch Edition Mode" color="primary"
-                   (click)="app.setObjectFillColor('red')">
-              Set Red
-            </button>
-
-          </ng-container>
-          <ng-container *ngIf="app.roomEdit">
+            <button mat-button matTooltip="Switch Edition Mode" color="primary"
+                    (click)="app.endEditRoom()">Set Room</button>
             <button mat-icon-button matTooltip="Undo (Ctrl + Z)" (click)="app.undo()"
               [disabled]="app.roomEditStates.length === 1">
               <fa-icon [icon]="faReply"></fa-icon>
@@ -286,8 +339,8 @@
               [disabled]="app.roomEditRedoStates.length === 0">
               <fa-icon [icon]="faShare"></fa-icon>
             </button>
-            <button mat-button matTooltip="Switch Edition Mode" color="primary" *ngIf="app.roomEdit"
-              (click)="app.endEditRoom()">End Room Edition</button>
+            <button mat-button matTooltip="Switch Edition Mode" color="primary"
+              (click)="app.endEditRoom()">Edit Room</button>
           </ng-container>
         </div>
 
@@ -307,41 +360,52 @@
       </mat-toolbar-row>
     </mat-toolbar>
 
-    <pointless-room-layout-view
-        (outPutSelectedItem)="selectItem($event)"
-        [userMode]="userMode">
-    </pointless-room-layout-view>
+      <pointless-room-layout-view
+          [userMode]="userMode">
+      </pointless-room-layout-view>
 
-    <table  *ngIf="!userMode" class="status-bar">
-      <tbody>
-        <tr class="status-bar-item">
-          <td>Type</td>
-          <td>ID</td>
-          <td>Name</td>
-          <td>Left</td>
-          <td>Top</td>
-          <td>Rotation</td>
-          <td>Width</td>
-          <td>Height</td>
-          <td></td>
-        </tr>
-        <tr class="status-bar-item" *ngFor="let selected of app.selections">
-          <td><strong *ngIf="selected.name">{{selected.name.split(';')[0] | titlecase}}</strong></td>
-          <td><strong *ngIf="selected.name">{{selected.name.split(';')[1]}}</strong></td>
-          <td><strong *ngIf="selected.name">{{selected.name.split(';')[2]}}</strong></td>
-          <td><strong>{{selected.left}}</strong></td>
-          <td><strong>{{selected.top}}</strong></td>
-          <td><strong>{{selected.angle}}'</strong></td>
-          <td><strong>{{selected.width}}</strong></td>
-          <td><strong>{{selected.height}}</strong></td>
-          <td>
-            <strong *ngIf="selected.name.split(':')[0] == 'TABLE'">
-              {{selected._objects.length - 1}} Chairs
-            </strong>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <table  *ngIf="!userMode || isAdmin" class="status-bar">
+        <tbody>
+          <tr class="status-bar-item">
+            <td>ID</td>
+            <td>Name</td>
+          </tr>
+
+          <tr class="status-bar-item" *ngFor="let selected of app.selections">
+
+            <td *ngIf="selected && selected?.name">
+              <mat-form-field appearance="outline">
+              <mat-label >OrderID {{selected?.name.split(';')[1]}}</mat-label>
+              <input matInput
+                    type="text"
+                    [(ngModel)]="app.orderID"
+                    (change)="app.setOrder(app.orderID)"
+                    class="form-control" >
+              </mat-form-field>
+              <span>
+                <button mat-raised-button (click)="app.setOrder('')">Clear</button>
+              </span>
+            </td>
+
+            <td *ngIf="selected && selected?.name">
+              <mat-form-field appearance="outline">
+              <mat-label >Name: {{selected?.name.split(';')[2]}}</mat-label>
+              <input matInput
+                    type="text"
+                    [(ngModel)]="app.tableName"
+                    (change)="app.setTable(app.tableName)"
+                    class="form-control" >
+              </mat-form-field>
+              <span>
+                <button mat-raised-button (click)="app.setTable('')">Clear</button>
+              </span>
+
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
 
   </mat-drawer-content>
 </mat-drawer-container>
+

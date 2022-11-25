@@ -92,8 +92,8 @@ const createBasicShape = (part: any, stroke: string = '#aaaaaa', fill: string = 
 
 const createFurniture = (type: string, object, chair = {}) => {
   if (type === 'TABLE') {
-    console.log('chair', chair)
-    console.log('object', object)
+    // console.log('chair', chair)
+    // console.log('object', object)
     return createTable(object, chair);
   } else if (type === 'TEXT') {
     return createText(object);
@@ -108,7 +108,7 @@ const createFurniture = (type: string, object, chair = {}) => {
 const createShape = (object: any, stroke = RL_CHAIR_STROKE, fill = RL_CHAIR_FILL, type: string = 'CHAIR'): fabric.Group => {
   const parts = object.parts.map(obj => createBasicShape(obj, stroke, fill));
   const group = new Group(parts, {
-    name: `${type}:${object.title}`,
+    name: `${type}`,
     hasControls: false,
     originX: 'center',
     originY: 'center'
@@ -119,7 +119,6 @@ const createShape = (object: any, stroke = RL_CHAIR_STROKE, fill = RL_CHAIR_FILL
 
 
 // All Create[Name]Object() functions should return a group
-
 const createTable = (def: any, RL_DEFAULT_CHAIR: any, type: string = 'TABLE') => {
   // tables with chairs have the chairs full-height around the table
   // create table name passing from def
@@ -209,7 +208,6 @@ const createTable = (def: any, RL_DEFAULT_CHAIR: any, type: string = 'TABLE') =>
       components[index].left = leftOffset + chairWidth / 2;
       components[index].top = topOffset + chairHeight / 2;
       index++;
-
       leftOffset += (chairWidth + gap);
     }
 
@@ -224,7 +222,6 @@ const createTable = (def: any, RL_DEFAULT_CHAIR: any, type: string = 'TABLE') =>
       components[index].left = leftOffset + chairWidth / 2;
       components[index].top = topOffset + chairWidth / 2;
       ++index;
-
       leftOffset += (chairWidth + gap);
     }
 
@@ -239,7 +236,6 @@ const createTable = (def: any, RL_DEFAULT_CHAIR: any, type: string = 'TABLE') =>
       components[index].left = leftOffset;
       components[index].top = topOffset;
       ++index;
-
       topOffset += (chairWidth + gap);
     }
 
@@ -254,7 +250,6 @@ const createTable = (def: any, RL_DEFAULT_CHAIR: any, type: string = 'TABLE') =>
       components[index].left = leftOffset + chairHeight - (RL_CHAIR_TUCK * 2);
       components[index].top = topOffset;
       ++index;
-
       topOffset += (chairWidth + gap);
     }
 

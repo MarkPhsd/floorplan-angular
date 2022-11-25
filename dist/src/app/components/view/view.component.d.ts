@@ -34,8 +34,12 @@ export declare class ViewComponent implements OnInit, AfterViewInit {
     setGroupableState(): void;
     setObjectSettings(object: any, key: any, color: any): void;
     onSelected(): void;
-    setSelectedObjectColor(color: string): void;
-    setObjectOrderID(orderID: string): void;
+    setSelectedObjectColor(item: any, color: string, saveState: boolean): void;
+    setBackgroundImage(image: string): void;
+    setObjectOrderID(orderID: any): void;
+    getStatusDescription(orderID: any): any;
+    setTableName(name: string): void;
+    setTableStatus(status: string): void;
     /**********************************************************************************************************
      * init the canvas view & bind events
      * -------------------------------------------------------------------------------------------------------
@@ -93,6 +97,7 @@ export declare class ViewComponent implements OnInit, AfterViewInit {
     ungroup(): void;
     move(direction: any, increament?: number): void;
     setZoom(): void;
+    setScalingZoom(): void;
     placeInCenter(direction: any): void;
     arrange(action: string): void;
     filterObjects(names: string[]): fabric.Object[];
@@ -107,11 +112,11 @@ export declare class ViewComponent implements OnInit, AfterViewInit {
         center: number;
         middle: number;
     };
-    saveAs(format: string): void;
-    disableSeletion(): void;
     loadJSON(): void;
+    toggleSelection(selectable: boolean): void;
     isJsonStructure(str: any): boolean;
-    alterObjectColor(name: string, color: string, obj: any, view: any): any;
+    alterObjectColor(uuID: string, color: string): fabric.Canvas;
+    alterColor(color: any, obj: any, stroke: any): any;
     static ɵfac: i0.ɵɵFactoryDeclaration<ViewComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<ViewComponent, "pointless-room-layout-view", never, { "userMode": "userMode"; }, { "outPutSelectedItem": "outPutSelectedItem"; }, never, never>;
 }

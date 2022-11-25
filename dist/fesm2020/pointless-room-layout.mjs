@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import * as i0 from '@angular/core';
-import { NgModule, EventEmitter, Component, Input, Output, Injectable } from '@angular/core';
+import { NgModule, EventEmitter, Component, Input, Output, Injectable, ViewChild } from '@angular/core';
 import * as i9 from '@angular/forms';
 import { FormGroup, FormControl, FormArray, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,26 +12,27 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import * as i1$1 from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
-import * as i9$1 from '@angular/material/divider';
+import * as i8$1 from '@angular/material/divider';
 import { MatDividerModule } from '@angular/material/divider';
-import * as i7 from '@angular/material/expansion';
+import * as i6$1 from '@angular/material/expansion';
 import { MatExpansionModule } from '@angular/material/expansion';
 import * as i4$1 from '@angular/material/form-field';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import * as i14 from '@angular/material/icon';
 import { MatIconModule } from '@angular/material/icon';
 import * as i11 from '@angular/material/input';
 import { MatInputModule } from '@angular/material/input';
-import * as i8$1 from '@angular/material/list';
+import * as i7 from '@angular/material/list';
 import { MatListModule } from '@angular/material/list';
-import * as i16 from '@angular/material/menu';
+import * as i17 from '@angular/material/menu';
 import { MatMenuModule } from '@angular/material/menu';
 import * as i2$1 from '@angular/material/radio';
 import { MatRadioModule } from '@angular/material/radio';
 import * as i5 from '@angular/material/select';
 import { MatSelectModule } from '@angular/material/select';
-import * as i6$1 from '@angular/material/sidenav';
+import * as i5$1 from '@angular/material/sidenav';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import * as i4$2 from '@angular/material/toolbar';
+import * as i15 from '@angular/material/toolbar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import * as i4 from '@angular/material/tooltip';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -41,12 +42,10 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fabric } from 'fabric';
 import * as i6 from '@angular/material/core';
 import * as i10 from '@angular/common';
-import { formatDate } from '@angular/common';
 import { repeatWhen, delay } from 'rxjs/operators';
 import * as uuid from 'uuid';
 import { Subject } from 'rxjs';
-import { saveAs } from 'file-saver';
-import * as i21 from '@angular/cdk/text-field';
+import * as i22 from '@angular/cdk/text-field';
 
 class DesignModule {
 }
@@ -190,22 +189,22 @@ class ZoomComponent {
         if (this.zoom >= 150) {
             return;
         }
-        this.zoom += 10;
+        this.zoom += 5;
         this.zoomChange.emit(this.zoom);
     }
     zoomOut() {
         if (this.zoom <= 20) {
             return;
         }
-        this.zoom -= 10;
+        this.zoom -= 5;
         this.zoomChange.emit(this.zoom);
     }
 }
 ZoomComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.3.4", ngImport: i0, type: ZoomComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-ZoomComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "12.0.0", version: "13.3.4", type: ZoomComponent, selector: "app-zoom", inputs: { zoom: "zoom" }, outputs: { zoomChange: "zoomChange" }, ngImport: i0, template: "<div fxLayout fxLayoutAlign=\"center center\" class=\"zoom-widget\">\r\n  <button mat-icon-button matTooltip=\"Zoom Out\" (click)=\"zoomOut()\">\r\n    <fa-icon [icon]=\"faMinus\"></fa-icon>\r\n  </button>\r\n  <span style=\"padding: 0 10px; font-size: 16px\">{{ zoom }}%</span>\r\n  <button mat-icon-button matTooltip=\"Zoom In\" (click)=\"zoomIn()\">\r\n    <fa-icon [icon]=\"faPlus\"></fa-icon>\r\n  </button>\r\n</div>\r\n", styles: [".zoom-widget{border:1px solid #ddd;background:white;border-radius:8px}.zoom-widget fa-icon{font-size:9px}.zoom-widget button{line-height:30px}\n"], components: [{ type: i1.MatButton, selector: "button[mat-button], button[mat-raised-button], button[mat-icon-button],             button[mat-fab], button[mat-mini-fab], button[mat-stroked-button],             button[mat-flat-button]", inputs: ["disabled", "disableRipple", "color"], exportAs: ["matButton"] }, { type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "spin", "pulse", "mask", "styles", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "classes", "transform", "a11yRole"] }], directives: [{ type: i8.DefaultLayoutDirective, selector: "  [fxLayout], [fxLayout.xs], [fxLayout.sm], [fxLayout.md],  [fxLayout.lg], [fxLayout.xl], [fxLayout.lt-sm], [fxLayout.lt-md],  [fxLayout.lt-lg], [fxLayout.lt-xl], [fxLayout.gt-xs], [fxLayout.gt-sm],  [fxLayout.gt-md], [fxLayout.gt-lg]", inputs: ["fxLayout", "fxLayout.xs", "fxLayout.sm", "fxLayout.md", "fxLayout.lg", "fxLayout.xl", "fxLayout.lt-sm", "fxLayout.lt-md", "fxLayout.lt-lg", "fxLayout.lt-xl", "fxLayout.gt-xs", "fxLayout.gt-sm", "fxLayout.gt-md", "fxLayout.gt-lg"] }, { type: i8.DefaultLayoutAlignDirective, selector: "  [fxLayoutAlign], [fxLayoutAlign.xs], [fxLayoutAlign.sm], [fxLayoutAlign.md],  [fxLayoutAlign.lg], [fxLayoutAlign.xl], [fxLayoutAlign.lt-sm], [fxLayoutAlign.lt-md],  [fxLayoutAlign.lt-lg], [fxLayoutAlign.lt-xl], [fxLayoutAlign.gt-xs], [fxLayoutAlign.gt-sm],  [fxLayoutAlign.gt-md], [fxLayoutAlign.gt-lg]", inputs: ["fxLayoutAlign", "fxLayoutAlign.xs", "fxLayoutAlign.sm", "fxLayoutAlign.md", "fxLayoutAlign.lg", "fxLayoutAlign.xl", "fxLayoutAlign.lt-sm", "fxLayoutAlign.lt-md", "fxLayoutAlign.lt-lg", "fxLayoutAlign.lt-xl", "fxLayoutAlign.gt-xs", "fxLayoutAlign.gt-sm", "fxLayoutAlign.gt-md", "fxLayoutAlign.gt-lg"] }, { type: i4.MatTooltip, selector: "[matTooltip]", exportAs: ["matTooltip"] }] });
+ZoomComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "12.0.0", version: "13.3.4", type: ZoomComponent, selector: "app-zoom", inputs: { zoom: "zoom" }, outputs: { zoomChange: "zoomChange" }, ngImport: i0, template: "<div fxLayout fxLayoutAlign=\"center center\" class=\"zoom-widget\">\r\n  <button mat-icon-button matTooltip=\"Zoom Out\" (click)=\"zoomOut()\">\r\n    <fa-icon [icon]=\"faMinus\"></fa-icon>\r\n  </button>\r\n  <span style=\"padding: 0 10px; font-size: 16px\">{{ zoom }}%</span>\r\n  <button mat-icon-button matTooltip=\"Zoom In\" (click)=\"zoomIn()\">\r\n    <fa-icon [icon]=\"faPlus\"></fa-icon>\r\n  </button>\r\n</div>\r\n", styles: [".zoom-widget{border:1px solid #ddd;border-radius:8px}.zoom-widget fa-icon{font-size:9px}.zoom-widget button{line-height:30px}\n"], components: [{ type: i1.MatButton, selector: "button[mat-button], button[mat-raised-button], button[mat-icon-button],             button[mat-fab], button[mat-mini-fab], button[mat-stroked-button],             button[mat-flat-button]", inputs: ["disabled", "disableRipple", "color"], exportAs: ["matButton"] }, { type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "spin", "pulse", "mask", "styles", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "classes", "transform", "a11yRole"] }], directives: [{ type: i8.DefaultLayoutDirective, selector: "  [fxLayout], [fxLayout.xs], [fxLayout.sm], [fxLayout.md],  [fxLayout.lg], [fxLayout.xl], [fxLayout.lt-sm], [fxLayout.lt-md],  [fxLayout.lt-lg], [fxLayout.lt-xl], [fxLayout.gt-xs], [fxLayout.gt-sm],  [fxLayout.gt-md], [fxLayout.gt-lg]", inputs: ["fxLayout", "fxLayout.xs", "fxLayout.sm", "fxLayout.md", "fxLayout.lg", "fxLayout.xl", "fxLayout.lt-sm", "fxLayout.lt-md", "fxLayout.lt-lg", "fxLayout.lt-xl", "fxLayout.gt-xs", "fxLayout.gt-sm", "fxLayout.gt-md", "fxLayout.gt-lg"] }, { type: i8.DefaultLayoutAlignDirective, selector: "  [fxLayoutAlign], [fxLayoutAlign.xs], [fxLayoutAlign.sm], [fxLayoutAlign.md],  [fxLayoutAlign.lg], [fxLayoutAlign.xl], [fxLayoutAlign.lt-sm], [fxLayoutAlign.lt-md],  [fxLayoutAlign.lt-lg], [fxLayoutAlign.lt-xl], [fxLayoutAlign.gt-xs], [fxLayoutAlign.gt-sm],  [fxLayoutAlign.gt-md], [fxLayoutAlign.gt-lg]", inputs: ["fxLayoutAlign", "fxLayoutAlign.xs", "fxLayoutAlign.sm", "fxLayoutAlign.md", "fxLayoutAlign.lg", "fxLayoutAlign.xl", "fxLayoutAlign.lt-sm", "fxLayoutAlign.lt-md", "fxLayoutAlign.lt-lg", "fxLayoutAlign.lt-xl", "fxLayoutAlign.gt-xs", "fxLayoutAlign.gt-sm", "fxLayoutAlign.gt-md", "fxLayoutAlign.gt-lg"] }, { type: i4.MatTooltip, selector: "[matTooltip]", exportAs: ["matTooltip"] }] });
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.3.4", ngImport: i0, type: ZoomComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'app-zoom', template: "<div fxLayout fxLayoutAlign=\"center center\" class=\"zoom-widget\">\r\n  <button mat-icon-button matTooltip=\"Zoom Out\" (click)=\"zoomOut()\">\r\n    <fa-icon [icon]=\"faMinus\"></fa-icon>\r\n  </button>\r\n  <span style=\"padding: 0 10px; font-size: 16px\">{{ zoom }}%</span>\r\n  <button mat-icon-button matTooltip=\"Zoom In\" (click)=\"zoomIn()\">\r\n    <fa-icon [icon]=\"faPlus\"></fa-icon>\r\n  </button>\r\n</div>\r\n", styles: [".zoom-widget{border:1px solid #ddd;background:white;border-radius:8px}.zoom-widget fa-icon{font-size:9px}.zoom-widget button{line-height:30px}\n"] }]
+            args: [{ selector: 'app-zoom', template: "<div fxLayout fxLayoutAlign=\"center center\" class=\"zoom-widget\">\r\n  <button mat-icon-button matTooltip=\"Zoom Out\" (click)=\"zoomOut()\">\r\n    <fa-icon [icon]=\"faMinus\"></fa-icon>\r\n  </button>\r\n  <span style=\"padding: 0 10px; font-size: 16px\">{{ zoom }}%</span>\r\n  <button mat-icon-button matTooltip=\"Zoom In\" (click)=\"zoomIn()\">\r\n    <fa-icon [icon]=\"faPlus\"></fa-icon>\r\n  </button>\r\n</div>\r\n", styles: [".zoom-widget{border:1px solid #ddd;border-radius:8px}.zoom-widget fa-icon{font-size:9px}.zoom-widget button{line-height:30px}\n"] }]
         }], ctorParameters: function () { return []; }, propDecorators: { zoom: [{
                 type: Input
             }], zoomChange: [{
@@ -301,8 +300,8 @@ const createBasicShape = (part, stroke = '#aaaaaa', fill = 'white') => {
 };
 const createFurniture = (type, object, chair = {}) => {
     if (type === 'TABLE') {
-        console.log('chair', chair);
-        console.log('object', object);
+        // console.log('chair', chair)
+        // console.log('object', object)
         return createTable(object, chair);
     }
     else if (type === 'TEXT') {
@@ -319,7 +318,7 @@ const createFurniture = (type, object, chair = {}) => {
 const createShape = (object, stroke = RL_CHAIR_STROKE, fill = RL_CHAIR_FILL, type = 'CHAIR') => {
     const parts = object.parts.map(obj => createBasicShape(obj, stroke, fill));
     const group = new Group(parts, {
-        name: `${type}:${object.title}`,
+        name: `${type}`,
         hasControls: false,
         originX: 'center',
         originY: 'center'
@@ -903,6 +902,7 @@ class ChairsLayoutComponent {
             spacing_row: new FormControl(40),
             chairs: new FormArray(new Array(10).fill(new FormControl(10))),
         });
+        console.log(this.curvedBlock);
         this.view = new fabric.Canvas('layout_chairs');
         this.view.setWidth(WIDTH);
         this.view.setHeight(HEIGHT);
@@ -1023,7 +1023,9 @@ class AppService {
         this.roomEditRedoStates = [];
         this.selections = [];
         this.ungroupable = false;
+        this.selectededObject = new Subject();
         this.setSelectedObjectColor = new Subject();
+        this.selectedBackGroundImage = new Subject();
         this.performOperation = new Subject();
         this.insertObject = new Subject();
         this.defaultChair = new Subject();
@@ -1044,10 +1046,17 @@ class AppService {
     editRoom() {
         this.roomEdit = true;
         this.roomEdition.next(true);
+        this.performOperation.next('enableSelection');
     }
     endEditRoom() {
         this.roomEdit = false;
         this.roomEdition.next(false);
+        this.performOperation.next('disableSelection');
+    }
+    updateCurrentObjet() {
+        this.selectededObject.subscribe(data => {
+            this.currenObject = data;
+        });
     }
     undo() {
         if ((this.states.length === 1 && !this.roomEdit) || (this.roomEditStates.length === 1 && this.roomEdit)) {
@@ -1077,12 +1086,19 @@ class AppService {
     paste() {
         this.performOperation.next('PASTE');
     }
-    setOrder(orderID) {
+    setOrder(item) {
         if (!this.selections.length) {
             return;
         }
-        this.orderID = orderID;
+        this.orderID = item;
         this.performOperation.next('setOrderID');
+    }
+    setTable(tableName) {
+        console.log(tableName, this.selections.length);
+        if (!this.selections.length) {
+            return;
+        }
+        this.performOperation.next('setTableName');
     }
     delete() {
         if (!this.selections.length) {
@@ -1090,8 +1106,8 @@ class AppService {
         }
         this.performOperation.next('DELETE');
     }
-    disableSeletion() {
-        this.performOperation.next('disableSeletion');
+    disableSelection() {
+        this.performOperation.next('disableSelection');
     }
     loadJson(value) {
         this.jsonValue.next(value);
@@ -1132,96 +1148,6 @@ class AppService {
         this.zoom -= 10;
         this.performOperation.next('ZOOM');
     }
-    alterObjectColor(name, color, obj, view) {
-        let json;
-        if (view) {
-            json = view.toJSON(['name']);
-            if (json.objects) {
-                if (json.objects.length > 0) {
-                    json.objects.forEach(data => {
-                        console.log('alterObjectColor data?.backgroundColor', data?.backgroundColor);
-                        if (data?.name === name) {
-                            if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
-                                data.backgroundColor = color;
-                                data.borderColor = color;
-                                data.stroke = color;
-                                data.strokeWidth = 10;
-                                // console.log('item color changed 1', data?.backgroundColor)
-                            }
-                            if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
-                                data.backgroundColor = color;
-                                data.borderColor = color;
-                                data.stroke = color;
-                                data.strokeWidth = 10;
-                                // console.log('item color changed 1', data?.backgroundColor)
-                            }
-                            this.alterColor('red', data);
-                        }
-                    });
-                }
-            }
-        }
-        if (view && json) {
-            console.log('loading json');
-        }
-        return json;
-    }
-    // borderColor: 'purple',
-    // backgroundColor: 'purple',
-    // stroke: 'purple',
-    // strokeWidth: 10,
-    // fill: 'purple'
-    setObjectColor(name, color, obj, view) {
-        let json;
-        if (view) {
-            // json = view.toJSON(['name']);
-            this.alterColor(color, obj);
-            if (obj.objects) {
-                if (obj.objects.length > 0) {
-                    obj.objects.forEach(data => {
-                        console.log('alterObjectColor data?.backgroundColor', data?.backgroundColor);
-                        if (data?.name === name) {
-                            if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
-                                data.backgroundColor = color;
-                                data.borderColor = color;
-                                data.stroke = color;
-                                data.strokeWidth = 10;
-                                // console.log('item color changed 1', data?.backgroundColor)
-                            }
-                            if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
-                                data.backgroundColor = color;
-                                data.borderColor = color;
-                                data.stroke = color;
-                                data.strokeWidth = 10;
-                                // console.log('item color changed 1', data?.backgroundColor)
-                            }
-                            this.alterColor('red', data);
-                        }
-                    });
-                }
-            }
-        }
-        if (view && obj) {
-            console.log('loading json');
-        }
-        return obj;
-    }
-    alterColor(color, obj) {
-        // console.log('obj', obj, obj.length)
-        // if (obj?.backgroundColor === 'purple' || obj?.backgroundColor === 'rgba(255,100,171,0.25)') {
-        // obj.backgroundColor = color;
-        obj.borderColor = color;
-        obj.stroke = color;
-        obj.strokeWidth = 3;
-        // console.log('item color changed 2', obj.backgroundColor)
-        // }
-        if (obj.objects && obj.objects.length > 0) {
-            obj.objects.forEach(item => {
-                this.alterColor(color, item);
-            });
-        }
-        return obj;
-    }
 }
 AppService.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.3.4", ngImport: i0, type: AppService, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
 AppService.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "13.3.4", ngImport: i0, type: AppService, providedIn: 'root' });
@@ -1259,7 +1185,7 @@ class PreviewFurnitureComponent {
         group.top = RL_PREVIEW_HEIGHT / 2;
         group.selectable = false;
         group.hoverCursor = 'pointer';
-        console.log('group add', group);
+        // console.log('group add', group)
         this.canvas.add(group);
     }
 }
@@ -1284,9 +1210,7 @@ const Top = (wall) => wall.y1 < wall.y2 ? wall.y1 : wall.y2;
 const Right = (wall) => wall.x1 > wall.x2 ? wall.x1 : wall.x2;
 const Bottom = (wall) => wall.y1 > wall.y2 ? wall.y1 : wall.y2;
 class ViewComponent {
-    constructor(
-    // public viewJSONServiceService: ViewJSONServiceService,
-    app) {
+    constructor(app) {
         this.app = app;
         this.outPutSelectedItem = new EventEmitter();
         this.corners = [];
@@ -1302,31 +1226,45 @@ class ViewComponent {
     }
     ngOnInit() {
         this.loadJSON();
-        this.app.setSelectedObjectColor.subscribe(data => {
-            if (data) {
-                this.setSelectedObjectColor(data);
-            }
-        });
-        this.app.roomEdition.subscribe(doEdit => {
-            this.corners.forEach(c => this.setCornerStyle(c));
-            this.drawRoom();
-            if (doEdit) {
-                this.editRoom();
-            }
-            else {
-                this.cancelRoomEdition();
-            }
-        });
-        this.app.insertObject.subscribe(res => {
-            this.handleObjectInsertion(res);
-            this.saveState();
-        });
+        try {
+            this.app.setSelectedObjectColor.subscribe(data => {
+                this.alterObjectColor(data.uuid, data.color);
+                console.log('alter object color');
+            });
+            this.view.renderAll();
+        }
+        catch (error) {
+        }
+        try {
+            this.app.roomEdition.subscribe(doEdit => {
+                this.corners.forEach(c => this.setCornerStyle(c));
+                this.drawRoom();
+                if (doEdit) {
+                    this.editRoom();
+                }
+                else {
+                    this.cancelRoomEdition();
+                }
+            });
+        }
+        catch (error) {
+        }
+        try {
+            this.app.insertObject.subscribe(res => {
+                this.handleObjectInsertion(res);
+                this.saveState();
+            });
+        }
+        catch (error) {
+        }
         this.app.defaultChair.subscribe(res => this.DEFAULT_CHAIR = res);
-        this.app.setSelectedObjectColor.subscribe(data => {
-            if (data) {
-                this.setSelectedObjectColor(data);
-            }
-        });
+        try {
+            this.app.selectedBackGroundImage.subscribe(data => {
+                this.setBackgroundImage(data);
+            });
+        }
+        catch (error) {
+        }
         this.app.performOperation.subscribe(operation => {
             switch (operation) {
                 case 'UNDO':
@@ -1350,7 +1288,15 @@ class ViewComponent {
                 case 'ROTATE_ANTI':
                     this.rotate(false);
                     break;
+                case 'setTableName':
+                    this.setTableName(this.app.tableName);
+                    break;
                 case 'setOrderID':
+                    if (this.app.clearNextSelectedTable) {
+                        this.setObjectOrderID('');
+                        this.app.clearNextSelectedTable = false;
+                        return;
+                    }
                     this.setObjectOrderID(this.app.orderID);
                     break;
                 case 'clearLayout':
@@ -1367,23 +1313,33 @@ class ViewComponent {
                     this.placeInCenter(operation);
                     break;
                 case 'ROOM_OPERATION':
-                    this.drawRoom();
+                    // this.drawRoom();
                     break;
                 case 'PNG':
-                case 'SVG':
-                    this.saveAs(operation);
                     break;
                 case 'loadjson':
                     this.loadJSON();
                     break;
+                case 'save':
+                    this.saveState();
+                    break;
                 case 'json':
-                    this.saveAs(operation);
+                    this.saveState();
+                    break;
+                case 'saveFullJson':
+                    this.app.jsonValue.next(JSON.stringify(this.view.toJSON(['name'])));
                     break;
                 case 'ZOOM':
                     this.setZoom();
                     break;
-                case 'disableSeletion':
-                    this.disableSeletion();
+                case 'InitLayout':
+                    this.initLayout();
+                    break;
+                case 'disableSelection':
+                    this.toggleSelection(false);
+                    break;
+                case 'disableSelection':
+                    this.toggleSelection(true);
                     break;
                 case 'LEFT':
                 case 'CENTER':
@@ -1401,6 +1357,7 @@ class ViewComponent {
         this.initLayout();
     }
     initLayout() {
+        this.app.saveState.next(JSON.stringify(null));
         this.setCanvasView();
         /** Add room */
         this.setRoom(this.ROOM_SIZE);
@@ -1453,12 +1410,16 @@ class ViewComponent {
             return;
         }
         const obj = this.view.getActiveObject();
-        const type = obj.name ? obj.name.split(':')[0] : '';
-        if (RL_UNGROUPABLES.indexOf(type) > -1) {
-            this.app.ungroupable = false;
+        try {
+            const type = obj.name ? obj.name.split(':')[0] : '';
+            if (RL_UNGROUPABLES.indexOf(type) > -1) {
+                this.app.ungroupable = false;
+            }
+            else {
+                this.app.ungroupable = true;
+            }
         }
-        else {
-            this.app.ungroupable = true;
+        catch (error) {
         }
     }
     setObjectSettings(object, key, color) {
@@ -1468,57 +1429,119 @@ class ViewComponent {
         fabric.Group.prototype.strokeWidth = 3;
     }
     onSelected() {
+        if (!this.view) {
+            console.log('view is undefined');
+            return;
+        }
         const active = this.view.getActiveObject();
+        if (!this.view || !active) {
+            console.log('active is undefined');
+            return;
+        }
         // this.setObjectSettings(active, 'fill', 'red')
         // // active._renderFill('purple', () => { });
         // return;
-        active.lockScalingX = true, active.lockScalingY = true;
-        if (!active.name) {
-            active.name = 'GROUP';
+        try {
+            active.lockScalingX = true, active.lockScalingY = true;
+            if (!active.name) {
+                active.name = 'GROUP';
+            }
+        }
+        catch (error) {
         }
         this.app.selections = this.view.getActiveObjects();
         this.setGroupableState();
     }
-    setSelectedObjectColor(color) {
-        // console.log('item.', color)
-        const item = this.view.getActiveObject();
+    setSelectedObjectColor(item, color, saveState) {
+        // const item = this.view.getActiveObject();
         if (!item) {
             return;
         }
-        // console.log('item.', item.name)
         if (item.name) {
-            // const json =  this.viewJSONServiceService.alterObjectColor(item.name, color, item, this.view)
-            // const newItem = `${uid};${orderID};${name}`;
-            // console.log('New Item', newItem)
-            // this.selectedObject.name = newItem;
-            const json = this.alterObjectColor(item.name, color, item, this.view);
+            const uid = item.name.split(';')[0];
+            // const json = this.alterObjectColor(item.name, color);
             this.drawRoom();
             this.saveState();
-            // console.log(json)
-            // let object
-            // if (this.isJsonStructure(json)) {
-            //   object = json
-            // } else {
-            //   object = JSON.parse(json)
-            // }
-            this.view.loadFromJSON(json, function () {
-                // this.view.renderAll();
-            });
+            // this.view.loadFromJSON(json, function() { });
         }
         return;
     }
+    setBackgroundImage(image) {
+        if (!image || image === '') {
+            return;
+        }
+        this.view.setBackgroundImage(image, this.view.renderAll.bind(this.view), {});
+    }
     setObjectOrderID(orderID) {
+        if (this.selectedObject) {
+            const item = this.selectedObject?.name;
+            if (item) {
+                const uid = item.split(';')[0];
+                const name = item.split(';')[2];
+                let status = item.split(';')[3];
+                status = this.getStatusDescription(orderID);
+                const newItem = `${uid};${orderID};${name};${status}`;
+                // if (!orderID) {
+                //   this.alterObjectColor(uid, 'red')
+                // }
+                // if (!orderID)  {
+                //   this.alterObjectColor(uid, 'green')
+                // }
+                this.selectedObject.name = newItem;
+                // this.saveState();
+            }
+        }
+    }
+    getStatusDescription(orderID) {
+        let status;
+        if (orderID) {
+            if (status) {
+                status = 'active';
+            }
+        }
+        if (!orderID) {
+            if (!status) {
+                status = 'inactive';
+            }
+        }
+        return status;
+    }
+    setTableName(name) {
+        if (this.selectedObject) {
+            let order;
+            let status;
+            let uuid;
+            const item = this.selectedObject?.name;
+            if (item && (item.split(';').length > 0 || item.split(';').length == 0)) {
+                uuid = item.split(';')[0];
+            }
+            // if (item && (item.split(';').length>1 || item.split(';').length == 1) ){
+            //    uid   = item.split(';')[1];
+            // }
+            // if (item && (item.split(';').length>2 || item.split(';').length == 2) ){
+            //    name   = item.split(';')[2];
+            // }
+            // if (item && (item.split(';').length>3 || item.split(';').length == 3) ){
+            //    status   = item.split(';')[3];
+            // }
+            status = 'inactive';
+            const newItem = `${uuid};${order};${name};${status}`;
+            console.log('newItem', newItem);
+            this.selectedObject.name = newItem;
+            this.saveState();
+            this.app.tableName = '';
+        }
+    }
+    setTableStatus(status) {
         if (this.selectedObject) {
             const item = this.selectedObject?.name;
             const uid = item.split(';')[0];
             const order = item.split(';')[1];
             const name = item.split(';')[2];
-            // console.log('setObjectOrderID', order)
-            const newItem = `${uid};${orderID};${name}`;
-            // console.log('New Item', newItem)
+            const newItem = `${uid};${order};${name};${status}`;
             this.selectedObject.name = newItem;
-            this.drawRoom();
             this.saveState();
+            this.app.tableStatus = '';
         }
     }
     /**********************************************************************************************************
@@ -1543,7 +1566,7 @@ class ViewComponent {
                 return;
             }
             this.onSelected();
-            console.log('selection:created', this.app.roomEdit);
+            // console.log('selection:created', this.app.roomEdit)
         });
         this.view.on('selection:updated', (e) => {
             if (this.app.roomEdit) {
@@ -1556,7 +1579,6 @@ class ViewComponent {
             if (this.app.roomEdit) {
                 return;
             }
-            console.log('selection:cleared', this.app.roomEdit);
             this.app.selections = [];
             this.app.ungroupable = false;
         });
@@ -1569,9 +1591,11 @@ class ViewComponent {
         });
         this.view.on('object:rotated', () => this.saveState());
         this.view.on('mouse:down:before', (e) => {
+            this.app.selections = [];
             const obj = e.target;
             this.selectedObject = obj;
-            this.outPutSelectedItem.emit(obj);
+            this.app.selections.push(obj);
+            this.app.selectededObject.next(obj);
             if (this.app.roomEdit && obj && obj?.name.indexOf('WALL') > -1 && obj instanceof Line) {
                 let { v1, v2, v1Id, v2Id } = cornersOfWall(obj);
                 const v0Id = (v1Id === 0) ? this.corners.length - 1 : v1Id - 1;
@@ -1590,6 +1614,7 @@ class ViewComponent {
                 this.drawRoom();
                 this.saveState();
             }
+            ;
         });
         this.view.on('object:moving', (e) => {
             // console.log('object:moving', this.app.roomEdit)
@@ -1731,36 +1756,45 @@ class ViewComponent {
      * -------------------------------------------------------------------------------------------------------
      */
     drawRoom() {
-        const exists = this.view.getObjects().filter(obj => obj.name.indexOf('WALL') > -1 || obj.name === 'CORNER');
-        this.view.remove(...exists);
-        this.view.add(...this.corners);
-        const wall = (coords, index) => new Line(coords, {
-            stroke: RL_ROOM_STROKE,
-            strokeWidth: RL_ROOM_INNER_SPACING,
-            name: `WALL:${index}`,
-            originX: 'center',
-            originY: 'center',
-            hoverCursor: this.app.roomEdit ? this.view.moveCursor : this.view.defaultCursor,
-            hasControls: false,
-            hasBorders: false,
-            selectable: this.app.roomEdit,
-            evented: this.app.roomEdit,
-            cornerStyle: 'rect'
-        });
-        let LT = new Point(9999, 9999), RB = new Point(0, 0);
-        this.walls = this.corners.map((corner, i) => {
-            const start = corner;
-            const end = (i === this.corners.length - 1) ? this.corners[0] : this.corners[i + 1];
-            if (corner.top < LT.x && corner.left < LT.y)
-                LT = new Point(corner.left, corner.top);
-            if (corner.top > RB.y && corner.left > RB.y)
-                RB = new Point(corner.left, corner.top);
-            const w = wall([start.left, start.top, end.left, end.top], i);
-            return w;
-        });
-        this.view.add(...this.walls);
-        this.walls.forEach(w => w.sendToBack());
-        this.ROOM_SIZE = { width: RB.x - LT.x, height: RB.y - LT.y };
+        let exists;
+        try {
+            exists = this.view.getObjects().filter(obj => obj.name.indexOf('WALL') > -1 || obj.name === 'CORNER');
+        }
+        catch (error) {
+        }
+        try {
+            this.view.remove(...exists);
+            this.view.add(...this.corners);
+            const wall = (coords, index) => new Line(coords, {
+                stroke: RL_ROOM_STROKE,
+                strokeWidth: RL_ROOM_INNER_SPACING,
+                name: `WALL:${index}`,
+                originX: 'center',
+                originY: 'center',
+                hoverCursor: this.app.roomEdit ? this.view.moveCursor : this.view.defaultCursor,
+                hasControls: false,
+                hasBorders: false,
+                selectable: this.app.roomEdit,
+                evented: this.app.roomEdit,
+                cornerStyle: 'rect'
+            });
+            let LT = new Point(9999, 9999), RB = new Point(0, 0);
+            this.walls = this.corners.map((corner, i) => {
+                const start = corner;
+                const end = (i === this.corners.length - 1) ? this.corners[0] : this.corners[i + 1];
+                if (corner.top < LT.x && corner.left < LT.y)
+                    LT = new Point(corner.left, corner.top);
+                if (corner.top > RB.y && corner.left > RB.y)
+                    RB = new Point(corner.left, corner.top);
+                const w = wall([start.left, start.top, end.left, end.top], i);
+                return w;
+            });
+            this.view.add(...this.walls);
+            this.walls.forEach(w => w.sendToBack());
+            this.ROOM_SIZE = { width: RB.x - LT.x, height: RB.y - LT.y };
+        }
+        catch (error) {
+        }
     }
     locateDW(dw, wall, x, y) {
         const dWall = this.directionOfWall(wall);
@@ -1789,41 +1823,48 @@ class ViewComponent {
     }
     /**********************************************************************************************************/
     editRoom() {
-        if (this.userMode) {
-            return;
+        if (this.view.getObjects()) {
+            let items = this.view.getObjects();
+            items.forEach(r => {
+                if ((r === null || r === void 0 ? void 0 : r?.name?.indexOf('WALL')) !== -1) {
+                    r.selectable = false;
+                    r.evented = false;
+                }
+                else {
+                    if (this.app.userMode) {
+                        r.selectable = false;
+                        r.evented = true;
+                    }
+                    if (!this.app.userMode) {
+                        r.selectable = true;
+                        r.evented = true;
+                    }
+                }
+            });
         }
-        this.view.getObjects().forEach(r => {
-            if (r.name.indexOf('WALL') !== -1) {
-                r.selectable = true;
-                r.evented = true;
-            }
-            else {
-                r.selectable = false;
-                r.evented = false;
-            }
-        });
         if (this.app.roomEditStates.length === 0)
             this.saveState();
     }
     cancelRoomEdition() {
         this.view.getObjects().forEach(r => {
-            if (r.name.indexOf('WALL') !== -1 || r.name.indexOf('CORNER') !== -1) {
-                r.selectable = false;
-                r.evented = false;
+            try {
+                if (r.name.indexOf('WALL') !== -1 || r.name.indexOf('CORNER') !== -1) {
+                    r.selectable = false;
+                    r.evented = false;
+                }
+                else {
+                    r.selectable = true;
+                    r.evented = true;
+                }
             }
-            else {
-                r.selectable = true;
-                r.evented = true;
+            catch (error) {
             }
         });
     }
     setItemStatus(type, object) {
-        // console.log('type', type)
-        // console.log('object', object)
         if (object && type) {
             if (type === 'table') {
                 if (object.name != '') {
-                    const fullName = object.name;
                     const items = object.split(';');
                     //type
                     if (items.length >= 0 && items[0]) {
@@ -1880,6 +1921,7 @@ class ViewComponent {
         if (type != 'table') {
             group = createFurniture(type, object, this.DEFAULT_CHAIR);
         }
+        // console.log(group);
         if (type === 'DOOR' || type === 'WINDOW') {
             group.originX = 'center';
             group.originY = 'top';
@@ -1961,7 +2003,6 @@ class ViewComponent {
             }
         }
         group.fill = 'blue';
-        // console.log('group', group);
         this.view.add(group);
         this.view.setActiveObject(group);
         this.lastObject = group;
@@ -1969,7 +2010,14 @@ class ViewComponent {
     }
     /** Save current state */
     saveState() {
-        const state = this.view.toDatalessJSON(['name', 'hasControls', 'selectable', 'hasBorders', 'evented', 'hoverCursor', 'moveCursor']);
+        if (this.app.userMode) {
+            const state = this.view.toDatalessJSON(['name', 'hasControls', 'selectable',
+                'hasBorders', 'evented', 'hoverCursor']);
+            this.app.saveState.next(JSON.stringify(state));
+            return;
+        }
+        const state = this.view.toDatalessJSON(['name', 'hasControls', 'selectable',
+            'hasBorders', 'evented', 'hoverCursor', 'moveCursor']);
         this.app.saveState.next(JSON.stringify(state));
     }
     undo() {
@@ -2021,7 +2069,7 @@ class ViewComponent {
         if (!active) {
             return;
         }
-        active.clone(cloned => this.app.copied = cloned, ['name', 'hasControls']);
+        active.clone(cloned => this.app.copied = cloned, ['pointname', 'name', 'hasControls']);
     }
     /** Paste operation */
     paste() {
@@ -2054,11 +2102,11 @@ class ViewComponent {
     }
     clearLayout() {
         this.app.loadJson('');
-        // this.view.clear();
         this.initLayout();
     }
     /** Delete operation */
     delete() {
+        // console.log(this.app.selections)
         if (this.userMode) {
             return;
         }
@@ -2179,6 +2227,10 @@ class ViewComponent {
         this.view.setZoom(this.app.zoom / 100);
         this.view.renderAll();
     }
+    setScalingZoom() {
+        // this.view.setDimensions({ width: this.view.getWidth() * this.app.scaleRatio,
+        //                        height: this.view.getHeight() * this.app.scaleRatio });
+    }
     placeInCenter(direction) {
         if (this.userMode) {
             return;
@@ -2252,65 +2304,6 @@ class ViewComponent {
         const middle = (top + bottom) / 2;
         return { left, top, right, bottom, center, middle };
     }
-    saveAs(format) {
-        const { right, bottom } = this.getBoundingRect(this.corners);
-        const width = this.view.getWidth();
-        const height = this.view.getHeight();
-        this.view.setWidth(right + RL_ROOM_OUTER_SPACING);
-        this.view.setHeight(bottom + RL_ROOM_OUTER_SPACING + 12);
-        // this.view.setBackgroundColor('purple', () => { });
-        const credit = new fabric.Text(RL_CREDIT_TEXT, {
-            ...RL_CREDIT_TEXT_PARAMS,
-            left: RL_ROOM_OUTER_SPACING,
-            top: bottom + RL_ROOM_OUTER_SPACING - RL_CREDIT_TEXT_PARAMS.fontSize
-        });
-        this.view.add(credit);
-        this.view.discardActiveObject();
-        this.view.renderAll();
-        const restore = () => {
-            this.view.remove(credit);
-            this.view.setBackgroundColor('transparent', () => { });
-            this.view.setWidth(width);
-            this.view.setHeight(height);
-            this.view.renderAll();
-        };
-        if (format === 'PNG') {
-            const canvas = document.getElementById('main');
-            canvas.toBlob((blob) => {
-                saveAs(blob, `room_layout_${formatDate(new Date(), 'yyyy-MM-dd-hh-mm-ss', 'en')}.png`);
-                restore();
-            });
-        }
-        else if (format === 'SVG') {
-            const svg = this.view.toSVG();
-            const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
-            saveAs(blob, `room_layout_${formatDate(new Date(), 'yyyy-MM-dd-hh-mm-ss', 'en')}.svg`);
-            restore();
-        }
-        else if (format === 'json') {
-            const json = this.view.toJSON(['name']);
-            this.app.jsonValue.next(json);
-        }
-    }
-    disableSeletion() {
-        // if (this.userMode) {
-        // this.view.forEachObject(function(o) {
-        //   o.selectable = false;
-        // });
-        // }
-        this.view.getObjects().forEach((obj, index) => {
-            obj.selectable = false;
-        });
-        // this.view = new fabric.StaticCanvas(this.view);
-        // if (this.userMode) {
-        //   this.maincontainerClass = 'main-container-usermode'
-        //   this.userMode = true;
-        // }
-        // if (!this.userMode) {
-        //   this.maincontainerClass = 'main-container'
-        //   this.userMode = false;
-        // }
-    }
     loadJSON() {
         this.app.jsonValue.subscribe(data => {
             if (this.userMode) {
@@ -2319,30 +2312,26 @@ class ViewComponent {
             if (!this.userMode) {
                 this.maincontainerClass = 'main-container';
             }
-            if (!data || data == null) {
-                this.view.loadFromJSON(null, function () {
-                    this.view.renderAll();
-                });
-                return;
+            try {
+                if (!data || data == null && this.view) {
+                    console.log('clear');
+                    this.view.loadFromJSON(null, function () {
+                        this.view.renderAll();
+                    });
+                    this.view.loadFromJSON(data, this.view.renderAll.bind(this.view));
+                    return;
+                }
             }
-            let object;
-            if (this.isJsonStructure(data)) {
-                object = data;
-                const string = JSON.stringify(data);
+            catch (error) {
+                console.log('error', error);
             }
-            else {
-                object = JSON.parse(data);
-            }
-            if (this.userMode) {
-                this.view.loadFromJSON(object, function () {
-                    this.view.renderAll();
-                });
-            }
-            if (!this.userMode) {
-                this.view.loadFromJSON(object, function () {
-                    this.view.renderAll();
-                });
-            }
+            this.view.loadFromJSON(data, this.view.renderAll.bind(this.view));
+        });
+    }
+    toggleSelection(selectable) {
+        this.view.getObjects().forEach((obj, index) => {
+            obj.selectable = selectable;
+            obj.evented = true;
         });
     }
     isJsonStructure(str) {
@@ -2358,44 +2347,75 @@ class ViewComponent {
             return false;
         }
     }
-    // saveToJSON() {
-    //   const canvas: any = document.getElementById('main');
-    //   const json = canvas.toJSON(['name'])
-    //   return json
-    // }
-    alterObjectColor(name, color, obj, view) {
-        let json;
+    alterObjectColor(uuID, color) {
+        const view = this.view;
         if (view) {
-            json = view.toJSON(['name']);
-            if (json.objects) {
-                if (json.objects.length > 0) {
-                    json.objects.forEach(data => {
-                        console.log('alterObjectColor data?.backgroundColor', data?.backgroundColor);
-                        if (data?.name === name) {
-                            if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
-                                data.backgroundColor = color;
-                                data.borderColor = color;
-                                data.stroke = color;
-                                data.strokeWidth = 10;
-                                // console.log('item color changed 1', data?.backgroundColor)
+            console.log('uuid', uuID);
+            console.log(view._objects);
+            if (view._objects) {
+                view._objects.forEach(data => {
+                    if (data && data?.type && (data?.type === 'group')) {
+                        const itemValue = data?.name.split(";");
+                        console.log(data?.name, uuID);
+                        console.log('itemValue', itemValue);
+                        if (itemValue.length > 0) {
+                            const itemUUID = itemValue[0];
+                            if (uuID === itemUUID) {
+                                console.log('itemValue update ', itemValue);
+                                let stroke = 5;
+                                if (color === 'red' || color === 'rgb(200,10,10)') {
+                                    data.backgroundColor = color;
+                                    data.borderColor = color;
+                                    let stroke = 8;
+                                }
+                                if (color === 'green' || color === 'rgb(10,10,200)') {
+                                    data.backgroundColor = color;
+                                    data.borderColor = color;
+                                    let stroke = 5;
+                                }
+                                if (color === 'yellow' || color === 'rgb(10,10,200)') {
+                                    data.backgroundColor = color;
+                                    data.borderColor = color;
+                                    let stroke = 5;
+                                }
+                                if (data?.backgroundColor === 'purple' ||
+                                    data?.backgroundColor === 'rgba(255,100,171,0.25)') {
+                                    // console.log('name successful setting color', name, data?.backgroundColor, color);
+                                    data.backgroundColor = color;
+                                    data.borderColor = color;
+                                    data.stroke = color;
+                                    data.strokeWidth = stroke;
+                                }
+                                if (data?.backgroundColor === 'purple' ||
+                                    data?.backgroundColor === 'rgba(255,100,171,0.25)') {
+                                    // console.log('name successful setting color 2', name, data?.backgroundColor, color);
+                                    data.backgroundColor = color;
+                                    data.borderColor = color;
+                                    data.stroke = color;
+                                    data.strokeWidth = stroke;
+                                }
+                                this.alterColor(color, data, stroke - 3);
+                                //   }
+                                // }
                             }
-                            if (data?.backgroundColor === 'purple' || data?.backgroundColor === 'rgba(255,100,171,0.25)') {
-                                data.backgroundColor = color;
-                                data.borderColor = color;
-                                data.stroke = color;
-                                data.strokeWidth = 10;
-                                // console.log('item color changed 1', data?.backgroundColor)
-                            }
-                            this.app.alterColor('red', data);
+                            ;
                         }
-                    });
-                }
+                    }
+                });
             }
         }
-        if (view && json) {
-            console.log('loading json');
+        return view;
+    }
+    alterColor(color, obj, stroke) {
+        obj.borderColor = color;
+        obj.stroke = color;
+        obj.strokeWidth = stroke;
+        if (obj.objects && obj.objects.length > 0) {
+            obj.objects.forEach(item => {
+                this.alterColor(color, item, stroke);
+            });
         }
-        return json;
+        return obj;
     }
 }
 ViewComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.3.4", ngImport: i0, type: ViewComponent, deps: [{ token: AppService }], target: i0.ɵɵFactoryTarget.Component });
@@ -2418,12 +2438,15 @@ class RoomLayoutDesignerComponent {
         this.app = app;
         this.fb = fb;
         this.dialog = dialog;
-        // @Input() _userMode: Subject<boolean>;
+        this.isAdmin = true;
         this.userMode = false;
-        this.outPutOrderSelected = new EventEmitter(); // {uuid: string, orderID: string, name: string}
-        this.outPutTemplate = new EventEmitter(); // {id: number, name: string, jsonTEmplate}
-        this.outPutLayoutTable = new EventEmitter();
-        // currentLayout : any;
+        //sends the current  object
+        this.saveFloorPlan = new EventEmitter();
+        this.newFloorPlan = new EventEmitter();
+        this.setFloorPlanAndTable = new EventEmitter(); // { id:
+        this.getFloorPlan = new EventEmitter(); // { id:
+        this.setTable = new EventEmitter(); // {uuid:
+        this.outPutJSON = new EventEmitter(); // {uuid:
         this.title = 'room-layout';
         this.init = false;
         this.furnishings = FURNISHINGS;
@@ -2448,40 +2471,267 @@ class RoomLayoutDesignerComponent {
             this.app.defaultChair.next(defaultChair);
             this.init = true;
         }, 100);
+        this._setTableSelectedColor();
+        this.setZoom();
         this.initTextForm();
-        this.intJSONTemplateSubscriber();
-        this.initJSONTemplateList();
+        this.intTemplateSubscriber();
+        this.initCurrentFloorPlan();
+        this.clearTableSubscriber();
+        this.initUserModeSubscriber();
+        this._setTable();
+        this.setOrder();
+        this.performOperations();
+        this.app.userMode = this.userMode;
+        this._outPutJSON();
     }
-    initJSONTemplateList() {
-        this._jsonTemplateLists.subscribe(data => {
-            this.jsonTemplateLists = data;
+    //subscribe to the client's object.
+    //it can receive then update info about the table
+    //using the name field.
+    //and also set other features like the color.
+    ngOnDestroy() {
+        // if (this.app.jsonValue) {
+        //   this.app.jsonValue.unsubscribe();
+        // }
+        // if (this.app.performOperation) {
+        //   this.app.performOperation.unsubscribe();
+        // }
+        // if (this.app.saveState) {
+        //   this.app.saveState.unsubscribe();
+        // }
+    }
+    _outPutJSON() {
+        this.app.jsonValue.subscribe(data => {
+            this.outPutJSON.emit(data);
         });
     }
-    intJSONTemplateSubscriber() {
-        this._jsonValue = this.app.jsonValue.subscribe(data => {
-            if (this.isJsonStructure(data)) {
-                this.jsonValue = data;
-                return;
+    setTableInfo() {
+        this._setTableInfo.subscribe(data => {
+            this.app.selectededObject.next(data);
+        });
+    }
+    setZoom() {
+        this._zoom.subscribe(data => {
+            this.app.zoom = data;
+            this.app.performOperation.next('ZOOM');
+        });
+    }
+    _setTableSelectedColor() {
+        this.changeObjectColor.subscribe(list => {
+            console.log(list, this.floorPlan);
+            if (list && list.length > 0) {
+                list.forEach(order => {
+                    const item = { uuID: order?.tableUUID, color: 'red' };
+                    console.log(item);
+                    this.app.setSelectedObjectColor.next(item);
+                });
             }
-            this.jsonValue = JSON.stringify(data);
-            return;
         });
+    }
+    setOrder() {
+        try {
+            this._newOrder.subscribe(data => {
+                const item = data;
+                this.app.orderID = item.orderID;
+                this.app.tableStatus = item.status;
+                this.app.setOrder(item.orderID);
+            });
+        }
+        catch (error) {
+        }
+    }
+    get isRoomLayoutSelector() {
+        if (this.floorPlan) {
+            return this.roomLayout;
+        }
+        return null;
+    }
+    get islayoutObjects() {
+        if (this.floorPlan) {
+            return this.layoutObjects;
+        }
+        return null;
+    }
+    initCurrentFloorPlan() {
+        try {
+            if (this._floorPlan) {
+                this._floorPlan.subscribe(data => {
+                    if (data) {
+                        this.floorPlan = data;
+                        this.app.loadJson(data.template);
+                        this.changeBackGroundImage();
+                    }
+                });
+            }
+        }
+        catch (error) {
+            console.log('initCurrentFloorPlan', error);
+        }
+    }
+    changeBackGroundImage() {
+        this.app.selectedBackGroundImage.next(this.floorPlan.image);
+    }
+    _saveFloorPlan() {
+        this.app.performOperation.next('save');
+    }
+    intTemplateSubscriber() {
+        try {
+            this.app.saveState.subscribe(data => {
+                this.setFloorPlanTemplate(data);
+                return;
+            });
+        }
+        catch (error) {
+            console.log('init intTemplateSubscriber', error);
+        }
+    }
+    setFloorPlanTemplate(data) {
+        if (data && this.floorPlan) {
+            if (data) {
+                data = JSON.stringify(data);
+                data = data.replace(/(^"|"$)/g, '');
+                data = data.replaceAll('\\', '');
+            }
+            this.floorPlan.template = data;
+            this.saveFloorPlan.emit(this.floorPlan);
+        }
+    }
+    loadTemplate() {
+        if (!this.floorPlan) {
+            this.floorPlan = this.exampleFloor();
+        }
+        try {
+            if (this.floorPlan) {
+                let data = this.floorPlan.template;
+                this.floorPlan.template = data.replaceAll('\\', '');
+                this.floorPlan.template = this.floorPlan.template;
+                this.app.loadJson(this.floorPlan.template);
+            }
+        }
+        catch (error) {
+            console.log('loadTemplate', error);
+        }
+    }
+    clearTable() {
+        this.floorPlan.template = null;
+        this.app.saveState.next(null);
+        this.app.performOperation.next('InitLayout');
+    }
+    getFloorPlanData() {
+        this.getFloorPlan.emit(this.floorPlan);
+    }
+    toggleUserMode() {
+        this.userMode = !this.userMode;
+        this.toggleMode(this.userMode);
     }
     initUserModeSubscriber() {
+        if (!this._userMode) {
+            return;
+        }
+        ;
         this._userMode.subscribe(v => {
-            this.toggleMode();
+            this.toggleMode(v);
         });
     }
-    initTaleLayoutList() {
+    clearTableSubscriber() {
+        try {
+            if (this._clearNextSelectedTable) {
+                this._clearNextSelectedTable.subscribe(data => {
+                    if (data) {
+                        this.app.clearNextSelectedTable = data;
+                        if (data) {
+                            this.app.setOrder('');
+                            return;
+                        }
+                    }
+                    if (data) {
+                        this.app.setOrder('');
+                        this.app.clearNextSelectedTable = false;
+                    }
+                });
+            }
+        }
+        catch (error) {
+            // console.log('init _clearNextSelectedTable', error)
+        }
     }
-    selectItem(item) {
-        this.outPutLayoutTable.emit(item);
+    _setTable() {
+        this.app.selectededObject.subscribe(data => {
+            this.setTable.emit(data);
+        });
     }
-    selectOrder(item) {
-        this.outPutOrderSelected.emit(item);
+    clearLayout() {
+        this.app.performOperation.next('InitLayout');
     }
-    selectTableLayout(item) {
-        this.outPutLayoutTable.emit(item);
+    isJsonStructure(str) {
+        if (typeof str !== 'string')
+            return false;
+        try {
+            const result = JSON.parse(str);
+            const type = Object.prototype.toString.call(result);
+            return type === '[object Object]'
+                || type === '[object Array]';
+        }
+        catch (err) {
+            return false;
+        }
+    }
+    onZoom(value) {
+        this.app.zoom = value;
+        this.app.performOperation.next('ZOOM');
+    }
+    toggleMode(option) {
+        this.userMode = option;
+        this.app.userMode = option;
+        if (option) {
+            this.app.editRoom();
+        }
+        if (!option) {
+            this.app.endEditRoom();
+        }
+    }
+    performOperations() {
+        if (!this._performOperations) {
+            return;
+        }
+        this._performOperations.next(data => {
+            const result = data.split(';');
+            if (result[0] === 'setTableID') {
+                this.app.orderID = result[0];
+                this.app.setOrder(result[0]);
+                this.saveFloorPlan.emit(data);
+                return;
+            }
+            this.app.performOperation.next(data);
+        });
+    }
+    outPutSetTable() {
+        //this emits a request for a new orderID
+        //the orderID will be received
+        //the perform operation will be called and the delimiter with orderid will be position 2
+        //the orderID will be set
+        //the floorplan will be emitted.
+    }
+    enableLayout() {
+        this.app.performOperation.next('enableSelection');
+    }
+    displayLayout(item) {
+        this.app.performOperation.next('InitLayout');
+        this.getFloorPlan.emit(item);
+        if (this.userMode && !this.isAdmin) {
+            if (item) {
+                if (item.id) {
+                    this.app.disableSelection();
+                }
+            }
+        }
+    }
+    refreshObservable(item$) {
+        if (!this.userMode) {
+            return;
+        }
+        item$.pipe(repeatWhen(x => x.pipe(delay(3500)))).subscribe(data => {
+            // this.orderService.updateOrderSubscription(data)
+        });
     }
     insert(object, type) {
         if (this.app.roomEdit) {
@@ -2514,96 +2764,65 @@ class RoomLayoutDesignerComponent {
             this.insert(res, 'LAYOUT');
         });
     }
-    getCurrentFabricLayout() {
-        this.app.performOperation.next('json');
-    }
-    setOrderID() {
-        //assign the orderid to the current selected order.
-        this.app.setOrder('131390');
-    }
-    loadJSON() {
-        try {
-            this.app.loadJson(this.jsonValue);
-        }
-        catch (error) {
-            console.log(error);
-        }
-    }
-    clearLayout() {
-        this.app.clearLayout();
-    }
-    isJsonStructure(str) {
-        if (typeof str !== 'string')
-            return false;
-        try {
-            const result = JSON.parse(str);
-            const type = Object.prototype.toString.call(result);
-            return type === '[object Object]'
-                || type === '[object Array]';
-        }
-        catch (err) {
-            return false;
-        }
-    }
-    onZoom(value) {
-        this.app.zoom = value;
-        this.app.performOperation.next('ZOOM');
-    }
-    toggleMode() {
-        this.userMode = !this.userMode;
-        this.app.userMode = this.userMode;
-        this.app.roomEdit = !this.userMode;
-        this.loadJSON();
-    }
-    disableLayout() {
-        this.app.disableSeletion();
-    }
-    displayLayout(item) {
-        if (!this.userMode) {
-            return;
-        }
-        if (item) {
-            if (item.id) {
-                this.app.disableSeletion();
-                // this.currentLayout = item;
-            }
-        }
-    }
-    // refreshCurrentList() {
-    //   //use the same feature as the current order refresh.
-    //   if (!this.userMode) { return }
-    //   if (this.currentLayout) {
-    //   }
-    // }
-    refreshObservable(item$) {
-        if (!this.userMode) {
-            return;
-        }
-        item$.pipe(repeatWhen(x => x.pipe(delay(3500)))).subscribe(data => {
-            // this.orderService.updateOrderSubscription(data)
-        });
+    exampleFloor() {
+        this.floorPlan = {};
+        this.floorPlan.name = 'hello there';
+        this.floorPlan.enabled = true;
+        this.floorPlan.template = '{"version":"5.2.1","objects":[{"type":"line","version":"5.2.1","originX":"center","originY":"center","left":48,"top":288,"width":0,"height":480,"fill":"rgb(0,0,0)","stroke":"#000","strokeWidth":4,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"WALL:3","x1":0,"x2":0,"y1":240,"y2":-240},{"type":"line","version":"5.2.1","originX":"center","originY":"center","left":528,"top":528,"width":960,"height":0,"fill":"rgb(0,0,0)","stroke":"#000","strokeWidth":4,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"WALL:2","x1":480,"x2":-480,"y1":0,"y2":0},{"type":"line","version":"5.2.1","originX":"center","originY":"center","left":1008,"top":288,"width":0,"height":480,"fill":"rgb(0,0,0)","stroke":"#000","strokeWidth":4,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"WALL:1","x1":0,"x2":0,"y1":-240,"y2":240},{"type":"line","version":"5.2.1","originX":"center","originY":"center","left":528,"top":48,"width":960,"height":0,"fill":"rgb(0,0,0)","stroke":"#000","strokeWidth":4,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"WALL:0","x1":-480,"x2":480,"y1":0,"y2":0},{"type":"rect","version":"5.2.1","originX":"center","originY":"center","left":48,"top":48,"width":4,"height":4,"fill":"#000","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0,"name":"CORNER"},{"type":"rect","version":"5.2.1","originX":"center","originY":"center","left":1008,"top":48,"width":4,"height":4,"fill":"#000","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0,"name":"CORNER"},{"type":"rect","version":"5.2.1","originX":"center","originY":"center","left":1008,"top":528,"width":4,"height":4,"fill":"#000","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0,"name":"CORNER"},{"type":"rect","version":"5.2.1","originX":"center","originY":"center","left":48,"top":528,"width":4,"height":4,"fill":"#000","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0,"name":"CORNER"},{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":426.5,"top":132.5,"width":73,"height":73,"fill":"blue","stroke":"purple","strokeWidth":10,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"purple","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"f5fa4b51-984a-4606-88e5-b4e7793548f6;orderid;itemName;","objects":[{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":0,"top":-26,"width":19,"height":21,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":180,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"CHAIR:Generic","objects":[{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":-10.5,"width":18,"height":20,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0},{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":7.5,"width":18,"height":2,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0}]},{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":26,"top":0,"width":19,"height":21,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":270,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"CHAIR:Generic","objects":[{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":-10.5,"width":18,"height":20,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0},{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":7.5,"width":18,"height":2,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0}]},{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":0,"top":26,"width":19,"height":21,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":360,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"CHAIR:Generic","objects":[{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":-10.5,"width":18,"height":20,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0},{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":7.5,"width":18,"height":2,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0}]},{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":-26,"top":0,"width":19,"height":21,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":90,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"CHAIR:Generic","objects":[{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":-10.5,"width":18,"height":20,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0},{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":7.5,"width":18,"height":2,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0}]},{"type":"circle","version":"5.2.1","originX":"center","originY":"center","left":0,"top":0,"width":44,"height":44,"fill":"skyBlue","stroke":null,"strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"radius":22,"startAngle":0,"endAngle":360,"name":"f5fa4b51-984a-4606-88e5-b4e7793548f6;orderid;itemName;"}]},{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":500.42,"top":402.29,"width":81.38,"height":83,"fill":"blue","stroke":"purple","strokeWidth":10,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":2.07,"scaleY":2.07,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"purple","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"df32785b-4ec5-463e-863c-874e66c2b48c;orderid;itemName;","objects":[{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":0,"top":-31,"width":19,"height":21,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":180,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"CHAIR:Generic","objects":[{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":-10.5,"width":18,"height":20,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0},{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":7.5,"width":18,"height":2,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0}]},{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":26.85,"top":-15.5,"width":19,"height":21,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":240,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"CHAIR:Generic","objects":[{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":-10.5,"width":18,"height":20,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0},{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":7.5,"width":18,"height":2,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0}]},{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":26.85,"top":15.5,"width":19,"height":21,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":300,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"CHAIR:Generic","objects":[{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":-10.5,"width":18,"height":20,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0},{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":7.5,"width":18,"height":2,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0}]},{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":0,"top":31,"width":19,"height":21,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":360,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"CHAIR:Generic","objects":[{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":-10.5,"width":18,"height":20,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0},{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":7.5,"width":18,"height":2,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0}]},{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":-26.85,"top":15.5,"width":19,"height":21,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":60,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"CHAIR:Generic","objects":[{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":-10.5,"width":18,"height":20,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0},{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":7.5,"width":18,"height":2,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0}]},{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":-26.85,"top":-15.5,"width":19,"height":21,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":120,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"CHAIR:Generic","objects":[{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":-10.5,"width":18,"height":20,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0},{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":7.5,"width":18,"height":2,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0}]},{"type":"circle","version":"5.2.1","originX":"center","originY":"center","left":0,"top":0,"width":54,"height":54,"fill":"skyBlue","stroke":null,"strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"radius":27,"startAngle":0,"endAngle":360,"name":"df32785b-4ec5-463e-863c-874e66c2b48c;orderid;itemName;"}]},{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":565.5,"top":192.5,"width":73,"height":73,"fill":"blue","stroke":"purple","strokeWidth":10,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"purple","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"8393a512-7b3d-4e1b-8b68-3c6a4c123eac;orderid;itemName;","objects":[{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":0,"top":-26,"width":19,"height":21,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":180,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"CHAIR:Generic","objects":[{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":-10.5,"width":18,"height":20,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0},{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":7.5,"width":18,"height":2,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0}]},{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":26,"top":0,"width":19,"height":21,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":270,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"CHAIR:Generic","objects":[{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":-10.5,"width":18,"height":20,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0},{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":7.5,"width":18,"height":2,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0}]},{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":0,"top":26,"width":19,"height":21,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":360,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"CHAIR:Generic","objects":[{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":-10.5,"width":18,"height":20,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0},{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":7.5,"width":18,"height":2,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0}]},{"type":"group","version":"5.2.1","originX":"center","originY":"center","left":-26,"top":0,"width":19,"height":21,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":90,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"name":"CHAIR:Generic","objects":[{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":-10.5,"width":18,"height":20,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0},{"type":"rect","version":"5.2.1","originX":"left","originY":"top","left":-9.5,"top":7.5,"width":18,"height":2,"fill":"purple","stroke":"white","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"rx":0,"ry":0}]},{"type":"circle","version":"5.2.1","originX":"center","originY":"center","left":0,"top":0,"width":44,"height":44,"fill":"skyBlue","stroke":null,"strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"radius":22,"startAngle":0,"endAngle":360,"name":"8393a512-7b3d-4e1b-8b68-3c6a4c123eac;orderid;itemName;"}]},{"type":"text","version":"5.2.1","originX":"left","originY":"top","left":48,"top":564,"width":2,"height":13.56,"fill":"#999","stroke":null,"strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"fontFamily":"Arial","fontWeight":"normal","fontSize":12,"text":"","underline":false,"overline":false,"linethrough":false,"textAlign":"left","fontStyle":"normal","lineHeight":1.16,"textBackgroundColor":"","charSpacing":0,"styles":{},"direction":"ltr","path":null,"pathStartOffset":0,"pathSide":"left","pathAlign":"baseline"},{"type":"text","version":"5.2.1","originX":"left","originY":"top","left":48,"top":564,"width":2,"height":13.56,"fill":"#999","stroke":null,"strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"fontFamily":"Arial","fontWeight":"normal","fontSize":12,"text":"","underline":false,"overline":false,"linethrough":false,"textAlign":"left","fontStyle":"normal","lineHeight":1.16,"textBackgroundColor":"","charSpacing":0,"styles":{},"direction":"ltr","path":null,"pathStartOffset":0,"pathSide":"left","pathAlign":"baseline"}]}';
+        this.floorPlan.id = 1;
+        return this.floorPlan;
     }
 }
 RoomLayoutDesignerComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.3.4", ngImport: i0, type: RoomLayoutDesignerComponent, deps: [{ token: AppService }, { token: i9.FormBuilder }, { token: i1$1.MatDialog }], target: i0.ɵɵFactoryTarget.Component });
-RoomLayoutDesignerComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "12.0.0", version: "13.3.4", type: RoomLayoutDesignerComponent, selector: "pointless-room-layout-designer", inputs: { _userMode: "_userMode", userMode: "userMode", _jsonTemplateLists: "_jsonTemplateLists", jsonTemplate: "jsonTemplate", orderID: "orderID" }, outputs: { outPutOrderSelected: "outPutOrderSelected", outPutTemplate: "outPutTemplate", outPutLayoutTable: "outPutLayoutTable" }, ngImport: i0, template: "<mat-toolbar color=\"primary\">\r\n  <mat-toolbar-row>\r\n    <!-- <h1>Layout</h1> -->\r\n    <div class=\"layout-options-grid\" *ngIf=\"jsonTemplateLists; else jsonTemplates\">\r\n      Templates\r\n      <div *ngFor=\"let item of jsonTemplateLists\" >\r\n        <button mat-raised-button (click)=\"displayLayout(item)\">{{item.name}}</button>\r\n      </div>\r\n    </div>\r\n    <button mat-raised-button (click)=\"toggleMode()\">Toggle Mode</button>\r\n    <button mat-raised-button (click)=\"disableLayout()\">Disable Edit</button>\r\n    <ng-template #jsonTemplates>...loading</ng-template>\r\n  </mat-toolbar-row>\r\n</mat-toolbar>\r\n\r\n<mat-drawer-container hasBackdrop=\"false\">\r\n\r\n  <mat-drawer *ngIf=\"!userMode\" #drawer mode=\"side\" opened>\r\n    <mat-accordion class=\"rl-object-options\">\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Rooms\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-list>\r\n          <mat-divider></mat-divider>\r\n          <ng-container *ngFor=\"let room of furnishings.rooms\">\r\n            <mat-list-item (click)=\"insert(room, 'ROOM')\">\r\n              {{room.title}}\r\n            </mat-list-item>\r\n            <mat-divider></mat-divider>\r\n          </ng-container>\r\n        </mat-list>\r\n      </mat-expansion-panel>\r\n\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Doors\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-divider></mat-divider>\r\n        <div class=\"preview-layout\">\r\n          <div class=\"preview-item\" *ngFor=\"let door of furnishings.doors\">\r\n            <div (click)=\"insert(door, 'DOOR')\">\r\n              <pointless-preview-furniture [type]=\"'DOOR'\" [furniture]=\"door\"></pointless-preview-furniture>\r\n              <div class=\"preview-title\">{{door.title}}</div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </mat-expansion-panel>\r\n\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Windows\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-divider></mat-divider>\r\n        <div class=\"preview-layout\">\r\n          <div class=\"preview-item\" *ngFor=\"let window of furnishings.windows\">\r\n            <div (click)=\"insert(window, 'WINDOW')\">\r\n                <pointless-preview-furniture\r\n                    [type]=\"'WINDOW'\"\r\n                    [furniture]=\"window\">\r\n                </pointless-preview-furniture>\r\n              <div class=\"preview-title\">{{window.title}}</div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </mat-expansion-panel>\r\n\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Tables\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-divider></mat-divider>\r\n        <mat-form-field>\r\n          <mat-label>Default Chair</mat-label>\r\n          <mat-select [value]=\"defaultChairIndex\"\r\n                      (valueChange)=\"defaultChairChanged($event)\">\r\n            <mat-option *ngFor=\"let chair of furnishings.chairs; let i=index;\"\r\n                        [value]=\"i\">\r\n                {{chair.title}}\r\n            </mat-option>\r\n          </mat-select>\r\n        </mat-form-field>\r\n        <div class=\"preview-layout\">\r\n          <div class=\"preview-item\" *ngFor=\"let table of furnishings.tables\">\r\n            <div (click)=\"insert(table, 'TABLE')\">\r\n              <pointless-preview-furniture\r\n                  [type]=\"'TABLE'\"\r\n                  [furniture]=\"table\">\r\n              </pointless-preview-furniture>\r\n              <div class=\"preview-title\">{{table.title}}</div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </mat-expansion-panel>\r\n\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Chairs\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-divider></mat-divider>\r\n        <div class=\"preview-layout\">\r\n          <div class=\"preview-item\" *ngFor=\"let chair of furnishings.chairs\">\r\n            <div (click)=\"insert(chair, 'CHAIR')\">\r\n              <pointless-preview-furniture\r\n                  [type]=\"'CHAIR'\"\r\n                  [furniture]=\"chair\">\r\n              </pointless-preview-furniture>\r\n              <div class=\"preview-title\">{{chair.title}}</div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </mat-expansion-panel>\r\n\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Miscellaneous\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-divider></mat-divider>\r\n        <div class=\"preview-layout\">\r\n          <div class=\"preview-item\" *ngFor=\"let m of furnishings.miscellaneous\">\r\n            <div (click)=\"insert(m, 'MISCELLANEOUS')\">\r\n              <pointless-preview-furniture\r\n                  [type]=\"'MISCELLANEOUS'\"\r\n                  [furniture]=\"m\">\r\n              </pointless-preview-furniture>\r\n              <div class=\"preview-title\">{{m.title}}</div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </mat-expansion-panel>\r\n\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Text\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-divider></mat-divider>\r\n        <form [formGroup]=\"textForm\"\r\n              class=\"new-text\"\r\n              (ngSubmit)=\"insertNewText()\">\r\n          <mat-form-field>\r\n            <input matInput placeholder=\"Input text\" formControlName=\"text\">\r\n          </mat-form-field>\r\n          <mat-form-field>\r\n            <input matInput type=\"number\"\r\n                   placeholder=\"Font Size\"\r\n                   min=\"1\"\r\n                   max=\"200\"\r\n                   formControlName=\"font_size\">\r\n          </mat-form-field>\r\n          <div style=\"margin: 1rem 0\">\r\n            <mat-radio-group formControlName=\"direction\">\r\n              <mat-radio-button value=\"HORIZONTAL\">Horizontal</mat-radio-button>\r\n              <mat-radio-button value=\"VERTICAL\">Vertical</mat-radio-button>\r\n            </mat-radio-group>\r\n          </div>\r\n          <div style=\"margin: 2rem 12px\">\r\n            <button mat-raised-button color=\"primary\" type=\"submit\">Add text</button>\r\n          </div>\r\n        </form>\r\n      </mat-expansion-panel>\r\n\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Advanced\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-divider></mat-divider>\r\n        <div style=\"padding: 2rem\">\r\n          <button mat-raised-button\r\n                  color=\"primary\"\r\n                  style=\"width: 100%\"\r\n                  (click)=\"layoutChairs()\">\r\n            Layout chairs\r\n          </button>\r\n        </div>\r\n      </mat-expansion-panel>\r\n\r\n      <div >\r\n        <button mat-raised-button color=\"primary\" (click)=\"getCurrentFabricLayout()\">Save Layout</button>\r\n        <button mat-raised-button color=\"primary\" (click)=\"loadJSON()\">Load Layout</button>\r\n        <button mat-raised-button color=\"primary\" (click)=\"clearLayout()\">Clear Layout</button>\r\n      </div>\r\n\r\n      <div class=\"example-full-width\">\r\n        <mat-form-field  appearance=\"fill\">\r\n          <mat-label>JSON Result</mat-label>\r\n          <textarea  cdkTextareaAutosize\r\n                     matInput\r\n                     [(ngModel)]=\"jsonValue\"\r\n                     placeholder=\"JSON Result\"></textarea>\r\n        </mat-form-field>\r\n      </div>\r\n\r\n      <div>\r\n        <mat-form-field appearance=\"outline\">\r\n        <mat-label >OrderID</mat-label>\r\n        <input matInput\r\n              type=\"text\"\r\n              [(ngModel)]=\"app.orderID\"\r\n              class=\"form-control\" >\r\n        </mat-form-field>\r\n      </div>\r\n      <div>\r\n        <button mat-raised-button color=\"primary\" (click)=\"app.setOrder('131390')\">Set Order #</button>\r\n      </div>\r\n      <div>\r\n        <button mat-raised-button color=\"primary\" (click)=\"app.setObjectFillColor('red')\">Set Red</button>\r\n      </div>\r\n      <div>\r\n        <button mat-raised-button color=\"primary\" (click)=\"app.setObjectFillColor('green')\">Set  Green</button>\r\n      </div>\r\n    </mat-accordion>\r\n  </mat-drawer>\r\n\r\n  <mat-drawer-content>\r\n\r\n    <mat-toolbar  *ngIf=\"!userMode\" >\r\n      <mat-toolbar-row>\r\n        <div *ngIf=\"init\">\r\n          <ng-container *ngIf=\"!app.roomEdit\">\r\n            <button mat-icon-button matTooltip=\"Undo (Ctrl + Z)\" (click)=\"app.undo()\"\r\n              [disabled]=\"app.states.length === 1\">\r\n              <fa-icon [icon]=\"faReply\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Redo (Ctrl + Shift + Z)\" (click)=\"app.redo()\"\r\n              [disabled]=\"app.redoStates.length === 0\">\r\n              <fa-icon [icon]=\"faShare\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Clone (Ctrl + D)\" [disabled]=\"app.selections.length === 0\"\r\n              (click)=\"app.clone()\">\r\n              <fa-icon [icon]=\"faClone\"></fa-icon>\r\n            </button>\r\n            <!--  -->\r\n            <button mat-icon-button matTooltip=\"Delete (Delete)\" [disabled]=\"app.selections.length === 0\"\r\n              (click)=\"app.delete()\">\r\n              <fa-icon [icon]=\"faTrash\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Rotate Anti-Clockwise (Ctrl + Left Arrow)\"\r\n              [disabled]=\"app.selections.length === 0\" (click)=\"app.rotateAntiClockWise()\">\r\n              <fa-icon [icon]=\"faUndo\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Rotate Clockwise (Ctrl + Right Arrow)\"\r\n              [disabled]=\"app.selections.length === 0\" (click)=\"app.rotateClockWise()\">\r\n              <fa-icon [icon]=\"faRedo\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Group (Ctrl + G)\" [disabled]=\"app.selections.length < 2\"\r\n              (click)=\"app.group()\">\r\n              <fa-icon [icon]=\"faObjectGroup\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Ungroup (Ctrl + E)\" [disabled]=\"!app.ungroupable\"\r\n              (click)=\"app.ungroup()\">\r\n              <fa-icon [icon]=\"faObjectUngroup\"></fa-icon>\r\n            </button>\r\n            <button mat-button matTooltip=\"Arrange\" [matMenuTriggerFor]=\"arrange\">Arrange</button>\r\n            <button mat-raised-button matTooltip=\"Switch Edition Mode\" color=\"primary\"\r\n                    (click)=\"app.editRoom()\">Edit\r\n              Room</button>\r\n\r\n            <button mat-raised-button matTooltip=\"Switch Edition Mode\" color=\"primary\"\r\n                   (click)=\"app.setObjectFillColor('red')\">\r\n              Set Red\r\n            </button>\r\n\r\n          </ng-container>\r\n          <ng-container *ngIf=\"app.roomEdit\">\r\n            <button mat-icon-button matTooltip=\"Undo (Ctrl + Z)\" (click)=\"app.undo()\"\r\n              [disabled]=\"app.roomEditStates.length === 1\">\r\n              <fa-icon [icon]=\"faReply\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Redo (Ctrl + Shift + Z)\" (click)=\"app.redo()\"\r\n              [disabled]=\"app.roomEditRedoStates.length === 0\">\r\n              <fa-icon [icon]=\"faShare\"></fa-icon>\r\n            </button>\r\n            <button mat-button matTooltip=\"Switch Edition Mode\" color=\"primary\" *ngIf=\"app.roomEdit\"\r\n              (click)=\"app.endEditRoom()\">End Room Edition</button>\r\n          </ng-container>\r\n        </div>\r\n\r\n        <mat-menu #arrange=\"matMenu\">\r\n          <ng-template matMenuContent>\r\n            <button mat-menu-item (click)=\"app.arrange('LEFT')\" [disabled]=\"app.selections.length < 2\">Arrange Left</button>\r\n            <button mat-menu-item (click)=\"app.arrange('CENTER')\" [disabled]=\"app.selections.length < 2\">Arrange Center</button>\r\n            <button mat-menu-item (click)=\"app.arrange('RIGHT')\" [disabled]=\"app.selections.length < 2\">Arrange Right</button>\r\n            <button mat-menu-item (click)=\"app.arrange('TOP')\" [disabled]=\"app.selections.length < 2\">Arrange Top</button>\r\n            <button mat-menu-item (click)=\"app.arrange('MIDDLE')\" [disabled]=\"app.selections.length < 2\">Arrange Middle</button>\r\n            <button mat-menu-item (click)=\"app.arrange('BOTTOM')\" [disabled]=\"app.selections.length < 2\">Arrange Bottom</button>\r\n            <button mat-menu-item (click)=\"app.placeInCenter('HORIZONTAL')\">Center Horizontally</button>\r\n            <button mat-menu-item (click)=\"app.placeInCenter('VERTICAL')\">Center Vertically</button>\r\n          </ng-template>\r\n        </mat-menu>\r\n        <app-zoom (zoomChange)=\"onZoom($event)\" [zoom]=\"app.zoom\"></app-zoom>\r\n      </mat-toolbar-row>\r\n    </mat-toolbar>\r\n\r\n    <pointless-room-layout-view\r\n        (outPutSelectedItem)=\"selectItem($event)\"\r\n        [userMode]=\"userMode\">\r\n    </pointless-room-layout-view>\r\n\r\n    <table  *ngIf=\"!userMode\" class=\"status-bar\">\r\n      <tbody>\r\n        <tr class=\"status-bar-item\">\r\n          <td>Type</td>\r\n          <td>ID</td>\r\n          <td>Name</td>\r\n          <td>Left</td>\r\n          <td>Top</td>\r\n          <td>Rotation</td>\r\n          <td>Width</td>\r\n          <td>Height</td>\r\n          <td></td>\r\n        </tr>\r\n        <tr class=\"status-bar-item\" *ngFor=\"let selected of app.selections\">\r\n          <td><strong *ngIf=\"selected.name\">{{selected.name.split(';')[0] | titlecase}}</strong></td>\r\n          <td><strong *ngIf=\"selected.name\">{{selected.name.split(';')[1]}}</strong></td>\r\n          <td><strong *ngIf=\"selected.name\">{{selected.name.split(';')[2]}}</strong></td>\r\n          <td><strong>{{selected.left}}</strong></td>\r\n          <td><strong>{{selected.top}}</strong></td>\r\n          <td><strong>{{selected.angle}}'</strong></td>\r\n          <td><strong>{{selected.width}}</strong></td>\r\n          <td><strong>{{selected.height}}</strong></td>\r\n          <td>\r\n            <strong *ngIf=\"selected.name.split(':')[0] == 'TABLE'\">\r\n              {{selected._objects.length - 1}} Chairs\r\n            </strong>\r\n          </td>\r\n        </tr>\r\n      </tbody>\r\n    </table>\r\n\r\n  </mat-drawer-content>\r\n</mat-drawer-container>\r\n", styles: ["mat-drawer{width:350px}mat-drawer-container{height:calc(100% - 64px)}.preview-layout{display:flex;flex-wrap:wrap;justify-content:space-between;padding:8px}.preview-layout .preview-item{padding:8px;cursor:pointer}.preview-layout .preview-item:hover{background:white;box-shadow:0 3px 1px -2px #0003,0 2px 2px #00000024,0 1px 5px #0000001f}.preview-layout .preview-title{margin-top:8px;text-align:center}.status-bar{border-top:1px solid rgba(0,0,0,.12);background:#ececec;min-height:79px;width:100%}.status-bar .status-bar-item td{padding:10px;border-bottom:1px solid rgba(0,0,0,.12)}.status-bar .status-bar-item span{margin-right:15px}.new-text mat-radio-group{padding-left:12px}.new-text mat-radio-group mat-radio-button{margin-right:16px}.layout-options-grid{display:flex;flex-direction:row;margin:10px}mat-toolbar-row{justify-content:space-between}button{margin:10px}.example-full-width{max-height:200px;overflow-y:auto;overflow-x:hidden}\n"], components: [{ type: i4$2.MatToolbar, selector: "mat-toolbar", inputs: ["color"], exportAs: ["matToolbar"] }, { type: i1.MatButton, selector: "button[mat-button], button[mat-raised-button], button[mat-icon-button],             button[mat-fab], button[mat-mini-fab], button[mat-stroked-button],             button[mat-flat-button]", inputs: ["disabled", "disableRipple", "color"], exportAs: ["matButton"] }, { type: i6$1.MatDrawerContainer, selector: "mat-drawer-container", inputs: ["autosize", "hasBackdrop"], outputs: ["backdropClick"], exportAs: ["matDrawerContainer"] }, { type: i6$1.MatDrawer, selector: "mat-drawer", inputs: ["position", "mode", "disableClose", "autoFocus", "opened"], outputs: ["openedChange", "opened", "openedStart", "closed", "closedStart", "positionChanged"], exportAs: ["matDrawer"] }, { type: i7.MatExpansionPanel, selector: "mat-expansion-panel", inputs: ["disabled", "expanded", "hideToggle", "togglePosition"], outputs: ["opened", "closed", "expandedChange", "afterExpand", "afterCollapse"], exportAs: ["matExpansionPanel"] }, { type: i7.MatExpansionPanelHeader, selector: "mat-expansion-panel-header", inputs: ["tabIndex", "expandedHeight", "collapsedHeight"] }, { type: i8$1.MatList, selector: "mat-list, mat-action-list", inputs: ["disableRipple", "disabled"], exportAs: ["matList"] }, { type: i9$1.MatDivider, selector: "mat-divider", inputs: ["vertical", "inset"] }, { type: i8$1.MatListItem, selector: "mat-list-item, a[mat-list-item], button[mat-list-item]", inputs: ["disableRipple", "disabled"], exportAs: ["matListItem"] }, { type: PreviewFurnitureComponent, selector: "pointless-preview-furniture", inputs: ["type", "furniture"] }, { type: i4$1.MatFormField, selector: "mat-form-field", inputs: ["color", "appearance", "hideRequiredMarker", "hintLabel", "floatLabel"], exportAs: ["matFormField"] }, { type: i5.MatSelect, selector: "mat-select", inputs: ["disabled", "disableRipple", "tabIndex"], exportAs: ["matSelect"] }, { type: i6.MatOption, selector: "mat-option", exportAs: ["matOption"] }, { type: i2$1.MatRadioButton, selector: "mat-radio-button", inputs: ["disableRipple", "tabIndex"], exportAs: ["matRadioButton"] }, { type: i6$1.MatDrawerContent, selector: "mat-drawer-content" }, { type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "spin", "pulse", "mask", "styles", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "classes", "transform", "a11yRole"] }, { type: i16.MatMenu, selector: "mat-menu", exportAs: ["matMenu"] }, { type: i16.MatMenuItem, selector: "[mat-menu-item]", inputs: ["disabled", "disableRipple", "role"], exportAs: ["matMenuItem"] }, { type: ZoomComponent, selector: "app-zoom", inputs: ["zoom"], outputs: ["zoomChange"] }, { type: ViewComponent, selector: "pointless-room-layout-view", inputs: ["userMode"], outputs: ["outPutSelectedItem"] }], directives: [{ type: i4$2.MatToolbarRow, selector: "mat-toolbar-row", exportAs: ["matToolbarRow"] }, { type: i10.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { type: i10.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { type: i7.MatAccordion, selector: "mat-accordion", inputs: ["multi", "hideToggle", "displayMode", "togglePosition"], exportAs: ["matAccordion"] }, { type: i7.MatExpansionPanelTitle, selector: "mat-panel-title" }, { type: i4$1.MatLabel, selector: "mat-label" }, { type: i9.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { type: i9.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { type: i9.FormGroupDirective, selector: "[formGroup]", inputs: ["formGroup"], outputs: ["ngSubmit"], exportAs: ["ngForm"] }, { type: i11.MatInput, selector: "input[matInput], textarea[matInput], select[matNativeControl],      input[matNativeControl], textarea[matNativeControl]", inputs: ["disabled", "id", "placeholder", "name", "required", "type", "errorStateMatcher", "aria-describedby", "value", "readonly"], exportAs: ["matInput"] }, { type: i9.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { type: i9.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { type: i9.FormControlName, selector: "[formControlName]", inputs: ["formControlName", "disabled", "ngModel"], outputs: ["ngModelChange"] }, { type: i9.MinValidator, selector: "input[type=number][min][formControlName],input[type=number][min][formControl],input[type=number][min][ngModel]", inputs: ["min"] }, { type: i9.MaxValidator, selector: "input[type=number][max][formControlName],input[type=number][max][formControl],input[type=number][max][ngModel]", inputs: ["max"] }, { type: i9.NumberValueAccessor, selector: "input[type=number][formControlName],input[type=number][formControl],input[type=number][ngModel]" }, { type: i2$1.MatRadioGroup, selector: "mat-radio-group", exportAs: ["matRadioGroup"] }, { type: i21.CdkTextareaAutosize, selector: "textarea[cdkTextareaAutosize]", inputs: ["cdkAutosizeMinRows", "cdkAutosizeMaxRows", "cdkTextareaAutosize", "placeholder"], exportAs: ["cdkTextareaAutosize"] }, { type: i9.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }, { type: i4.MatTooltip, selector: "[matTooltip]", exportAs: ["matTooltip"] }, { type: i16.MatMenuTrigger, selector: "[mat-menu-trigger-for], [matMenuTriggerFor]", exportAs: ["matMenuTrigger"] }, { type: i16.MatMenuContent, selector: "ng-template[matMenuContent]" }], pipes: { "titlecase": i10.TitleCasePipe } });
+RoomLayoutDesignerComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "12.0.0", version: "13.3.4", type: RoomLayoutDesignerComponent, selector: "pointless-room-layout-designer", inputs: { isAdmin: "isAdmin", userMode: "userMode", _zoom: "_zoom", _userMode: "_userMode", _clearNextSelectedTable: "_clearNextSelectedTable", changeObjectColor: "changeObjectColor", floorPlan: "floorPlan", _floorPlan: "_floorPlan", _setTableInfo: "_setTableInfo", _newOrder: "_newOrder", orderID: "orderID", _performOperations: "_performOperations", _setOrder: "_setOrder", toggleButtonHidden: "toggleButtonHidden" }, outputs: { saveFloorPlan: "saveFloorPlan", newFloorPlan: "newFloorPlan", setFloorPlanAndTable: "setFloorPlanAndTable", getFloorPlan: "getFloorPlan", setTable: "setTable", outPutJSON: "outPutJSON" }, viewQueries: [{ propertyName: "layoutObjects", first: true, predicate: ["layoutObjects"], descendants: true }, { propertyName: "roomLayout", first: true, predicate: ["roomLayout"], descendants: true }], ngImport: i0, template: "<button *ngIf=\"!toggleButtonHidden\" mat-raised-button (click)=\"toggleUserMode()\">toggle</button>\r\n\r\n<mat-drawer-container hasBackdrop=\"false\">\r\n\r\n  <mat-drawer *ngIf=\"!userMode\" #drawer mode=\"side\" opened>\r\n    <mat-accordion class=\"rl-object-options\">\r\n      <span [hidden]=\"!floorPlan\">\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Rooms\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-list>\r\n            <mat-divider></mat-divider>\r\n            <ng-container *ngFor=\"let room of furnishings.rooms\">\r\n              <mat-list-item (click)=\"insert(room, 'ROOM')\">\r\n                {{room.title}}\r\n              </mat-list-item>\r\n              <mat-divider></mat-divider>\r\n            </ng-container>\r\n          </mat-list>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Doors\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-divider></mat-divider>\r\n          <div class=\"preview-layout\">\r\n            <div class=\"preview-item\" *ngFor=\"let door of furnishings.doors\">\r\n              <div (click)=\"insert(door, 'DOOR')\">\r\n                <pointless-preview-furniture [type]=\"'DOOR'\" [furniture]=\"door\"></pointless-preview-furniture>\r\n                <div class=\"preview-title\">{{door.title}}</div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Windows\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-divider></mat-divider>\r\n          <div class=\"preview-layout\">\r\n            <div class=\"preview-item\" *ngFor=\"let window of furnishings.windows\">\r\n              <div (click)=\"insert(window, 'WINDOW')\">\r\n                  <pointless-preview-furniture\r\n                      [type]=\"'WINDOW'\"\r\n                      [furniture]=\"window\">\r\n                  </pointless-preview-furniture>\r\n                <div class=\"preview-title\">{{window.title}}</div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Tables\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-divider></mat-divider>\r\n          <mat-form-field>\r\n            <mat-label>Default Chair</mat-label>\r\n            <mat-select [value]=\"defaultChairIndex\"\r\n                        (valueChange)=\"defaultChairChanged($event)\">\r\n              <mat-option *ngFor=\"let chair of furnishings.chairs; let i=index;\"\r\n                          [value]=\"i\">\r\n                  {{chair.title}}\r\n              </mat-option>\r\n            </mat-select>\r\n          </mat-form-field>\r\n\r\n          <div class=\"preview-layout\">\r\n            <div class=\"preview-item\" *ngFor=\"let table of furnishings.tables\">\r\n              <div (click)=\"insert(table, 'TABLE')\">\r\n                <pointless-preview-furniture\r\n                    [type]=\"'TABLE'\"\r\n                    [furniture]=\"table\">\r\n                </pointless-preview-furniture>\r\n                <div class=\"preview-title\">{{table.title}}</div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Chairs\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-divider></mat-divider>\r\n          <div class=\"preview-layout\">\r\n            <div class=\"preview-item\" *ngFor=\"let chair of furnishings.chairs\">\r\n              <div (click)=\"insert(chair, 'CHAIR')\">\r\n                <pointless-preview-furniture\r\n                    [type]=\"'CHAIR'\"\r\n                    [furniture]=\"chair\">\r\n                </pointless-preview-furniture>\r\n                <div class=\"preview-title\">{{chair.title}}</div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Miscellaneous\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-divider></mat-divider>\r\n          <div class=\"preview-layout\">\r\n            <div class=\"preview-item\" *ngFor=\"let m of furnishings.miscellaneous\">\r\n              <div (click)=\"insert(m, 'MISCELLANEOUS')\">\r\n                <pointless-preview-furniture\r\n                    [type]=\"'MISCELLANEOUS'\"\r\n                    [furniture]=\"m\">\r\n                </pointless-preview-furniture>\r\n                <div class=\"preview-title\">{{m.title}}</div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Text\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-divider></mat-divider>\r\n          <form [formGroup]=\"textForm\"\r\n                class=\"new-text\"\r\n                (ngSubmit)=\"insertNewText()\">\r\n            <mat-form-field>\r\n              <input matInput placeholder=\"Input text\" formControlName=\"text\">\r\n            </mat-form-field>\r\n            <mat-form-field>\r\n              <input matInput type=\"number\"\r\n                    placeholder=\"Font Size\"\r\n                    min=\"1\"\r\n                    max=\"200\"\r\n                    formControlName=\"font_size\">\r\n            </mat-form-field>\r\n            <div style=\"margin: 1rem 0\">\r\n              <mat-radio-group formControlName=\"direction\">\r\n                <mat-radio-button value=\"HORIZONTAL\">Horizontal</mat-radio-button>\r\n                <mat-radio-button value=\"VERTICAL\">Vertical</mat-radio-button>\r\n              </mat-radio-group>\r\n            </div>\r\n            <div style=\"margin: 2rem 12px\">\r\n              <button mat-raised-button color=\"primary\" type=\"submit\">Add text</button>\r\n            </div>\r\n          </form>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Advanced\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-divider></mat-divider>\r\n          <div style=\"padding: 2rem\">\r\n            <button mat-raised-button\r\n                    color=\"primary\"\r\n                    style=\"width: 100%\"\r\n                    (click)=\"layoutChairs()\">\r\n              Layout chairs\r\n            </button>\r\n          </div>\r\n        </mat-expansion-panel>\r\n\r\n      </span>\r\n\r\n      <h3>Layout</h3>\r\n      <div class=\"grid-buttons\">\r\n        <div>\r\n          <button class=\"buttons\" mat-raised-button color=\"primary\"\r\n                  (click)=\"_saveFloorPlan()\">\r\n            <mat-icon>save</mat-icon>Save </button>\r\n        </div>\r\n\r\n        <div>\r\n          <button class=\"buttons\"  mat-raised-button color=\"primary\"\r\n                 (click)=\"loadTemplate()\">\r\n            <mat-icon>refresh</mat-icon>Refresh </button>\r\n        </div>\r\n\r\n        <div>\r\n          <button class=\"buttons\"  mat-raised-button color=\"primary\"\r\n                  (click)=\"app.setOrder('131390')\">\r\n            Set Order #</button>\r\n        </div>\r\n\r\n        <div>\r\n          <button class=\"buttons\"  mat-raised-button color=\"primary\"\r\n                 (click)=\"clearTable()\">\r\n           Clear Table</button>\r\n        </div>\r\n\r\n        <div>\r\n          <button class=\"buttons\"  mat-raised-button color=\"primary\"\r\n                  (click)=\"app.setObjectFillColor('red')\">\r\n            Set Red</button>\r\n        </div>\r\n\r\n        <div>\r\n          <button class=\"buttons\"  mat-raised-button color=\"primary\"\r\n                 (click)=\"app.setObjectFillColor('green')\">\r\n            Set  Green</button>\r\n        </div>\r\n      </div>\r\n\r\n      <div *ngIf=\"floorPlan\">\r\n        <div>\r\n            <mat-form-field appearance=\"outline\">\r\n            <mat-label >Name</mat-label>\r\n            <input matInput\r\n                  type=\"text\"\r\n                  [(ngModel)]=\"floorPlan.name\"\r\n                  class=\"form-control\" >\r\n            </mat-form-field>\r\n        </div>\r\n\r\n        <div>\r\n          <mat-form-field appearance=\"outline\">\r\n          <mat-label >Height</mat-label>\r\n          <input matInput\r\n                type=\"text\"\r\n                [(ngModel)]=\"floorPlan.height\"\r\n                class=\"form-control\" >\r\n          </mat-form-field>\r\n        </div>\r\n        <div>\r\n            <mat-form-field appearance=\"outline\">\r\n            <mat-label >Width</mat-label>\r\n            <input matInput\r\n                  type=\"text\"\r\n                  [(ngModel)]=\"floorPlan.width\"\r\n                  class=\"form-control\" >\r\n            </mat-form-field>\r\n        </div>\r\n        <div>\r\n          <mat-form-field appearance=\"outline\">\r\n          <mat-label >OrderID</mat-label>\r\n          <input matInput\r\n                type=\"text\"\r\n                [(ngModel)]=\"app.orderID\"\r\n                class=\"form-control\" >\r\n          </mat-form-field>\r\n        </div>\r\n        <div>\r\n          <mat-form-field appearance=\"outline\">\r\n          <mat-label >Image</mat-label>\r\n          <input matInput\r\n                type=\"text\"\r\n                (change)=\"changeBackGroundImage()\"\r\n                [(ngModel)]=\"floorPlan.image\"\r\n                class=\"form-control\" >\r\n          </mat-form-field>\r\n        </div>\r\n\r\n        <div class=\"example-full-width\">\r\n          <mat-form-field  appearance=\"fill\" >\r\n            <mat-label>Floor Plan Result</mat-label>\r\n            <textarea  cdkTextareaAutosize\r\n                      matInput\r\n                      rows = 5\r\n                      class=\"floor-plan-json\"\r\n                      [(ngModel)]=\"floorPlan.template\"\r\n                      placeholder=\"Floor plan Result\"></textarea>\r\n          </mat-form-field>\r\n        </div>\r\n\r\n      </div>\r\n\r\n    </mat-accordion>\r\n  </mat-drawer>\r\n\r\n  <mat-drawer-content>\r\n    <mat-toolbar  *ngIf=\"!userMode && floorPlan\" >\r\n      <mat-toolbar-row>\r\n\r\n        <div *ngIf=\"init\">\r\n\r\n          <ng-container *ngIf=\"!app.roomEdit\">\r\n            <button mat-icon-button matTooltip=\"Undo (Ctrl + Z)\" (click)=\"app.undo()\"\r\n              [disabled]=\"app.states.length === 1\">\r\n              <fa-icon [icon]=\"faReply\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Redo (Ctrl + Shift + Z)\"\r\n                    (click)=\"app.redo()\"\r\n                    [disabled]=\"app.redoStates.length === 0\">\r\n              <fa-icon [icon]=\"faShare\"></fa-icon>\r\n            </button>\r\n\r\n            <button mat-icon-button\r\n              [disabled]=\"app.selections.length === 0\"\r\n              matTooltip=\"Delete (Delete)\"\r\n              (click)=\"app.delete()\">\r\n              <fa-icon [icon]=\"faTrash\"></fa-icon>\r\n            </button>\r\n\r\n            <button mat-icon-button matTooltip=\"Rotate Anti-Clockwise (Ctrl + Left Arrow)\"\r\n              [disabled]=\"app.selections.length === 0\" (click)=\"app.rotateAntiClockWise()\">\r\n              <fa-icon [icon]=\"faUndo\"></fa-icon>\r\n            </button>\r\n\r\n            <button mat-icon-button matTooltip=\"Rotate Clockwise (Ctrl + Right Arrow)\"\r\n              [disabled]=\"app.selections.length === 0\" (click)=\"app.rotateClockWise()\">\r\n              <fa-icon [icon]=\"faRedo\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Group (Ctrl + G)\" [disabled]=\"app.selections.length < 2\"\r\n              (click)=\"app.group()\">\r\n              <fa-icon [icon]=\"faObjectGroup\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Ungroup (Ctrl + E)\" [disabled]=\"!app.ungroupable\"\r\n              (click)=\"app.ungroup()\">\r\n              <fa-icon [icon]=\"faObjectUngroup\"></fa-icon>\r\n            </button>\r\n            <button mat-button matTooltip=\"Arrange\" [matMenuTriggerFor]=\"arrange\">Arrange</button>\r\n            <button mat-button matTooltip=\"Switch Edition Mode\" color=\"primary\"\r\n                    (click)=\"app.endEditRoom()\">Set Room</button>\r\n            <button mat-icon-button matTooltip=\"Undo (Ctrl + Z)\" (click)=\"app.undo()\"\r\n              [disabled]=\"app.roomEditStates.length === 1\">\r\n              <fa-icon [icon]=\"faReply\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Redo (Ctrl + Shift + Z)\" (click)=\"app.redo()\"\r\n              [disabled]=\"app.roomEditRedoStates.length === 0\">\r\n              <fa-icon [icon]=\"faShare\"></fa-icon>\r\n            </button>\r\n            <button mat-button matTooltip=\"Switch Edition Mode\" color=\"primary\"\r\n              (click)=\"app.endEditRoom()\">Edit Room</button>\r\n          </ng-container>\r\n        </div>\r\n\r\n        <mat-menu #arrange=\"matMenu\">\r\n          <ng-template matMenuContent>\r\n            <button mat-menu-item (click)=\"app.arrange('LEFT')\" [disabled]=\"app.selections.length < 2\">Arrange Left</button>\r\n            <button mat-menu-item (click)=\"app.arrange('CENTER')\" [disabled]=\"app.selections.length < 2\">Arrange Center</button>\r\n            <button mat-menu-item (click)=\"app.arrange('RIGHT')\" [disabled]=\"app.selections.length < 2\">Arrange Right</button>\r\n            <button mat-menu-item (click)=\"app.arrange('TOP')\" [disabled]=\"app.selections.length < 2\">Arrange Top</button>\r\n            <button mat-menu-item (click)=\"app.arrange('MIDDLE')\" [disabled]=\"app.selections.length < 2\">Arrange Middle</button>\r\n            <button mat-menu-item (click)=\"app.arrange('BOTTOM')\" [disabled]=\"app.selections.length < 2\">Arrange Bottom</button>\r\n            <button mat-menu-item (click)=\"app.placeInCenter('HORIZONTAL')\">Center Horizontally</button>\r\n            <button mat-menu-item (click)=\"app.placeInCenter('VERTICAL')\">Center Vertically</button>\r\n          </ng-template>\r\n        </mat-menu>\r\n        <app-zoom (zoomChange)=\"onZoom($event)\" [zoom]=\"app.zoom\"></app-zoom>\r\n      </mat-toolbar-row>\r\n    </mat-toolbar>\r\n\r\n      <pointless-room-layout-view\r\n          [userMode]=\"userMode\">\r\n      </pointless-room-layout-view>\r\n\r\n      <table  *ngIf=\"!userMode || isAdmin\" class=\"status-bar\">\r\n        <tbody>\r\n          <tr class=\"status-bar-item\">\r\n            <td>ID</td>\r\n            <td>Name</td>\r\n          </tr>\r\n\r\n          <tr class=\"status-bar-item\" *ngFor=\"let selected of app.selections\">\r\n\r\n            <td *ngIf=\"selected && selected?.name\">\r\n              <mat-form-field appearance=\"outline\">\r\n              <mat-label >OrderID {{selected?.name.split(';')[1]}}</mat-label>\r\n              <input matInput\r\n                    type=\"text\"\r\n                    [(ngModel)]=\"app.orderID\"\r\n                    (change)=\"app.setOrder(app.orderID)\"\r\n                    class=\"form-control\" >\r\n              </mat-form-field>\r\n              <span>\r\n                <button mat-raised-button (click)=\"app.setOrder('')\">Clear</button>\r\n              </span>\r\n            </td>\r\n\r\n            <td *ngIf=\"selected && selected?.name\">\r\n              <mat-form-field appearance=\"outline\">\r\n              <mat-label >Name: {{selected?.name.split(';')[2]}}</mat-label>\r\n              <input matInput\r\n                    type=\"text\"\r\n                    [(ngModel)]=\"app.tableName\"\r\n                    (change)=\"app.setTable(app.tableName)\"\r\n                    class=\"form-control\" >\r\n              </mat-form-field>\r\n              <span>\r\n                <button mat-raised-button (click)=\"app.setTable('')\">Clear</button>\r\n              </span>\r\n\r\n            </td>\r\n\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n\r\n  </mat-drawer-content>\r\n</mat-drawer-container>\r\n\r\n", styles: ["mat-drawer{width:350px}mat-drawer-container{height:calc(100% - 64px)}.h3{margin:5px}.preview-layout{display:flex;flex-wrap:wrap;justify-content:space-between;padding:8px}.preview-layout .preview-item{padding:8px;cursor:pointer}.preview-layout .preview-item:hover{box-shadow:0 3px 1px -2px #0003,0 2px 2px #00000024,0 1px 5px #0000001f}.preview-layout .preview-title{margin-top:8px;text-align:center}.status-bar{min-height:79px;width:100%}.status-bar .status-bar-item td{padding:10px}.status-bar .status-bar-item span{margin-right:15px}.new-text mat-radio-group{padding-left:12px}.new-text mat-radio-group mat-radio-button{margin-right:16px}.layout-options-grid{display:flex;flex-direction:row;margin:10px}mat-toolbar-row{justify-content:space-between}button{margin:10px}.example-full-width{max-height:210px;overflow-y:hidden;overflow-x:hidden}.floor-plan-json{max-height:75px;overflow-y:auto;overflow-x:hidden}.buttons{width:120px}.grid-buttons{display:grid;grid-gap:5px;gap:5px;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));overflow-y:visible;max-width:260px}\n"], components: [{ type: i1.MatButton, selector: "button[mat-button], button[mat-raised-button], button[mat-icon-button],             button[mat-fab], button[mat-mini-fab], button[mat-stroked-button],             button[mat-flat-button]", inputs: ["disabled", "disableRipple", "color"], exportAs: ["matButton"] }, { type: i5$1.MatDrawerContainer, selector: "mat-drawer-container", inputs: ["autosize", "hasBackdrop"], outputs: ["backdropClick"], exportAs: ["matDrawerContainer"] }, { type: i5$1.MatDrawer, selector: "mat-drawer", inputs: ["position", "mode", "disableClose", "autoFocus", "opened"], outputs: ["openedChange", "opened", "openedStart", "closed", "closedStart", "positionChanged"], exportAs: ["matDrawer"] }, { type: i6$1.MatExpansionPanel, selector: "mat-expansion-panel", inputs: ["disabled", "expanded", "hideToggle", "togglePosition"], outputs: ["opened", "closed", "expandedChange", "afterExpand", "afterCollapse"], exportAs: ["matExpansionPanel"] }, { type: i6$1.MatExpansionPanelHeader, selector: "mat-expansion-panel-header", inputs: ["tabIndex", "expandedHeight", "collapsedHeight"] }, { type: i7.MatList, selector: "mat-list, mat-action-list", inputs: ["disableRipple", "disabled"], exportAs: ["matList"] }, { type: i8$1.MatDivider, selector: "mat-divider", inputs: ["vertical", "inset"] }, { type: i7.MatListItem, selector: "mat-list-item, a[mat-list-item], button[mat-list-item]", inputs: ["disableRipple", "disabled"], exportAs: ["matListItem"] }, { type: PreviewFurnitureComponent, selector: "pointless-preview-furniture", inputs: ["type", "furniture"] }, { type: i4$1.MatFormField, selector: "mat-form-field", inputs: ["color", "appearance", "hideRequiredMarker", "hintLabel", "floatLabel"], exportAs: ["matFormField"] }, { type: i5.MatSelect, selector: "mat-select", inputs: ["disabled", "disableRipple", "tabIndex"], exportAs: ["matSelect"] }, { type: i6.MatOption, selector: "mat-option", exportAs: ["matOption"] }, { type: i2$1.MatRadioButton, selector: "mat-radio-button", inputs: ["disableRipple", "tabIndex"], exportAs: ["matRadioButton"] }, { type: i14.MatIcon, selector: "mat-icon", inputs: ["color", "inline", "svgIcon", "fontSet", "fontIcon"], exportAs: ["matIcon"] }, { type: i5$1.MatDrawerContent, selector: "mat-drawer-content" }, { type: i15.MatToolbar, selector: "mat-toolbar", inputs: ["color"], exportAs: ["matToolbar"] }, { type: i2.FaIconComponent, selector: "fa-icon", inputs: ["icon", "title", "spin", "pulse", "mask", "styles", "flip", "size", "pull", "border", "inverse", "symbol", "rotate", "fixedWidth", "classes", "transform", "a11yRole"] }, { type: i17.MatMenu, selector: "mat-menu", exportAs: ["matMenu"] }, { type: i17.MatMenuItem, selector: "[mat-menu-item]", inputs: ["disabled", "disableRipple", "role"], exportAs: ["matMenuItem"] }, { type: ZoomComponent, selector: "app-zoom", inputs: ["zoom"], outputs: ["zoomChange"] }, { type: ViewComponent, selector: "pointless-room-layout-view", inputs: ["userMode"], outputs: ["outPutSelectedItem"] }], directives: [{ type: i10.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { type: i6$1.MatAccordion, selector: "mat-accordion", inputs: ["multi", "hideToggle", "displayMode", "togglePosition"], exportAs: ["matAccordion"] }, { type: i6$1.MatExpansionPanelTitle, selector: "mat-panel-title" }, { type: i10.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { type: i4$1.MatLabel, selector: "mat-label" }, { type: i9.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { type: i9.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { type: i9.FormGroupDirective, selector: "[formGroup]", inputs: ["formGroup"], outputs: ["ngSubmit"], exportAs: ["ngForm"] }, { type: i11.MatInput, selector: "input[matInput], textarea[matInput], select[matNativeControl],      input[matNativeControl], textarea[matNativeControl]", inputs: ["disabled", "id", "placeholder", "name", "required", "type", "errorStateMatcher", "aria-describedby", "value", "readonly"], exportAs: ["matInput"] }, { type: i9.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { type: i9.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { type: i9.FormControlName, selector: "[formControlName]", inputs: ["formControlName", "disabled", "ngModel"], outputs: ["ngModelChange"] }, { type: i9.MinValidator, selector: "input[type=number][min][formControlName],input[type=number][min][formControl],input[type=number][min][ngModel]", inputs: ["min"] }, { type: i9.MaxValidator, selector: "input[type=number][max][formControlName],input[type=number][max][formControl],input[type=number][max][ngModel]", inputs: ["max"] }, { type: i9.NumberValueAccessor, selector: "input[type=number][formControlName],input[type=number][formControl],input[type=number][ngModel]" }, { type: i2$1.MatRadioGroup, selector: "mat-radio-group", exportAs: ["matRadioGroup"] }, { type: i9.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }, { type: i22.CdkTextareaAutosize, selector: "textarea[cdkTextareaAutosize]", inputs: ["cdkAutosizeMinRows", "cdkAutosizeMaxRows", "cdkTextareaAutosize", "placeholder"], exportAs: ["cdkTextareaAutosize"] }, { type: i15.MatToolbarRow, selector: "mat-toolbar-row", exportAs: ["matToolbarRow"] }, { type: i4.MatTooltip, selector: "[matTooltip]", exportAs: ["matTooltip"] }, { type: i17.MatMenuTrigger, selector: "[mat-menu-trigger-for], [matMenuTriggerFor]", exportAs: ["matMenuTrigger"] }, { type: i17.MatMenuContent, selector: "ng-template[matMenuContent]" }] });
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.3.4", ngImport: i0, type: RoomLayoutDesignerComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'pointless-room-layout-designer', template: "<mat-toolbar color=\"primary\">\r\n  <mat-toolbar-row>\r\n    <!-- <h1>Layout</h1> -->\r\n    <div class=\"layout-options-grid\" *ngIf=\"jsonTemplateLists; else jsonTemplates\">\r\n      Templates\r\n      <div *ngFor=\"let item of jsonTemplateLists\" >\r\n        <button mat-raised-button (click)=\"displayLayout(item)\">{{item.name}}</button>\r\n      </div>\r\n    </div>\r\n    <button mat-raised-button (click)=\"toggleMode()\">Toggle Mode</button>\r\n    <button mat-raised-button (click)=\"disableLayout()\">Disable Edit</button>\r\n    <ng-template #jsonTemplates>...loading</ng-template>\r\n  </mat-toolbar-row>\r\n</mat-toolbar>\r\n\r\n<mat-drawer-container hasBackdrop=\"false\">\r\n\r\n  <mat-drawer *ngIf=\"!userMode\" #drawer mode=\"side\" opened>\r\n    <mat-accordion class=\"rl-object-options\">\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Rooms\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-list>\r\n          <mat-divider></mat-divider>\r\n          <ng-container *ngFor=\"let room of furnishings.rooms\">\r\n            <mat-list-item (click)=\"insert(room, 'ROOM')\">\r\n              {{room.title}}\r\n            </mat-list-item>\r\n            <mat-divider></mat-divider>\r\n          </ng-container>\r\n        </mat-list>\r\n      </mat-expansion-panel>\r\n\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Doors\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-divider></mat-divider>\r\n        <div class=\"preview-layout\">\r\n          <div class=\"preview-item\" *ngFor=\"let door of furnishings.doors\">\r\n            <div (click)=\"insert(door, 'DOOR')\">\r\n              <pointless-preview-furniture [type]=\"'DOOR'\" [furniture]=\"door\"></pointless-preview-furniture>\r\n              <div class=\"preview-title\">{{door.title}}</div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </mat-expansion-panel>\r\n\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Windows\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-divider></mat-divider>\r\n        <div class=\"preview-layout\">\r\n          <div class=\"preview-item\" *ngFor=\"let window of furnishings.windows\">\r\n            <div (click)=\"insert(window, 'WINDOW')\">\r\n                <pointless-preview-furniture\r\n                    [type]=\"'WINDOW'\"\r\n                    [furniture]=\"window\">\r\n                </pointless-preview-furniture>\r\n              <div class=\"preview-title\">{{window.title}}</div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </mat-expansion-panel>\r\n\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Tables\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-divider></mat-divider>\r\n        <mat-form-field>\r\n          <mat-label>Default Chair</mat-label>\r\n          <mat-select [value]=\"defaultChairIndex\"\r\n                      (valueChange)=\"defaultChairChanged($event)\">\r\n            <mat-option *ngFor=\"let chair of furnishings.chairs; let i=index;\"\r\n                        [value]=\"i\">\r\n                {{chair.title}}\r\n            </mat-option>\r\n          </mat-select>\r\n        </mat-form-field>\r\n        <div class=\"preview-layout\">\r\n          <div class=\"preview-item\" *ngFor=\"let table of furnishings.tables\">\r\n            <div (click)=\"insert(table, 'TABLE')\">\r\n              <pointless-preview-furniture\r\n                  [type]=\"'TABLE'\"\r\n                  [furniture]=\"table\">\r\n              </pointless-preview-furniture>\r\n              <div class=\"preview-title\">{{table.title}}</div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </mat-expansion-panel>\r\n\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Chairs\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-divider></mat-divider>\r\n        <div class=\"preview-layout\">\r\n          <div class=\"preview-item\" *ngFor=\"let chair of furnishings.chairs\">\r\n            <div (click)=\"insert(chair, 'CHAIR')\">\r\n              <pointless-preview-furniture\r\n                  [type]=\"'CHAIR'\"\r\n                  [furniture]=\"chair\">\r\n              </pointless-preview-furniture>\r\n              <div class=\"preview-title\">{{chair.title}}</div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </mat-expansion-panel>\r\n\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Miscellaneous\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-divider></mat-divider>\r\n        <div class=\"preview-layout\">\r\n          <div class=\"preview-item\" *ngFor=\"let m of furnishings.miscellaneous\">\r\n            <div (click)=\"insert(m, 'MISCELLANEOUS')\">\r\n              <pointless-preview-furniture\r\n                  [type]=\"'MISCELLANEOUS'\"\r\n                  [furniture]=\"m\">\r\n              </pointless-preview-furniture>\r\n              <div class=\"preview-title\">{{m.title}}</div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </mat-expansion-panel>\r\n\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Text\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-divider></mat-divider>\r\n        <form [formGroup]=\"textForm\"\r\n              class=\"new-text\"\r\n              (ngSubmit)=\"insertNewText()\">\r\n          <mat-form-field>\r\n            <input matInput placeholder=\"Input text\" formControlName=\"text\">\r\n          </mat-form-field>\r\n          <mat-form-field>\r\n            <input matInput type=\"number\"\r\n                   placeholder=\"Font Size\"\r\n                   min=\"1\"\r\n                   max=\"200\"\r\n                   formControlName=\"font_size\">\r\n          </mat-form-field>\r\n          <div style=\"margin: 1rem 0\">\r\n            <mat-radio-group formControlName=\"direction\">\r\n              <mat-radio-button value=\"HORIZONTAL\">Horizontal</mat-radio-button>\r\n              <mat-radio-button value=\"VERTICAL\">Vertical</mat-radio-button>\r\n            </mat-radio-group>\r\n          </div>\r\n          <div style=\"margin: 2rem 12px\">\r\n            <button mat-raised-button color=\"primary\" type=\"submit\">Add text</button>\r\n          </div>\r\n        </form>\r\n      </mat-expansion-panel>\r\n\r\n      <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n          <mat-panel-title>\r\n            Advanced\r\n          </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <mat-divider></mat-divider>\r\n        <div style=\"padding: 2rem\">\r\n          <button mat-raised-button\r\n                  color=\"primary\"\r\n                  style=\"width: 100%\"\r\n                  (click)=\"layoutChairs()\">\r\n            Layout chairs\r\n          </button>\r\n        </div>\r\n      </mat-expansion-panel>\r\n\r\n      <div >\r\n        <button mat-raised-button color=\"primary\" (click)=\"getCurrentFabricLayout()\">Save Layout</button>\r\n        <button mat-raised-button color=\"primary\" (click)=\"loadJSON()\">Load Layout</button>\r\n        <button mat-raised-button color=\"primary\" (click)=\"clearLayout()\">Clear Layout</button>\r\n      </div>\r\n\r\n      <div class=\"example-full-width\">\r\n        <mat-form-field  appearance=\"fill\">\r\n          <mat-label>JSON Result</mat-label>\r\n          <textarea  cdkTextareaAutosize\r\n                     matInput\r\n                     [(ngModel)]=\"jsonValue\"\r\n                     placeholder=\"JSON Result\"></textarea>\r\n        </mat-form-field>\r\n      </div>\r\n\r\n      <div>\r\n        <mat-form-field appearance=\"outline\">\r\n        <mat-label >OrderID</mat-label>\r\n        <input matInput\r\n              type=\"text\"\r\n              [(ngModel)]=\"app.orderID\"\r\n              class=\"form-control\" >\r\n        </mat-form-field>\r\n      </div>\r\n      <div>\r\n        <button mat-raised-button color=\"primary\" (click)=\"app.setOrder('131390')\">Set Order #</button>\r\n      </div>\r\n      <div>\r\n        <button mat-raised-button color=\"primary\" (click)=\"app.setObjectFillColor('red')\">Set Red</button>\r\n      </div>\r\n      <div>\r\n        <button mat-raised-button color=\"primary\" (click)=\"app.setObjectFillColor('green')\">Set  Green</button>\r\n      </div>\r\n    </mat-accordion>\r\n  </mat-drawer>\r\n\r\n  <mat-drawer-content>\r\n\r\n    <mat-toolbar  *ngIf=\"!userMode\" >\r\n      <mat-toolbar-row>\r\n        <div *ngIf=\"init\">\r\n          <ng-container *ngIf=\"!app.roomEdit\">\r\n            <button mat-icon-button matTooltip=\"Undo (Ctrl + Z)\" (click)=\"app.undo()\"\r\n              [disabled]=\"app.states.length === 1\">\r\n              <fa-icon [icon]=\"faReply\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Redo (Ctrl + Shift + Z)\" (click)=\"app.redo()\"\r\n              [disabled]=\"app.redoStates.length === 0\">\r\n              <fa-icon [icon]=\"faShare\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Clone (Ctrl + D)\" [disabled]=\"app.selections.length === 0\"\r\n              (click)=\"app.clone()\">\r\n              <fa-icon [icon]=\"faClone\"></fa-icon>\r\n            </button>\r\n            <!--  -->\r\n            <button mat-icon-button matTooltip=\"Delete (Delete)\" [disabled]=\"app.selections.length === 0\"\r\n              (click)=\"app.delete()\">\r\n              <fa-icon [icon]=\"faTrash\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Rotate Anti-Clockwise (Ctrl + Left Arrow)\"\r\n              [disabled]=\"app.selections.length === 0\" (click)=\"app.rotateAntiClockWise()\">\r\n              <fa-icon [icon]=\"faUndo\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Rotate Clockwise (Ctrl + Right Arrow)\"\r\n              [disabled]=\"app.selections.length === 0\" (click)=\"app.rotateClockWise()\">\r\n              <fa-icon [icon]=\"faRedo\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Group (Ctrl + G)\" [disabled]=\"app.selections.length < 2\"\r\n              (click)=\"app.group()\">\r\n              <fa-icon [icon]=\"faObjectGroup\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Ungroup (Ctrl + E)\" [disabled]=\"!app.ungroupable\"\r\n              (click)=\"app.ungroup()\">\r\n              <fa-icon [icon]=\"faObjectUngroup\"></fa-icon>\r\n            </button>\r\n            <button mat-button matTooltip=\"Arrange\" [matMenuTriggerFor]=\"arrange\">Arrange</button>\r\n            <button mat-raised-button matTooltip=\"Switch Edition Mode\" color=\"primary\"\r\n                    (click)=\"app.editRoom()\">Edit\r\n              Room</button>\r\n\r\n            <button mat-raised-button matTooltip=\"Switch Edition Mode\" color=\"primary\"\r\n                   (click)=\"app.setObjectFillColor('red')\">\r\n              Set Red\r\n            </button>\r\n\r\n          </ng-container>\r\n          <ng-container *ngIf=\"app.roomEdit\">\r\n            <button mat-icon-button matTooltip=\"Undo (Ctrl + Z)\" (click)=\"app.undo()\"\r\n              [disabled]=\"app.roomEditStates.length === 1\">\r\n              <fa-icon [icon]=\"faReply\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Redo (Ctrl + Shift + Z)\" (click)=\"app.redo()\"\r\n              [disabled]=\"app.roomEditRedoStates.length === 0\">\r\n              <fa-icon [icon]=\"faShare\"></fa-icon>\r\n            </button>\r\n            <button mat-button matTooltip=\"Switch Edition Mode\" color=\"primary\" *ngIf=\"app.roomEdit\"\r\n              (click)=\"app.endEditRoom()\">End Room Edition</button>\r\n          </ng-container>\r\n        </div>\r\n\r\n        <mat-menu #arrange=\"matMenu\">\r\n          <ng-template matMenuContent>\r\n            <button mat-menu-item (click)=\"app.arrange('LEFT')\" [disabled]=\"app.selections.length < 2\">Arrange Left</button>\r\n            <button mat-menu-item (click)=\"app.arrange('CENTER')\" [disabled]=\"app.selections.length < 2\">Arrange Center</button>\r\n            <button mat-menu-item (click)=\"app.arrange('RIGHT')\" [disabled]=\"app.selections.length < 2\">Arrange Right</button>\r\n            <button mat-menu-item (click)=\"app.arrange('TOP')\" [disabled]=\"app.selections.length < 2\">Arrange Top</button>\r\n            <button mat-menu-item (click)=\"app.arrange('MIDDLE')\" [disabled]=\"app.selections.length < 2\">Arrange Middle</button>\r\n            <button mat-menu-item (click)=\"app.arrange('BOTTOM')\" [disabled]=\"app.selections.length < 2\">Arrange Bottom</button>\r\n            <button mat-menu-item (click)=\"app.placeInCenter('HORIZONTAL')\">Center Horizontally</button>\r\n            <button mat-menu-item (click)=\"app.placeInCenter('VERTICAL')\">Center Vertically</button>\r\n          </ng-template>\r\n        </mat-menu>\r\n        <app-zoom (zoomChange)=\"onZoom($event)\" [zoom]=\"app.zoom\"></app-zoom>\r\n      </mat-toolbar-row>\r\n    </mat-toolbar>\r\n\r\n    <pointless-room-layout-view\r\n        (outPutSelectedItem)=\"selectItem($event)\"\r\n        [userMode]=\"userMode\">\r\n    </pointless-room-layout-view>\r\n\r\n    <table  *ngIf=\"!userMode\" class=\"status-bar\">\r\n      <tbody>\r\n        <tr class=\"status-bar-item\">\r\n          <td>Type</td>\r\n          <td>ID</td>\r\n          <td>Name</td>\r\n          <td>Left</td>\r\n          <td>Top</td>\r\n          <td>Rotation</td>\r\n          <td>Width</td>\r\n          <td>Height</td>\r\n          <td></td>\r\n        </tr>\r\n        <tr class=\"status-bar-item\" *ngFor=\"let selected of app.selections\">\r\n          <td><strong *ngIf=\"selected.name\">{{selected.name.split(';')[0] | titlecase}}</strong></td>\r\n          <td><strong *ngIf=\"selected.name\">{{selected.name.split(';')[1]}}</strong></td>\r\n          <td><strong *ngIf=\"selected.name\">{{selected.name.split(';')[2]}}</strong></td>\r\n          <td><strong>{{selected.left}}</strong></td>\r\n          <td><strong>{{selected.top}}</strong></td>\r\n          <td><strong>{{selected.angle}}'</strong></td>\r\n          <td><strong>{{selected.width}}</strong></td>\r\n          <td><strong>{{selected.height}}</strong></td>\r\n          <td>\r\n            <strong *ngIf=\"selected.name.split(':')[0] == 'TABLE'\">\r\n              {{selected._objects.length - 1}} Chairs\r\n            </strong>\r\n          </td>\r\n        </tr>\r\n      </tbody>\r\n    </table>\r\n\r\n  </mat-drawer-content>\r\n</mat-drawer-container>\r\n", styles: ["mat-drawer{width:350px}mat-drawer-container{height:calc(100% - 64px)}.preview-layout{display:flex;flex-wrap:wrap;justify-content:space-between;padding:8px}.preview-layout .preview-item{padding:8px;cursor:pointer}.preview-layout .preview-item:hover{background:white;box-shadow:0 3px 1px -2px #0003,0 2px 2px #00000024,0 1px 5px #0000001f}.preview-layout .preview-title{margin-top:8px;text-align:center}.status-bar{border-top:1px solid rgba(0,0,0,.12);background:#ececec;min-height:79px;width:100%}.status-bar .status-bar-item td{padding:10px;border-bottom:1px solid rgba(0,0,0,.12)}.status-bar .status-bar-item span{margin-right:15px}.new-text mat-radio-group{padding-left:12px}.new-text mat-radio-group mat-radio-button{margin-right:16px}.layout-options-grid{display:flex;flex-direction:row;margin:10px}mat-toolbar-row{justify-content:space-between}button{margin:10px}.example-full-width{max-height:200px;overflow-y:auto;overflow-x:hidden}\n"] }]
-        }], ctorParameters: function () { return [{ type: AppService }, { type: i9.FormBuilder }, { type: i1$1.MatDialog }]; }, propDecorators: { _userMode: [{
+            args: [{ selector: 'pointless-room-layout-designer', template: "<button *ngIf=\"!toggleButtonHidden\" mat-raised-button (click)=\"toggleUserMode()\">toggle</button>\r\n\r\n<mat-drawer-container hasBackdrop=\"false\">\r\n\r\n  <mat-drawer *ngIf=\"!userMode\" #drawer mode=\"side\" opened>\r\n    <mat-accordion class=\"rl-object-options\">\r\n      <span [hidden]=\"!floorPlan\">\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Rooms\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-list>\r\n            <mat-divider></mat-divider>\r\n            <ng-container *ngFor=\"let room of furnishings.rooms\">\r\n              <mat-list-item (click)=\"insert(room, 'ROOM')\">\r\n                {{room.title}}\r\n              </mat-list-item>\r\n              <mat-divider></mat-divider>\r\n            </ng-container>\r\n          </mat-list>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Doors\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-divider></mat-divider>\r\n          <div class=\"preview-layout\">\r\n            <div class=\"preview-item\" *ngFor=\"let door of furnishings.doors\">\r\n              <div (click)=\"insert(door, 'DOOR')\">\r\n                <pointless-preview-furniture [type]=\"'DOOR'\" [furniture]=\"door\"></pointless-preview-furniture>\r\n                <div class=\"preview-title\">{{door.title}}</div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Windows\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-divider></mat-divider>\r\n          <div class=\"preview-layout\">\r\n            <div class=\"preview-item\" *ngFor=\"let window of furnishings.windows\">\r\n              <div (click)=\"insert(window, 'WINDOW')\">\r\n                  <pointless-preview-furniture\r\n                      [type]=\"'WINDOW'\"\r\n                      [furniture]=\"window\">\r\n                  </pointless-preview-furniture>\r\n                <div class=\"preview-title\">{{window.title}}</div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Tables\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-divider></mat-divider>\r\n          <mat-form-field>\r\n            <mat-label>Default Chair</mat-label>\r\n            <mat-select [value]=\"defaultChairIndex\"\r\n                        (valueChange)=\"defaultChairChanged($event)\">\r\n              <mat-option *ngFor=\"let chair of furnishings.chairs; let i=index;\"\r\n                          [value]=\"i\">\r\n                  {{chair.title}}\r\n              </mat-option>\r\n            </mat-select>\r\n          </mat-form-field>\r\n\r\n          <div class=\"preview-layout\">\r\n            <div class=\"preview-item\" *ngFor=\"let table of furnishings.tables\">\r\n              <div (click)=\"insert(table, 'TABLE')\">\r\n                <pointless-preview-furniture\r\n                    [type]=\"'TABLE'\"\r\n                    [furniture]=\"table\">\r\n                </pointless-preview-furniture>\r\n                <div class=\"preview-title\">{{table.title}}</div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Chairs\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-divider></mat-divider>\r\n          <div class=\"preview-layout\">\r\n            <div class=\"preview-item\" *ngFor=\"let chair of furnishings.chairs\">\r\n              <div (click)=\"insert(chair, 'CHAIR')\">\r\n                <pointless-preview-furniture\r\n                    [type]=\"'CHAIR'\"\r\n                    [furniture]=\"chair\">\r\n                </pointless-preview-furniture>\r\n                <div class=\"preview-title\">{{chair.title}}</div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Miscellaneous\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-divider></mat-divider>\r\n          <div class=\"preview-layout\">\r\n            <div class=\"preview-item\" *ngFor=\"let m of furnishings.miscellaneous\">\r\n              <div (click)=\"insert(m, 'MISCELLANEOUS')\">\r\n                <pointless-preview-furniture\r\n                    [type]=\"'MISCELLANEOUS'\"\r\n                    [furniture]=\"m\">\r\n                </pointless-preview-furniture>\r\n                <div class=\"preview-title\">{{m.title}}</div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Text\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-divider></mat-divider>\r\n          <form [formGroup]=\"textForm\"\r\n                class=\"new-text\"\r\n                (ngSubmit)=\"insertNewText()\">\r\n            <mat-form-field>\r\n              <input matInput placeholder=\"Input text\" formControlName=\"text\">\r\n            </mat-form-field>\r\n            <mat-form-field>\r\n              <input matInput type=\"number\"\r\n                    placeholder=\"Font Size\"\r\n                    min=\"1\"\r\n                    max=\"200\"\r\n                    formControlName=\"font_size\">\r\n            </mat-form-field>\r\n            <div style=\"margin: 1rem 0\">\r\n              <mat-radio-group formControlName=\"direction\">\r\n                <mat-radio-button value=\"HORIZONTAL\">Horizontal</mat-radio-button>\r\n                <mat-radio-button value=\"VERTICAL\">Vertical</mat-radio-button>\r\n              </mat-radio-group>\r\n            </div>\r\n            <div style=\"margin: 2rem 12px\">\r\n              <button mat-raised-button color=\"primary\" type=\"submit\">Add text</button>\r\n            </div>\r\n          </form>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-expansion-panel>\r\n          <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n              Advanced\r\n            </mat-panel-title>\r\n          </mat-expansion-panel-header>\r\n          <mat-divider></mat-divider>\r\n          <div style=\"padding: 2rem\">\r\n            <button mat-raised-button\r\n                    color=\"primary\"\r\n                    style=\"width: 100%\"\r\n                    (click)=\"layoutChairs()\">\r\n              Layout chairs\r\n            </button>\r\n          </div>\r\n        </mat-expansion-panel>\r\n\r\n      </span>\r\n\r\n      <h3>Layout</h3>\r\n      <div class=\"grid-buttons\">\r\n        <div>\r\n          <button class=\"buttons\" mat-raised-button color=\"primary\"\r\n                  (click)=\"_saveFloorPlan()\">\r\n            <mat-icon>save</mat-icon>Save </button>\r\n        </div>\r\n\r\n        <div>\r\n          <button class=\"buttons\"  mat-raised-button color=\"primary\"\r\n                 (click)=\"loadTemplate()\">\r\n            <mat-icon>refresh</mat-icon>Refresh </button>\r\n        </div>\r\n\r\n        <div>\r\n          <button class=\"buttons\"  mat-raised-button color=\"primary\"\r\n                  (click)=\"app.setOrder('131390')\">\r\n            Set Order #</button>\r\n        </div>\r\n\r\n        <div>\r\n          <button class=\"buttons\"  mat-raised-button color=\"primary\"\r\n                 (click)=\"clearTable()\">\r\n           Clear Table</button>\r\n        </div>\r\n\r\n        <div>\r\n          <button class=\"buttons\"  mat-raised-button color=\"primary\"\r\n                  (click)=\"app.setObjectFillColor('red')\">\r\n            Set Red</button>\r\n        </div>\r\n\r\n        <div>\r\n          <button class=\"buttons\"  mat-raised-button color=\"primary\"\r\n                 (click)=\"app.setObjectFillColor('green')\">\r\n            Set  Green</button>\r\n        </div>\r\n      </div>\r\n\r\n      <div *ngIf=\"floorPlan\">\r\n        <div>\r\n            <mat-form-field appearance=\"outline\">\r\n            <mat-label >Name</mat-label>\r\n            <input matInput\r\n                  type=\"text\"\r\n                  [(ngModel)]=\"floorPlan.name\"\r\n                  class=\"form-control\" >\r\n            </mat-form-field>\r\n        </div>\r\n\r\n        <div>\r\n          <mat-form-field appearance=\"outline\">\r\n          <mat-label >Height</mat-label>\r\n          <input matInput\r\n                type=\"text\"\r\n                [(ngModel)]=\"floorPlan.height\"\r\n                class=\"form-control\" >\r\n          </mat-form-field>\r\n        </div>\r\n        <div>\r\n            <mat-form-field appearance=\"outline\">\r\n            <mat-label >Width</mat-label>\r\n            <input matInput\r\n                  type=\"text\"\r\n                  [(ngModel)]=\"floorPlan.width\"\r\n                  class=\"form-control\" >\r\n            </mat-form-field>\r\n        </div>\r\n        <div>\r\n          <mat-form-field appearance=\"outline\">\r\n          <mat-label >OrderID</mat-label>\r\n          <input matInput\r\n                type=\"text\"\r\n                [(ngModel)]=\"app.orderID\"\r\n                class=\"form-control\" >\r\n          </mat-form-field>\r\n        </div>\r\n        <div>\r\n          <mat-form-field appearance=\"outline\">\r\n          <mat-label >Image</mat-label>\r\n          <input matInput\r\n                type=\"text\"\r\n                (change)=\"changeBackGroundImage()\"\r\n                [(ngModel)]=\"floorPlan.image\"\r\n                class=\"form-control\" >\r\n          </mat-form-field>\r\n        </div>\r\n\r\n        <div class=\"example-full-width\">\r\n          <mat-form-field  appearance=\"fill\" >\r\n            <mat-label>Floor Plan Result</mat-label>\r\n            <textarea  cdkTextareaAutosize\r\n                      matInput\r\n                      rows = 5\r\n                      class=\"floor-plan-json\"\r\n                      [(ngModel)]=\"floorPlan.template\"\r\n                      placeholder=\"Floor plan Result\"></textarea>\r\n          </mat-form-field>\r\n        </div>\r\n\r\n      </div>\r\n\r\n    </mat-accordion>\r\n  </mat-drawer>\r\n\r\n  <mat-drawer-content>\r\n    <mat-toolbar  *ngIf=\"!userMode && floorPlan\" >\r\n      <mat-toolbar-row>\r\n\r\n        <div *ngIf=\"init\">\r\n\r\n          <ng-container *ngIf=\"!app.roomEdit\">\r\n            <button mat-icon-button matTooltip=\"Undo (Ctrl + Z)\" (click)=\"app.undo()\"\r\n              [disabled]=\"app.states.length === 1\">\r\n              <fa-icon [icon]=\"faReply\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Redo (Ctrl + Shift + Z)\"\r\n                    (click)=\"app.redo()\"\r\n                    [disabled]=\"app.redoStates.length === 0\">\r\n              <fa-icon [icon]=\"faShare\"></fa-icon>\r\n            </button>\r\n\r\n            <button mat-icon-button\r\n              [disabled]=\"app.selections.length === 0\"\r\n              matTooltip=\"Delete (Delete)\"\r\n              (click)=\"app.delete()\">\r\n              <fa-icon [icon]=\"faTrash\"></fa-icon>\r\n            </button>\r\n\r\n            <button mat-icon-button matTooltip=\"Rotate Anti-Clockwise (Ctrl + Left Arrow)\"\r\n              [disabled]=\"app.selections.length === 0\" (click)=\"app.rotateAntiClockWise()\">\r\n              <fa-icon [icon]=\"faUndo\"></fa-icon>\r\n            </button>\r\n\r\n            <button mat-icon-button matTooltip=\"Rotate Clockwise (Ctrl + Right Arrow)\"\r\n              [disabled]=\"app.selections.length === 0\" (click)=\"app.rotateClockWise()\">\r\n              <fa-icon [icon]=\"faRedo\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Group (Ctrl + G)\" [disabled]=\"app.selections.length < 2\"\r\n              (click)=\"app.group()\">\r\n              <fa-icon [icon]=\"faObjectGroup\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Ungroup (Ctrl + E)\" [disabled]=\"!app.ungroupable\"\r\n              (click)=\"app.ungroup()\">\r\n              <fa-icon [icon]=\"faObjectUngroup\"></fa-icon>\r\n            </button>\r\n            <button mat-button matTooltip=\"Arrange\" [matMenuTriggerFor]=\"arrange\">Arrange</button>\r\n            <button mat-button matTooltip=\"Switch Edition Mode\" color=\"primary\"\r\n                    (click)=\"app.endEditRoom()\">Set Room</button>\r\n            <button mat-icon-button matTooltip=\"Undo (Ctrl + Z)\" (click)=\"app.undo()\"\r\n              [disabled]=\"app.roomEditStates.length === 1\">\r\n              <fa-icon [icon]=\"faReply\"></fa-icon>\r\n            </button>\r\n            <button mat-icon-button matTooltip=\"Redo (Ctrl + Shift + Z)\" (click)=\"app.redo()\"\r\n              [disabled]=\"app.roomEditRedoStates.length === 0\">\r\n              <fa-icon [icon]=\"faShare\"></fa-icon>\r\n            </button>\r\n            <button mat-button matTooltip=\"Switch Edition Mode\" color=\"primary\"\r\n              (click)=\"app.endEditRoom()\">Edit Room</button>\r\n          </ng-container>\r\n        </div>\r\n\r\n        <mat-menu #arrange=\"matMenu\">\r\n          <ng-template matMenuContent>\r\n            <button mat-menu-item (click)=\"app.arrange('LEFT')\" [disabled]=\"app.selections.length < 2\">Arrange Left</button>\r\n            <button mat-menu-item (click)=\"app.arrange('CENTER')\" [disabled]=\"app.selections.length < 2\">Arrange Center</button>\r\n            <button mat-menu-item (click)=\"app.arrange('RIGHT')\" [disabled]=\"app.selections.length < 2\">Arrange Right</button>\r\n            <button mat-menu-item (click)=\"app.arrange('TOP')\" [disabled]=\"app.selections.length < 2\">Arrange Top</button>\r\n            <button mat-menu-item (click)=\"app.arrange('MIDDLE')\" [disabled]=\"app.selections.length < 2\">Arrange Middle</button>\r\n            <button mat-menu-item (click)=\"app.arrange('BOTTOM')\" [disabled]=\"app.selections.length < 2\">Arrange Bottom</button>\r\n            <button mat-menu-item (click)=\"app.placeInCenter('HORIZONTAL')\">Center Horizontally</button>\r\n            <button mat-menu-item (click)=\"app.placeInCenter('VERTICAL')\">Center Vertically</button>\r\n          </ng-template>\r\n        </mat-menu>\r\n        <app-zoom (zoomChange)=\"onZoom($event)\" [zoom]=\"app.zoom\"></app-zoom>\r\n      </mat-toolbar-row>\r\n    </mat-toolbar>\r\n\r\n      <pointless-room-layout-view\r\n          [userMode]=\"userMode\">\r\n      </pointless-room-layout-view>\r\n\r\n      <table  *ngIf=\"!userMode || isAdmin\" class=\"status-bar\">\r\n        <tbody>\r\n          <tr class=\"status-bar-item\">\r\n            <td>ID</td>\r\n            <td>Name</td>\r\n          </tr>\r\n\r\n          <tr class=\"status-bar-item\" *ngFor=\"let selected of app.selections\">\r\n\r\n            <td *ngIf=\"selected && selected?.name\">\r\n              <mat-form-field appearance=\"outline\">\r\n              <mat-label >OrderID {{selected?.name.split(';')[1]}}</mat-label>\r\n              <input matInput\r\n                    type=\"text\"\r\n                    [(ngModel)]=\"app.orderID\"\r\n                    (change)=\"app.setOrder(app.orderID)\"\r\n                    class=\"form-control\" >\r\n              </mat-form-field>\r\n              <span>\r\n                <button mat-raised-button (click)=\"app.setOrder('')\">Clear</button>\r\n              </span>\r\n            </td>\r\n\r\n            <td *ngIf=\"selected && selected?.name\">\r\n              <mat-form-field appearance=\"outline\">\r\n              <mat-label >Name: {{selected?.name.split(';')[2]}}</mat-label>\r\n              <input matInput\r\n                    type=\"text\"\r\n                    [(ngModel)]=\"app.tableName\"\r\n                    (change)=\"app.setTable(app.tableName)\"\r\n                    class=\"form-control\" >\r\n              </mat-form-field>\r\n              <span>\r\n                <button mat-raised-button (click)=\"app.setTable('')\">Clear</button>\r\n              </span>\r\n\r\n            </td>\r\n\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n\r\n  </mat-drawer-content>\r\n</mat-drawer-container>\r\n\r\n", styles: ["mat-drawer{width:350px}mat-drawer-container{height:calc(100% - 64px)}.h3{margin:5px}.preview-layout{display:flex;flex-wrap:wrap;justify-content:space-between;padding:8px}.preview-layout .preview-item{padding:8px;cursor:pointer}.preview-layout .preview-item:hover{box-shadow:0 3px 1px -2px #0003,0 2px 2px #00000024,0 1px 5px #0000001f}.preview-layout .preview-title{margin-top:8px;text-align:center}.status-bar{min-height:79px;width:100%}.status-bar .status-bar-item td{padding:10px}.status-bar .status-bar-item span{margin-right:15px}.new-text mat-radio-group{padding-left:12px}.new-text mat-radio-group mat-radio-button{margin-right:16px}.layout-options-grid{display:flex;flex-direction:row;margin:10px}mat-toolbar-row{justify-content:space-between}button{margin:10px}.example-full-width{max-height:210px;overflow-y:hidden;overflow-x:hidden}.floor-plan-json{max-height:75px;overflow-y:auto;overflow-x:hidden}.buttons{width:120px}.grid-buttons{display:grid;grid-gap:5px;gap:5px;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));overflow-y:visible;max-width:260px}\n"] }]
+        }], ctorParameters: function () { return [{ type: AppService }, { type: i9.FormBuilder }, { type: i1$1.MatDialog }]; }, propDecorators: { layoutObjects: [{
+                type: ViewChild,
+                args: ['layoutObjects']
+            }], roomLayout: [{
+                type: ViewChild,
+                args: ['roomLayout']
+            }], isAdmin: [{
                 type: Input
             }], userMode: [{
                 type: Input
-            }], _jsonTemplateLists: [{
+            }], _zoom: [{
                 type: Input
-            }], jsonTemplate: [{
+            }], _userMode: [{
+                type: Input
+            }], _clearNextSelectedTable: [{
+                type: Input
+            }], changeObjectColor: [{
+                type: Input
+            }], floorPlan: [{
+                type: Input
+            }], _floorPlan: [{
+                type: Input
+            }], _setTableInfo: [{
+                type: Input
+            }], _newOrder: [{
                 type: Input
             }], orderID: [{
                 type: Input
-            }], outPutOrderSelected: [{
+            }], _performOperations: [{
+                type: Input
+            }], _setOrder: [{
+                type: Input
+            }], saveFloorPlan: [{
                 type: Output
-            }], outPutTemplate: [{
+            }], newFloorPlan: [{
                 type: Output
-            }], outPutLayoutTable: [{
+            }], toggleButtonHidden: [{
+                type: Input
+            }], setFloorPlanAndTable: [{
+                type: Output
+            }], getFloorPlan: [{
+                type: Output
+            }], setTable: [{
+                type: Output
+            }], outPutJSON: [{
                 type: Output
             }] } });
 
