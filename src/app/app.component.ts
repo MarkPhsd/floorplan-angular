@@ -1,19 +1,19 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { UntypedFormGroup,  UntypedFormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faReply,
-  faShare,
-  faClone,
-  faTrash,
-  faUndo,
-  faRedo,
-  faObjectGroup,
-  faObjectUngroup,
-  faPlus,
-  faMinus
-} from '@fortawesome/free-solid-svg-icons';
+// import { library } from '@fortawesome/fontawesome-svg-core';
+// import {
+//   faReply,
+//   faShare,
+//   faClone,
+//   faTrash,
+//   faUndo,
+//   faRedo,
+//   faObjectGroup,
+//   faObjectUngroup,
+//   faPlus,
+//   faMinus
+// } from '@fortawesome/free-solid-svg-icons';
 
 import { FURNISHINGS } from './models/furnishings';
 import { AppService, uuidList } from './app.service';
@@ -23,7 +23,7 @@ import { delay, repeatWhen  } from 'rxjs/operators';
 import * as uuid from 'uuid';
 import { FakeDataService } from './fake-data.service';
 
-library.add(faReply, faShare, faClone, faTrash, faUndo, faRedo, faObjectGroup, faObjectUngroup, faMinus, faPlus);
+// library.add(faReply, faShare, faClone, faTrash, faUndo, faRedo, faObjectGroup, faObjectUngroup, faMinus, faPlus);
 
 // https://stackoverflow.com/questions/38974896/call-child-component-method-from-parent-class-angular
 export interface IFloorPlan {
@@ -82,17 +82,17 @@ export class RoomLayoutDesignerComponent implements OnInit, OnDestroy {
   previewItem = null;
   previewType = null;
 
-  // icons
-  faReply = faReply;
-  faShare = faShare;
-  faClone = faClone;
-  faTrash = faTrash;
-  faUndo  = faUndo;
-  faRedo  = faRedo;
-  faObjectGroup = faObjectGroup;
-  faObjectUngroup = faObjectUngroup;
-  faPlus  = faPlus;
-  faMinus = faMinus;
+  // // icons
+  // faReply = faReply;
+  // faShare = faShare;
+  // faClone = faClone;
+  // faTrash = faTrash;
+  // faUndo  = faUndo;
+  // faRedo  = faRedo;
+  // faObjectGroup = faObjectGroup;
+  // faObjectUngroup = faObjectUngroup;
+  // faPlus  = faPlus;
+  // faMinus = faMinus;
 
   constructor(public app: AppService,
               private fb: UntypedFormBuilder,
@@ -160,6 +160,11 @@ export class RoomLayoutDesignerComponent implements OnInit, OnDestroy {
   }
 
   _setTableSelectedColor() {
+    if (!this.changeObjectColor) {
+      console.log('no changeObjectColor')
+      return;
+    }
+
     this.changeObjectColor.subscribe(list => {
       console.log(list, this.floorPlan)
       if ( list && list.length>0 ) {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+// import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-zoom',
@@ -15,8 +15,8 @@ export class ZoomComponent implements OnInit {
   zoomChange = new EventEmitter();
 
   // icons
-  faMinus = faMinus;
-  faPlus = faPlus;
+  // faMinus = faMinus;
+  // faPlus = faPlus;
 
   constructor() { }
 

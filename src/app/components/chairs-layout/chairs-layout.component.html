@@ -23,26 +23,26 @@
         <div class="layout-option">
           <mat-form-field>
             <input type="number" min="1" max="5" formControlName="rows" matInput placeholder="Number of Rounds">
-            <mat-hint>Between 1 to 5</mat-hint>
+            <mat-label>Between 1 to 5</mat-label>
           </mat-form-field>
         </div>
         <div class="layout-option">
           <mat-form-field>
             <input type="number" min="50" max="500" formControlName="radius" matInput placeholder="Radius(px)">
-            <mat-hint>Between 50 to 500</mat-hint>
+            <mat-label>Between 50 to 500</mat-label>
           </mat-form-field>
         </div>
         <div class="layout-option">
           <mat-form-field>
             <input type="number" min="10" max="360" formControlName="angle" matInput placeholder="Angle">
-            <mat-hint>Between 10 to 360</mat-hint>
+            <mat-label>Between 10 to 360</mat-label>
           </mat-form-field>
         </div>
         <div class="layout-option">
           <mat-form-field>
             <input type="number" min="10" max="50" formControlName="spacing_row" matInput
               placeholder="Spacing between Rounds">
-            <mat-hint>Between 10 to 50</mat-hint>
+            <mat-label>Between 10 to 50</mat-label>
           </mat-form-field>
         </div>
       </div>
@@ -78,7 +78,7 @@
         <div class="layout-option">
           <mat-form-field>
             <input type="number" min="1" max="50" formControlName="rows" matInput placeholder="Rows">
-            <mat-hint>Between 1 to 50</mat-hint>
+            <mat-label>Between 1 to 50</mat-label>
           </mat-form-field>
         </div>
         <div class="layout-option">
@@ -90,7 +90,7 @@
           <mat-form-field>
             <input type="number" min="0" max="6" formControlName="spacing_chair" matInput
               placeholder="Spacing between chairs(px)">
-            <mat-hint>Between 0 to 6</mat-hint>
+            <mat-label>Between 0 to 6</mat-label>
           </mat-form-field>
         </div>
         <div>
@@ -104,7 +104,7 @@
         <form formArrayName="spacing_sections" fxLayout fxLayoutGap="20px">
           <div class="layout-option" *ngFor="let sec of spacing_sections | slice:0:sections-1; let i=index">
             <mat-form-field>
-              <input matInput [formControlName]="i" type="number">
+              <input type="number" matInput [formControlName]="i" >
             </mat-form-field>
           </div>
         </form>

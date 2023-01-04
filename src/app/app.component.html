@@ -223,64 +223,64 @@
 
       <div *ngIf="floorPlan">
         <div>
+              <mat-form-field appearance="outline">
+              <mat-label >Name</mat-label>
+              <input matInput
+                    type="text"
+                    [(ngModel)]="floorPlan.name"
+                    class="form-control" >
+              </mat-form-field>
+          </div>
+
+          <div>
             <mat-form-field appearance="outline">
-            <mat-label >Name</mat-label>
+            <mat-label >Height</mat-label>
             <input matInput
                   type="text"
-                  [(ngModel)]="floorPlan.name"
+                  [(ngModel)]="floorPlan.height"
                   class="form-control" >
             </mat-form-field>
-        </div>
-
-        <div>
-          <mat-form-field appearance="outline">
-          <mat-label >Height</mat-label>
-          <input matInput
-                type="text"
-                [(ngModel)]="floorPlan.height"
-                class="form-control" >
-          </mat-form-field>
-        </div>
-        <div>
+          </div>
+          <div>
+              <mat-form-field appearance="outline">
+              <mat-label >Width</mat-label>
+              <input matInput
+                    type="text"
+                    [(ngModel)]="floorPlan.width"
+                    class="form-control" >
+              </mat-form-field>
+          </div>
+          <div>
             <mat-form-field appearance="outline">
-            <mat-label >Width</mat-label>
+            <mat-label >OrderID</mat-label>
             <input matInput
                   type="text"
-                  [(ngModel)]="floorPlan.width"
+                  [(ngModel)]="app.orderID"
                   class="form-control" >
             </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field appearance="outline">
-          <mat-label >OrderID</mat-label>
-          <input matInput
-                type="text"
-                [(ngModel)]="app.orderID"
-                class="form-control" >
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field appearance="outline">
-          <mat-label >Image</mat-label>
-          <input matInput
-                type="text"
-                (change)="changeBackGroundImage()"
-                [(ngModel)]="floorPlan.image"
-                class="form-control" >
-          </mat-form-field>
-        </div>
+          </div>
+          <div>
+            <mat-form-field appearance="outline">
+            <mat-label >Image</mat-label>
+            <input matInput
+                  type="text"
+                  (change)="changeBackGroundImage()"
+                  [(ngModel)]="floorPlan.image"
+                  class="form-control" >
+            </mat-form-field>
+          </div>
 
-        <div class="example-full-width">
-          <mat-form-field  appearance="fill" >
-            <mat-label>Floor Plan Result</mat-label>
-            <textarea  cdkTextareaAutosize
-                      matInput
-                      rows = 5
-                      class="floor-plan-json"
-                      [(ngModel)]="floorPlan.template"
-                      placeholder="Floor plan Result"></textarea>
-          </mat-form-field>
-        </div>
+          <div class="example-full-width">
+            <mat-form-field  appearance="fill" >
+              <mat-label>Floor Plan Result</mat-label>
+              <textarea  cdkTextareaAutosize
+                        matInput
+                        rows = 5
+                        class="floor-plan-json"
+                        [(ngModel)]="floorPlan.template"
+                        placeholder="Floor plan Result"></textarea>
+            </mat-form-field>
+          </div> 
 
       </div>
 
@@ -296,48 +296,55 @@
           <ng-container *ngIf="!app.roomEdit">
             <button mat-icon-button matTooltip="Undo (Ctrl + Z)" (click)="app.undo()"
               [disabled]="app.states.length === 1">
-              <fa-icon [icon]="faReply"></fa-icon>
+              <mat-icon>reply</mat-icon>
             </button>
             <button mat-icon-button matTooltip="Redo (Ctrl + Shift + Z)"
                     (click)="app.redo()"
                     [disabled]="app.redoStates.length === 0">
-              <fa-icon [icon]="faShare"></fa-icon>
+              <mat-icon>share</mat-icon>
             </button>
 
             <button mat-icon-button
               [disabled]="app.selections.length === 0"
               matTooltip="Delete (Delete)"
               (click)="app.delete()">
-              <fa-icon [icon]="faTrash"></fa-icon>
+              <mat-icon>delete</mat-icon>
             </button>
 
             <button mat-icon-button matTooltip="Rotate Anti-Clockwise (Ctrl + Left Arrow)"
               [disabled]="app.selections.length === 0" (click)="app.rotateAntiClockWise()">
-              <fa-icon [icon]="faUndo"></fa-icon>
+              <!-- <fa-icon [icon]="faUndo"></fa-icon> -->
+              <mat-icon>undo</mat-icon>
             </button>
 
             <button mat-icon-button matTooltip="Rotate Clockwise (Ctrl + Right Arrow)"
               [disabled]="app.selections.length === 0" (click)="app.rotateClockWise()">
-              <fa-icon [icon]="faRedo"></fa-icon>
+              <!-- <fa-icon [icon]="faRedo"></fa-icon> -->
+              <mat-icon>redo</mat-icon>
             </button>
             <button mat-icon-button matTooltip="Group (Ctrl + G)" [disabled]="app.selections.length < 2"
               (click)="app.group()">
-              <fa-icon [icon]="faObjectGroup"></fa-icon>
+              <!-- <fa-icon [icon]="faObjectGroup"></fa-icon> -->
+              <mat-icon>redo</mat-icon>
             </button>
             <button mat-icon-button matTooltip="Ungroup (Ctrl + E)" [disabled]="!app.ungroupable"
               (click)="app.ungroup()">
-              <fa-icon [icon]="faObjectUngroup"></fa-icon>
+              <!-- <fa-icon [icon]="faObjectUngroup"></fa-icon>
+               -->
+              <mat-icon>table_view</mat-icon>
             </button>
             <button mat-button matTooltip="Arrange" [matMenuTriggerFor]="arrange">Arrange</button>
             <button mat-button matTooltip="Switch Edition Mode" color="primary"
                     (click)="app.endEditRoom()">Set Room</button>
             <button mat-icon-button matTooltip="Undo (Ctrl + Z)" (click)="app.undo()"
               [disabled]="app.roomEditStates.length === 1">
-              <fa-icon [icon]="faReply"></fa-icon>
+              <!-- <fa-icon [icon]="faReply"></fa-icon> -->
+              <mat-icon>repluy</mat-icon>
             </button>
             <button mat-icon-button matTooltip="Redo (Ctrl + Shift + Z)" (click)="app.redo()"
               [disabled]="app.roomEditRedoStates.length === 0">
-              <fa-icon [icon]="faShare"></fa-icon>
+              <!-- <fa-icon [icon]="faShare"></fa-icon> -->
+              <mat-icon>share</mat-icon>
             </button>
             <button mat-button matTooltip="Switch Edition Mode" color="primary"
               (click)="app.endEditRoom()">Edit Room</button>

@@ -4,7 +4,7 @@ import { fabric } from 'fabric';
 import { saveAs } from 'file-saver';
 import { AppService } from '../../app.service';
 import * as _ from '../../helpers';
-import { faListSquares } from '@fortawesome/free-solid-svg-icons';
+// import { faListSquares } from '@fortawesome/free-solid-svg-icons';
 // import { json } from 'stream/consumers';
 // import { ViewJSONServiceService } from 'src/app/view-jsonservice.service';
 
@@ -753,6 +753,11 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
   /**********************************************************************************************************/
   editRoom() {
+    if (!this.view) {
+      console.log('no view')
+      return
+    }
+
     if (this.view.getObjects()) {
         let items = this.view.getObjects()
         items.forEach(r => {
@@ -777,6 +782,10 @@ export class ViewComponent implements OnInit, AfterViewInit {
   }
 
   cancelRoomEdition() {
+    if (!this.view) {
+      console.log('no view')
+      return
+    }
 
     this.view.getObjects().forEach(r => {
       try {

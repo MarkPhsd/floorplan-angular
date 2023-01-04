@@ -7,8 +7,8 @@ import { RoomLayoutDesignerComponent } from './app.component';
 import { ViewComponent } from './components/view/view.component';
 import { PreviewFurnitureComponent } from './components/preview-furniture/preview-furniture.component';
 import { ChairsLayoutComponent } from './components/chairs-layout/chairs-layout.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 // import { ViewJSONServiceService } from './view-jsonservice.service';
+
 @NgModule({
     declarations: [
         RoomLayoutDesignerComponent,
@@ -22,7 +22,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         SharedModule,
         FormsModule,
         ReactiveFormsModule,
-        FontAwesomeModule
     ],
     exports: [
         RoomLayoutDesignerComponent,
