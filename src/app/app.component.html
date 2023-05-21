@@ -221,7 +221,7 @@
         </div>
       </div>
 
-      <div *ngIf="floorPlan">
+      <div *ngIf="floorPlan && isAdmin">
         <div>
               <mat-form-field appearance="outline">
               <mat-label >Name</mat-label>
@@ -280,7 +280,7 @@
                         [(ngModel)]="floorPlan.template"
                         placeholder="Floor plan Result"></textarea>
             </mat-form-field>
-          </div> 
+          </div>
 
       </div>
 
@@ -290,129 +290,142 @@
   <mat-drawer-content>
     <mat-toolbar  *ngIf="!userMode && floorPlan" >
       <mat-toolbar-row>
+        <!-- <ng-container *ngIf="!app.roomEdit"> -->
+          <!-- <div *ngIf="init && !app.roomEdit" class="grid-items"> -->
 
-        <div *ngIf="init">
+              <div>
+                <button mat-icon-button matTooltip="Undo (Ctrl + Z)" (click)="app.undo()"
+                  [disabled]="app.states.length === 1">
+                  <mat-icon>reply</mat-icon>
+                </button>
+              </div>
 
-          <ng-container *ngIf="!app.roomEdit">
-            <button mat-icon-button matTooltip="Undo (Ctrl + Z)" (click)="app.undo()"
-              [disabled]="app.states.length === 1">
-              <mat-icon>reply</mat-icon>
-            </button>
-            <button mat-icon-button matTooltip="Redo (Ctrl + Shift + Z)"
-                    (click)="app.redo()"
-                    [disabled]="app.redoStates.length === 0">
-              <mat-icon>share</mat-icon>
-            </button>
+              <div>
+                <button mat-icon-button matTooltip="Redo (Ctrl + Shift + Z)"
+                        (click)="app.redo()"
+                        [disabled]="app.redoStates.length === 0">
+                  <mat-icon>share</mat-icon>
+                </button>
+              </div>
 
-            <button mat-icon-button
-              [disabled]="app.selections.length === 0"
-              matTooltip="Delete (Delete)"
-              (click)="app.delete()">
-              <mat-icon>delete</mat-icon>
-            </button>
+              <div>
+                <button mat-icon-button
+                  [disabled]="app.selections.length === 0"
+                  matTooltip="Delete (Delete)"
+                  (click)="app.delete()">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
 
-            <button mat-icon-button matTooltip="Rotate Anti-Clockwise (Ctrl + Left Arrow)"
-              [disabled]="app.selections.length === 0" (click)="app.rotateAntiClockWise()">
-              <!-- <fa-icon [icon]="faUndo"></fa-icon> -->
-              <mat-icon>undo</mat-icon>
-            </button>
+              <div>
+                <button mat-icon-button matTooltip="Rotate Anti-Clockwise (Ctrl + Left Arrow)"
+                  [disabled]="app.selections.length === 0" (click)="app.rotateAntiClockWise()">
+                  <mat-icon>undo</mat-icon>
+                </button>
+              </div>
 
-            <button mat-icon-button matTooltip="Rotate Clockwise (Ctrl + Right Arrow)"
-              [disabled]="app.selections.length === 0" (click)="app.rotateClockWise()">
-              <!-- <fa-icon [icon]="faRedo"></fa-icon> -->
-              <mat-icon>redo</mat-icon>
-            </button>
-            <button mat-icon-button matTooltip="Group (Ctrl + G)" [disabled]="app.selections.length < 2"
-              (click)="app.group()">
-              <!-- <fa-icon [icon]="faObjectGroup"></fa-icon> -->
-              <mat-icon>redo</mat-icon>
-            </button>
-            <button mat-icon-button matTooltip="Ungroup (Ctrl + E)" [disabled]="!app.ungroupable"
-              (click)="app.ungroup()">
-              <!-- <fa-icon [icon]="faObjectUngroup"></fa-icon>
-               -->
-              <mat-icon>table_view</mat-icon>
-            </button>
-            <button mat-button matTooltip="Arrange" [matMenuTriggerFor]="arrange">Arrange</button>
-            <button mat-button matTooltip="Switch Edition Mode" color="primary"
-                    (click)="app.endEditRoom()">Set Room</button>
-            <button mat-icon-button matTooltip="Undo (Ctrl + Z)" (click)="app.undo()"
-              [disabled]="app.roomEditStates.length === 1">
-              <!-- <fa-icon [icon]="faReply"></fa-icon> -->
-              <mat-icon>repluy</mat-icon>
-            </button>
-            <button mat-icon-button matTooltip="Redo (Ctrl + Shift + Z)" (click)="app.redo()"
-              [disabled]="app.roomEditRedoStates.length === 0">
-              <!-- <fa-icon [icon]="faShare"></fa-icon> -->
-              <mat-icon>share</mat-icon>
-            </button>
-            <button mat-button matTooltip="Switch Edition Mode" color="primary"
-              (click)="app.endEditRoom()">Edit Room</button>
-          </ng-container>
-        </div>
+              <div>
+                <button mat-icon-button matTooltip="Rotate Clockwise (Ctrl + Right Arrow)"
+                  [disabled]="app.selections.length === 0" (click)="app.rotateClockWise()">
+                  <mat-icon>redo</mat-icon>
+                </button>
+              </div>
 
-        <mat-menu #arrange="matMenu">
-          <ng-template matMenuContent>
-            <button mat-menu-item (click)="app.arrange('LEFT')" [disabled]="app.selections.length < 2">Arrange Left</button>
-            <button mat-menu-item (click)="app.arrange('CENTER')" [disabled]="app.selections.length < 2">Arrange Center</button>
-            <button mat-menu-item (click)="app.arrange('RIGHT')" [disabled]="app.selections.length < 2">Arrange Right</button>
-            <button mat-menu-item (click)="app.arrange('TOP')" [disabled]="app.selections.length < 2">Arrange Top</button>
-            <button mat-menu-item (click)="app.arrange('MIDDLE')" [disabled]="app.selections.length < 2">Arrange Middle</button>
-            <button mat-menu-item (click)="app.arrange('BOTTOM')" [disabled]="app.selections.length < 2">Arrange Bottom</button>
-            <button mat-menu-item (click)="app.placeInCenter('HORIZONTAL')">Center Horizontally</button>
-            <button mat-menu-item (click)="app.placeInCenter('VERTICAL')">Center Vertically</button>
-          </ng-template>
-        </mat-menu>
+              <div>
+                <button mat-icon-button matTooltip="Group (Ctrl + G)" [disabled]="app.selections.length < 2"
+                  (click)="app.group()">
+                  <mat-icon>redo</mat-icon>
+                </button>
+              </div>
+
+              <div>
+                <button mat-icon-button matTooltip="Ungroup (Ctrl + E)" [disabled]="!app.ungroupable"
+                  (click)="app.ungroup()">
+                  <mat-icon>table_view</mat-icon>
+                </button>
+              </div>
+
+              <div>
+                <button mat-button matTooltip="Arrange" [matMenuTriggerFor]="arrange">Arrange</button>
+              </div>
+
+              <div>
+                <button mat-button matTooltip="Switch Edition Mode" color="primary"
+                        (click)="app.endEditRoom()">Set Room</button>
+              </div>
+
+              <div>
+                <button mat-icon-button matTooltip="Undo (Ctrl + Z)" (click)="app.undo()"
+                  [disabled]="app.roomEditStates.length === 1">
+                  <mat-icon>repluy</mat-icon>
+                </button>
+              </div>
+
+              <div>
+                <button mat-icon-button matTooltip="Redo (Ctrl + Shift + Z)" (click)="app.redo()"
+                  [disabled]="app.roomEditRedoStates.length === 0">
+                  <mat-icon>share</mat-icon>
+                </button>
+              </div>
+
+              <div>
+                <button mat-button matTooltip="Switch Edition Mode" color="primary"
+                  (click)="app.endEditRoom()">Edit Room</button>
+              </div>
+
+              <div>
+                <div  *ngIf="!userMode && isAdmin" >
+                  <div *ngFor="let selected of app.selections">
+                    <span *ngIf="selected && selected?.name">
+                      <mat-form-field appearance="outline">
+                      <mat-label >OrderID {{ getOrderName(selected) }} </mat-label>
+                      <input matInput
+                            type="text"
+                            [(ngModel)]="app.orderID"
+                            (change)="app.setOrder(app.orderID)"
+                            class="form-control" >
+                      </mat-form-field>
+                      <span>
+                        <button mat-raised-button (click)="app.setOrder('')">Clear</button>
+                      </span>
+                    </span>
+                    <span *ngIf="selected && selected?.name">
+                      <mat-form-field appearance="outline">
+                      <mat-label >Name: {{ getItemName(selected) }}</mat-label>
+                      <input matInput
+                            type="text"
+                            [(ngModel)]="app.tableName"
+                            (change)="app.setTable(app.tableName)"
+                            class="form-control" >
+                      </mat-form-field>
+                      <span>
+                        <button mat-raised-button (click)="app.setTable('')">Clear</button>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+          <mat-menu #arrange="matMenu">
+            <ng-template matMenuContent>
+              <button mat-menu-item (click)="app.arrange('LEFT')" [disabled]="app.selections.length < 2">Arrange Left</button>
+              <button mat-menu-item (click)="app.arrange('CENTER')" [disabled]="app.selections.length < 2">Arrange Center</button>
+              <button mat-menu-item (click)="app.arrange('RIGHT')" [disabled]="app.selections.length < 2">Arrange Right</button>
+              <button mat-menu-item (click)="app.arrange('TOP')" [disabled]="app.selections.length < 2">Arrange Top</button>
+              <button mat-menu-item (click)="app.arrange('MIDDLE')" [disabled]="app.selections.length < 2">Arrange Middle</button>
+              <button mat-menu-item (click)="app.arrange('BOTTOM')" [disabled]="app.selections.length < 2">Arrange Bottom</button>
+              <button mat-menu-item (click)="app.placeInCenter('HORIZONTAL')">Center Horizontally</button>
+              <button mat-menu-item (click)="app.placeInCenter('VERTICAL')">Center Vertically</button>
+            </ng-template>
+          </mat-menu>
         <app-zoom (zoomChange)="onZoom($event)" [zoom]="app.zoom"></app-zoom>
       </mat-toolbar-row>
     </mat-toolbar>
 
-      <pointless-room-layout-view
-          [userMode]="userMode">
-      </pointless-room-layout-view>
+    <pointless-room-layout-view
+        [userMode]="userMode">
+    </pointless-room-layout-view>
 
-      <table  *ngIf="!userMode || isAdmin" class="status-bar">
-        <tbody>
-          <tr class="status-bar-item">
-            <td>ID</td>
-            <td>Name</td>
-          </tr>
-
-          <tr class="status-bar-item" *ngFor="let selected of app.selections">
-
-            <td *ngIf="selected && selected?.name">
-              <mat-form-field appearance="outline">
-              <mat-label >OrderID {{selected?.name.split(';')[1]}}</mat-label>
-              <input matInput
-                    type="text"
-                    [(ngModel)]="app.orderID"
-                    (change)="app.setOrder(app.orderID)"
-                    class="form-control" >
-              </mat-form-field>
-              <span>
-                <button mat-raised-button (click)="app.setOrder('')">Clear</button>
-              </span>
-            </td>
-
-            <td *ngIf="selected && selected?.name">
-              <mat-form-field appearance="outline">
-              <mat-label >Name: {{selected?.name.split(';')[2]}}</mat-label>
-              <input matInput
-                    type="text"
-                    [(ngModel)]="app.tableName"
-                    (change)="app.setTable(app.tableName)"
-                    class="form-control" >
-              </mat-form-field>
-              <span>
-                <button mat-raised-button (click)="app.setTable('')">Clear</button>
-              </span>
-
-            </td>
-
-          </tr>
-        </tbody>
-      </table>
-
-  </mat-drawer-content>
-</mat-drawer-container>
+    </mat-drawer-content>
+  </mat-drawer-container>
 

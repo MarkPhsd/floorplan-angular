@@ -1,6 +1,6 @@
 <div class="layout-chairs">
   <div>
-    <div class="layout-type" fxLayout fxLayoutAlign="space-between center">
+    <div class="layout-type flex-design">
       <mat-radio-group
             aria-label="Select an layout"
             [ngModel]="layoutOption"
@@ -10,7 +10,7 @@
       </mat-radio-group>
       <app-zoom (zoomChange)="onZoom($event)" [zoom]="zoom"></app-zoom>
     </div>
-    <form *ngIf="layoutOption === 'CURVED'" [formGroup]="curvedBlock" fxLayout="column">
+    <form *ngIf="layoutOption === 'CURVED'" [formGroup]="curvedBlock" class="flex-design">
       <div>
         <mat-form-field>
           <mat-label>Select Chair</mat-label>
@@ -19,7 +19,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxLayout fxLayoutGap="20px">
+      <div class="flex-design">
         <div class="layout-option">
           <mat-form-field>
             <input type="number" min="1" max="5" formControlName="rows" matInput placeholder="Number of Rounds">
@@ -48,7 +48,7 @@
       </div>
       <div>
         <p>Number of chairs in rows</p>
-        <form formArrayName="chairs" fxLayout fxLayoutGap="20px">
+        <form formArrayName="chairs" >
           <div class="layout-option" *ngFor="let n of curved_chairs | slice:0:curved_rows; let i=index">
             <mat-form-field>
               <input matInput [formControlName]="i" type="number">
@@ -57,7 +57,7 @@
         </form>
       </div>
     </form>
-    <form *ngIf="layoutOption === 'NORMAL'" [formGroup]="rectBlock" fxLayout="column">
+    <form *ngIf="layoutOption === 'NORMAL'" [formGroup]="rectBlock" class='flex-design'>
       <div>
         <mat-form-field>
           <mat-label>Select Chair</mat-label>
@@ -66,7 +66,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxLayout fxLayoutGap="20px">
+      <div >
         <div class="layout-option">
           <mat-form-field>
             <mat-label>Sections</mat-label>

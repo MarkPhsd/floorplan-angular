@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { UntypedFormGroup,  UntypedFormBuilder } from '@angular/forms';
+import { FormGroup,  FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 // import { library } from '@fortawesome/fontawesome-svg-core';
 // import {
@@ -78,7 +78,7 @@ export class RoomLayoutDesignerComponent implements OnInit, OnDestroy {
   init = false;
   furnishings = FURNISHINGS;
   defaultChairIndex = 0;
-  textForm: UntypedFormGroup;
+  textForm: FormGroup;
   previewItem = null;
   previewType = null;
 
@@ -95,7 +95,7 @@ export class RoomLayoutDesignerComponent implements OnInit, OnDestroy {
   // faMinus = faMinus;
 
   constructor(public app: AppService,
-              private fb: UntypedFormBuilder,
+              private fb: FormBuilder,
               private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -157,6 +157,20 @@ export class RoomLayoutDesignerComponent implements OnInit, OnDestroy {
       this.app.performOperation.next('ZOOM');
     })
 
+  }
+
+  getItemName(selected) {
+    if ( !selected?.name.split(';')[2]  || selected?.name.split(';')[2] === 'itemName') {
+      return ''
+    }
+    return selected?.name.split(';')[2]
+  }
+
+  getOrderName(selected) {
+    if ( !selected?.name.split(';')[1]  || selected?.name.split(';')[1] == 'orderID' || selected?.name.split(';')[1] == 'orderid') {
+      return ''
+    }
+    return selected?.name.split(';')[1]
   }
 
   _setTableSelectedColor() {

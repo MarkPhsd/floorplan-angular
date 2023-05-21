@@ -6,6 +6,8 @@
     mat-radio-button {
       margin-right: 24px;
     }
+
+
   }
 
   label {
@@ -37,4 +39,12 @@
   p {
     margin-bottom: 0;
   }
+}
+
+.flex-design {
+  // fxLayout fxLayoutAlign="space-between center"
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  gap: 10px;
 }

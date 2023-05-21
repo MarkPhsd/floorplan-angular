@@ -1,0 +1,46 @@
+{
+  "name": "pointless-room-layout",
+  "version": "0.15.9",
+  "private": false,
+  "dependencies": {
+    "@angular/animations": "~13.3.4",
+    "@angular/cdk": "~13.3.4",
+    "@angular/common": "~13.3.4",
+    "@angular/compiler": "~13.3.4",
+    "@angular/core": "~13.3.4",
+    "@angular/forms": "~13.3.4",
+    "@angular/localize": "^13.3.4",
+    "@angular/material": "^13.3.4",
+    "@angular/platform-browser": "~13.3.4",
+    "@angular/platform-browser-dynamic": "~13.3.4",
+    "@angular/router": "~13.3.4",
+    "canvas": "^2.9.1",
+    "core-js": "^3.22.2",
+    "fabric": "^5.2.1",
+    "file-saver": "^2.0.5",
+    "rxjs": "~6.5.4",
+    "tslib": "^2.2.0",
+    "uuid": "^8.3.2",
+    "zone.js": "~0.11.4"
+  },
+  "module": "fesm2015/pointless-room-layout.mjs",
+  "es2020": "fesm2020/pointless-room-layout.mjs",
+  "esm2020": "esm2020/pointless-room-layout.mjs",
+  "fesm2020": "fesm2020/pointless-room-layout.mjs",
+  "fesm2015": "fesm2015/pointless-room-layout.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "esm2020": "./esm2020/pointless-room-layout.mjs",
+      "es2020": "./fesm2020/pointless-room-layout.mjs",
+      "es2015": "./fesm2015/pointless-room-layout.mjs",
+      "node": "./fesm2015/pointless-room-layout.mjs",
+      "default": "./fesm2020/pointless-room-layout.mjs"
+    }
+  },
+  "sideEffects": false
+}

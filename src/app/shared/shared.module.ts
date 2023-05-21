@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 // Modules
-import { MaterialModule, DesignModule } from './modules';
+import { MaterialModule } from './modules';
 
 // Components
 import { ZoomComponent } from './components';
@@ -9,11 +9,9 @@ import { ZoomComponent } from './components';
 @NgModule({
   imports: [
     MaterialModule,
-    DesignModule,
   ],
   exports: [
     MaterialModule,
-    DesignModule,
     ZoomComponent
   ],
   providers: [],

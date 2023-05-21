@@ -110,12 +110,17 @@ export class AppService {
 
   setOrder(item) {
     if (!this.selections.length) { return; }
+    if (item.trim() === '') {
+      this.clearNextSelectedTable = true;
+    }
+    if (!item) {
+      this.orderID = ''
+    }
     this.orderID = item ;
     this.performOperation.next('setOrderID');
   }
 
   setTable(tableName) {
-    console.log(tableName, this.selections.length)
     if (!this.selections.length) { return; }
     this.performOperation.next('setTableName');
   }

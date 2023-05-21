@@ -1,0 +1,31 @@
+import { OnInit } from '@angular/core';
+import { FormArray, FormGroup } from '@angular/forms';
+import { fabric } from 'fabric';
+import { MatDialogRef } from '@angular/material/dialog';
+import * as i0 from "@angular/core";
+export declare class ChairsLayoutComponent implements OnInit {
+    private dialogRef;
+    layout: fabric.Group;
+    layoutOption: string;
+    rectBlock: FormGroup;
+    curvedBlock: FormGroup;
+    view: fabric.Canvas;
+    chairs: any[];
+    sps: FormArray;
+    zoom: number;
+    constructor(dialogRef: MatDialogRef<ChairsLayoutComponent>);
+    ngOnInit(): void;
+    layoutOptionChanged(value: 'CURVED' | 'NORMAL'): void;
+    changeLayout(): void;
+    onZoom(value: number): void;
+    get spacing_sections(): import("@angular/forms").AbstractControl[];
+    get sections(): any;
+    get curved_chairs(): import("@angular/forms").AbstractControl[];
+    get curved_rows(): any;
+    create(): void;
+    cancel(): void;
+    toRadians(angle: number): number;
+    toDegrees(radian: number): number;
+    static ɵfac: i0.ɵɵFactoryDeclaration<ChairsLayoutComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ChairsLayoutComponent, "pointless-chairs-layout", never, {}, {}, never, never>;
+}

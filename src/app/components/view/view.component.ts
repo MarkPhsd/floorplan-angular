@@ -352,17 +352,13 @@ export class ViewComponent implements OnInit, AfterViewInit {
         const name = item.split(';')[2];
         let status = item.split(';')[3];
         status = this.getStatusDescription(orderID);
+        if (!orderID || orderID == undefined || orderID == 'null' || orderID == null) {
+          orderID = ''
+          status  = 'inactive'
+        }
+        this.app.orderID = orderID;
         const newItem = `${uid};${orderID};${name};${status}`;
-
-        // if (!orderID) {
-        //   this.alterObjectColor(uid, 'red')
-        // }
-        // if (!orderID)  {
-        //   this.alterObjectColor(uid, 'green')
-        // }
-
         this.selectedObject.name = newItem;
-        // this.saveState();
       }
     }
   }
@@ -374,7 +370,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
         status = 'active'
       }
     }
-    if (!orderID) {
+    if (!orderID || orderID == '') {
       if (!status) {
         status = 'inactive'
       }

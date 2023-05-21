@@ -10,6 +10,17 @@ mat-drawer-container {
   margin:5px;
 }
 
+mat-form-field {
+  margin-top: 5px;
+  font-size: small;
+}
+
+.grid-items {
+  display: grid;
+  grid-template-columns: repeat( auto-fit, minmax(150px, 1fr) );
+  gap: 10px;
+}
+
 .preview-layout {
   display: flex;
   flex-wrap: wrap;
